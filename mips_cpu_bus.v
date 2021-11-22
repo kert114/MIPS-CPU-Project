@@ -33,6 +33,45 @@ module mips_cpu_bus(
             opcodeSW = 6'b101011,
         } typeOpcode;
 
+        logic[31:0] progCount;
+        //logic[31:0] progCountTemp; (design choice lol)
+
+        //5 cycle CPU: Fetch, Decode, Execute,Memory,W.B
+        //CPU has 6 states, 5 cycles + HALT
+
+        always @(posedge clk) begin
+            if (reset == 1) begin
+                PC <=32'hBFC00000;
+                //other things as well
+            end
+            else if(Fetch) begin
+                //PC --> Avalon
+            end
+            else if(Decode) begin
+                //Avalon data --> comb logic --> decoded stuff
+            end
+            else if(Execute) begin
+                //stuff actually matters
+                if(opcode == opcodeJR)begin
+                    progCount <= addressJ
+                end
+                if(no jumps)begin
+                    progCount <= progCount + 4
+            end
+            else if(Memory) begin
+            end
+            else if(WriteBack) begin
+            end
+            else if(halted) begin
+                //halted
+            end
+
+
+
+
+        //32'hBFC00000 is progCount on reset
+        //32'h00000000 should cause a halt
+
 
 //IR register on CPU sheet
 //PC register on CPU sheet
