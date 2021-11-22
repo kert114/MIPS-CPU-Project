@@ -31,7 +31,7 @@ module mips_cpu_bus(
             opcodeADDIU = 6'b001001,
             opcodeLW = 6'b100011,
             opcodeSW = 6'b101011,
-        } typeOpcode;
+        } typeOpcode; //type declaration of a decoder (need to be redone for big CPU)
 
         logic[31:0] progCount;
         //logic[31:0] progCountTemp; (design choice lol)
@@ -46,24 +46,36 @@ module mips_cpu_bus(
             end
             else if(Fetch) begin
                 //PC --> Avalon
+                //CPU must pause until waitrequest = 0
+                //moves --> decode
             end
             else if(Decode) begin
-                //Avalon data --> comb logic --> decoded stuff
+                //data --> comb logic --> decoded stuff
+                //honestly, if it's comb logic, we can just put the decoder on this sheet
+                //ALU control gets set in this cycle
+                //sets to 1111 (default) when ALU is not used
+                //moves --> execute
             end
             else if(Execute) begin
-                //stuff actually matters
-                if(opcode == opcodeJR)begin
-                    progCount <= addressJ
-                end
-                if(no jumps)begin
-                    progCount <= progCount + 4
+                //Jumps will occur here (J,JAL,JR,JAlR)
+                //moves --> Memory
             end
             else if(Memory) begin
+                //says in this state until waitrequest = 0
+                //(maybe additonal criteria for pauses but not sure yet)
+                //branches will occur here I think?(BNE,BGTZ,BLEZ)
+                //moves --> WriteBack
             end
             else if(WriteBack) begin
+                //write to registers
+                //mthi and mtlo also happens here
+                //PC updates here depending on normal,jump or branch
             end
             else if(halted) begin
                 //halted
+                //PC stays perpetually the same
+                //nothing happens
+                //add some $display to show it when testing I guess?
             end
 
 
