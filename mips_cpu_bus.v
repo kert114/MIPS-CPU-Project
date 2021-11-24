@@ -14,16 +14,25 @@ module mips_cpu_bus(
     output logic[3:0] byteenable,
     input logic[31:0] readdata //not avaliable until cycle following read request
 );
-        logic[31:0] instr; //todo: get instr from avalon thing
+        logic[31:0] instruction; //todo: get instr from avalon thing
 
-        logic[5:0] opcode = instr[31:26]; //R,I,J
-        logic[5:0] source1 = instr[25:21]; //R,I
-        logic[5:0] source2 = instr[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
-        logic[5:0] dest = instr[15:11]; //R
-        logic[5:0] shift = instr[10:6]; //R
-        logic[5:0] fnCode = instr[5:0]; //R
-        logic[15:0] addressI = instr[15:0]; //I
-        logic[25:0] addressJ = instr[25:0]; //J
+        logic[5:0] instructionOpcode = instruction[31:26]; //R,I,J
+        logic[5:0] instructionSource1 = instruction[25:21]; //R,I
+        logic[5:0] instructionSource2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
+        logic[5:0] instructionDest = instruction[15:11]; //R
+        logic[5:0] instructionShift = instruction[10:6]; //R
+        logic[5:0] instructionFnCode = instruction[5:0]; //R
+        logic[15:0] instructionAddressI = instruction[15:0]; //I
+        logic[25:0] instructionAddressJ = instruction[25:0]; //J
+
+
+       /*----Memory combinational things-------------------*/
+
+       assign write = ((state == stateMemory) && (instructionOpcode == opcodeSW)); //add SH and SB later
+
+       assgin writedata = (instr_opcode == opcodeSW) ? registerReadDataB : 32'h00000000 //placeholder logic for SH and SB later
+
+       /*-------------------------------------------------*/
 
         typedef enum logic[5:0] {
             opcodeJR = 6'b000000,
@@ -32,6 +41,17 @@ module mips_cpu_bus(
             opcodeLW = 6'b100011,
             opcodeSW = 6'b101011,
         } typeOpcode; //type declaration of a decoder (need to be redone for big CPU)
+
+        typedef enum logic[2:0] {
+        	stateFetch = 3'b000,
+        	stateDecode = 3'b001,
+        	stateExecute = 3'b010,
+        	stateMemory = 3'b011,
+        	stateWriteBack = 3'b100,
+        	stateHalted = 3'b111
+        } typeState; //type declaration for the CPU states
+
+        assign writedata = (instructionOpcode = opcodeSW )
 
         logic[31:0] progCount;
         //logic[31:0] progCountTemp; (design choice lol)
@@ -44,34 +64,49 @@ module mips_cpu_bus(
                 PC <=32'hBFC00000;
                 //other things as well
             end
-            else if(Fetch) begin
-                //PC --> Avalon
-                //CPU must pause until waitrequest = 0
-                //moves --> decode
+            else if(state == stateFetch) begin
+            	$display("") //add useful testing messages
+            	if(address == 32'h00000000) begin
+            		active <= 0;
+            		state <= stateHalted;
+            	end
+            	else if(waitrequest) begin
+            	end//if waitrequest = 1, keep waiting
+            	else begin
+            		state <= stateDecode;
+            	end
+            	registerWriteEnable <= 0 //make sure register isn't writing (W.B sets it to 1)
             end
-            else if(Decode) begin
+            else if(state == stateDecode) begin
+            	instruction <=readdata; //avalon output = our instruction
+            	registerReadA <=instructionSource1;
+            	registerReadb <= instructionSource2; //change
                 //data --> comb logic --> decoded stuff
                 //honestly, if it's comb logic, we can just put the decoder on this sheet
                 //ALU control gets set in this cycle
                 //sets to 1111 (default) when ALU is not used
-                //moves --> execute
+                state <= stateExecute
             end
-            else if(Execute) begin
+            else if(state == stateExecute) begin
                 //Jumps will occur here (J,JAL,JR,JAlR)
                 //moves --> Memory
             end
-            else if(Memory) begin
-                //says in this state until waitrequest = 0
+            else if(state == stateMemory) begin
+            	//some logic to check if execute is done for multicycle executes (don't know what tho)
+            	if (waitrequest == 1) begin
+
+            	end //make sure avalon is avaliable before starting
+            	//write is already taken care of in the comb logic written above I think?
                 //(maybe additonal criteria for pauses but not sure yet)
                 //branches will occur here I think?(BNE,BGTZ,BLEZ)
                 //moves --> WriteBack
             end
-            else if(WriteBack) begin
+            else if(state == stateWriteBack) begin
                 //write to registers
                 //mthi and mtlo also happens here
                 //PC updates here depending on normal,jump or branch
             end
-            else if(halted) begin
+            else if(state == stateHalted) begin
                 //halted
                 //PC stays perpetually the same
                 //nothing happens
