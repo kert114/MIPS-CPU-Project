@@ -30,9 +30,22 @@ module mips_cpu_bus(
 
        assign write = ((state == stateMemory) && (instructionOpcode == opcodeSW)); //add SH and SB later
 
-       assgin writedata = (instr_opcode == opcodeSW) ? registerReadDataB : 32'h00000000 //placeholder logic for SH and SB later
+       assign writedata = (instr_opcode == opcodeSW) ? registerReadDataB : 32'h00000000 //placeholder logic for SH and SB later
 
        /*-------------------------------------------------*/
+
+       /*-----ALU things----*/
+
+       logic [3:0] AluControl;
+       logic[31:0] AluA;
+       logic[31:0] AluB;
+       logic[31:0] AluOut;
+       logic ALUZero;
+       logic[4:0] shiftAmount
+
+       mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero))
+
+       /*--------------------*/
 
         typedef enum logic[5:0] {
             opcodeJR = 6'b000000,
@@ -40,7 +53,12 @@ module mips_cpu_bus(
             opcodeADDIU = 6'b001001,
             opcodeLW = 6'b100011,
             opcodeSW = 6'b101011,
-        } typeOpcode; //type declaration of a decoder (need to be redone for big CPU)
+        } typeOpCode; //type declaration of a decoder (need to be redone for big CPU)
+
+        typedef enum logic[5:0] {
+            fnCodJR = 6'b001000,
+        } typeFnCode;
+
 
         typedef enum logic[2:0] {
         	stateFetch = 3'b000,
@@ -54,14 +72,17 @@ module mips_cpu_bus(
         assign writedata = (instructionOpcode = opcodeSW )
 
         logic[31:0] progCount;
-        //logic[31:0] progCountTemp; (design choice lol)
+        logic[31:0] progCountTemp;
+         //normally progCountTemp = progCount + 4;
+         //but when JR=1 progCountTemp = value of register A;
 
+         //progCount <-- progCountTemp
         //5 cycle CPU: Fetch, Decode, Execute,Memory,W.B
         //CPU has 6 states, 5 cycles + HALT
 
         always @(posedge clk) begin
             if (reset == 1) begin
-                PC <=32'hBFC00000;
+                progCount <=32'hBFC00000;
                 //other things as well
             end
             else if(state == stateFetch) begin
@@ -80,7 +101,17 @@ module mips_cpu_bus(
             else if(state == stateDecode) begin
             	instruction <=readdata; //avalon output = our instruction
             	registerReadA <=instructionSource1;
-            	registerReadb <= instructionSource2; //change
+            	registerReadB <= instructionSource2;
+
+                /* JR contrl signal from decode */
+                if(instructionOpcode == opcodeJR) begin
+                    if(instructionFnCode == fnCodJR) begin
+                        JRControl = 1
+                    end
+                end
+                /*-------------------------------*/
+
+                 //change
                 //data --> comb logic --> decoded stuff
                 //honestly, if it's comb logic, we can just put the decoder on this sheet
                 //ALU control gets set in this cycle
@@ -88,12 +119,20 @@ module mips_cpu_bus(
                 state <= stateExecute
             end
             else if(state == stateExecute) begin
+
+                /*JR execute*/
+                progCountTemp <= (JRControl == 1) ? registerReadA : progCount + 4;
+                /*----------*/
+
+                //ALU
                 //Jumps will occur here (J,JAL,JR,JAlR)
                 //moves --> Memory
             end
             else if(state == stateMemory) begin
             	//some logic to check if execute is done for multicycle executes (don't know what tho)
-            	if (waitrequest == 1) begin
+            	if (waitrequest == 1) begin end
+            	end
+            	
 
             	end //make sure avalon is avaliable before starting
             	//write is already taken care of in the comb logic written above I think?
@@ -105,6 +144,7 @@ module mips_cpu_bus(
                 //write to registers
                 //mthi and mtlo also happens here
                 //PC updates here depending on normal,jump or branch
+                progCountTemp <= progCountTemp
             end
             else if(state == stateHalted) begin
                 //halted
@@ -112,8 +152,6 @@ module mips_cpu_bus(
                 //nothing happens
                 //add some $display to show it when testing I guess?
             end
-
-
 
 
         //32'hBFC00000 is progCount on reset
