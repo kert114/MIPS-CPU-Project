@@ -2,15 +2,15 @@ module mips_cpu_registers(
 	input logic clk,
     input logic reset,
 
-    input logic w.en,
-    input logic[31:0] d.in,
-    input logic w.addr,
+    input logic writeEnable,
+    input logic[31:0] dataIn,
+    input logic[4:0] writeAddress,
 
-    input logic r.addrA, //allows for potential to read and write to/from registers
-    output logic[31:0] r.dataA,
+    input logic[4:0] readAddressA, //allows for potential to read and write to/from registers
+    output logic[31:0] readDataA,
 
-    input logic r.addrB, //allows access to two separate registers at once.
-    output logic[31:0] r.dataB,
+    input logic[4:0] readAddressB, //allows access to two separate registers at once.
+    output logic[31:0] readDataB,
 
     output logic[31:0] register_v0 //for tb purporses
 );
@@ -26,14 +26,14 @@ module mips_cpu_registers(
 				regs[i] <= 0;
 			end
 		end
-		else if (w.en == 1) begin
-			if (w.addr == 0) begin
+		else if (writeEnable == 1) begin
+			if (writeAddress == 0) begin
 			end //don't overwrite reg0 cus it's 0 forever.
-			reg[w.addr] <= d.in;
+			reg[writeAddress] <= dataIn;
 		end
 		else begin
-			r.dataA <= reset == 1 ? 0 : reg[r.addrA];
-			r.dataB <= reset == 1 ? 0 : reg[r.addrB]; 
+			readDataA <= reset == 1 ? 0 : reg[readAddressA];
+			readDataB <= reset == 1 ? 0 : reg[readAddressB]; 
 		end
 	end
 

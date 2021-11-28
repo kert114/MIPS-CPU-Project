@@ -29,7 +29,6 @@ module mips_cpu_bus(
        /*----Memory combinational things-------------------*/
 
        assign write = ((state == stateMemory) && (instructionOpcode == opcodeSW)); //add SH and SB later
-
        assign writedata = (instr_opcode == opcodeSW) ? registerReadDataB : 32'h00000000 //placeholder logic for SH and SB later
 
        /*-------------------------------------------------*/
@@ -43,9 +42,24 @@ module mips_cpu_bus(
        logic ALUZero;
        logic[4:0] shiftAmount
 
-       mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero))
+       mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
 
        /*--------------------*/
+
+       /*----Register0-31---*/
+
+      logic registerWriteEnable;
+      logic[31:0] registerDataIn;
+      logic[4:0] registerWriteAddress;
+      logic[4:0] registerAddressA;
+      logic[31:0] registerReadA;
+      logic[4:0] registerAddressB;
+      logic[31:0] registerReadB;
+
+      mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeaddress(registerWriteAddress),.readAdressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0))
+
+
+       /*-------------------*/
 
         typedef enum logic[5:0] {
             opcodeJR = 6'b000000,
