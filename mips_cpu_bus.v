@@ -179,7 +179,7 @@ module mips_cpu_bus(
                 //moves --> WriteBack
             end
             else if(state == stateWriteBack) begin
-                
+
                 registerWriteEnable < (instructionOpcode == opcodeJAL ||
                                       (instructionOpcode == opcodeRType && instructionFnCode == fncodeJALR)) ? 1 : 0;
                 registerWriteAddress <= (instructionOpcode == opcodeJAL) ? 5'd31:
@@ -194,6 +194,15 @@ module mips_cpu_bus(
                 progCountTemp <= progCountTemp
                 state <= stateFetch
             end
+
+            /*----PC stuff---*/
+            if(willJump == 1) begin
+                progCount <= progCountTemp;
+            end
+            else begin
+                progCount <= progNext;
+            end
+            /*---------*/
             else if(state == stateHalted) begin
                 //halted
                 //PC stays perpetually the same
