@@ -14,6 +14,8 @@ module mips_cpu_bus(
     output logic[3:0] byteenable,
     input logic[31:0] readdata //not avaliable until cycle following read request
 );
+
+        /*---Comb Decode---*/
         logic[31:0] instruction; //todo: get instr from avalon thing
 
         logic[5:0] instructionOpcode = instruction[31:26]; //R,I,J
@@ -22,42 +24,58 @@ module mips_cpu_bus(
         logic[4:0] instructionDest = instruction[15:11]; //R
         logic[4:0] instructionShift = instruction[10:6]; //R
         logic[5:0] instructionFnCode = instruction[5:0]; //R
-        logic[15:0] instructionAddressI = instruction[15:0]; //I
+        logic[15:0] instructionImmediateI = instruction[15:0]; //I
         logic[25:0] instructionAddressJ = instruction[25:0]; //J
 
+        /*------*/
 
-       /*----Memory combinational things-------------------*/
 
-       assign write = ((state == stateMemory) && (instructionOpcode == opcodeSW)); //add SH and SB later
-       assign writedata = (instr_opcode == opcodeSW) ? registerReadDataB : 32'h00000000 //placeholder logic for SH and SB later
+        /*----Memory combinational things-------------------*/
 
-       /*-------------------------------------------------*/
+        assign write = ((state == stateMemory) && (instructionOpcode == opcodeSW)); //add SH and SB later
+        assign writedata = (instr_opcode == opcodeSW) ? registerReadDataB : 32'h00000000 //placeholder logic for SH and SB later
 
-       /*-----ALU things----*/
+        /*-------------------------------------------------*/
 
-       logic [3:0] AluControl;
-       logic[31:0] AluA;
-       logic[31:0] AluB;
-       logic[31:0] AluOut;
-       logic ALUZero;
-       logic[4:0] shiftAmount
+        /*-----ALU things----*/
 
-       mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
+        logic [3:0] AluControl;
+        logic[31:0] AluA;
+        logic[31:0] AluB;
+        logic[31:0] AluOut;
+        logic ALUZero;
+        logic[4:0] shiftAmount
 
-       /*--------------------*/
+        mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
 
-       /*----Register0-31---*/
+        /*--------------------*/
 
-      logic registerWriteEnable;
-      logic[31:0] registerDataIn;
-      logic[4:0] registerWriteAddress;
-      logic[4:0] registerAddressA;
-      logic[31:0] registerReadA;
-      logic[4:0] registerAddressB;
-      logic[31:0] registerReadB;
+        /*----Register0-31+HI+LO+progCountS---*/
 
-      mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeaddress(registerWriteAddress),.readAdressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0))
+        logic registerWriteEnable;
+        logic[31:0] registerDataIn;
+        logic[4:0] registerWriteAddress;
+        logic[4:0] registerAddressA;
+        logic[31:0] registerReadA;
+        logic[4:0] registerAddressB;
+        logic[31:0] registerReadB;  
+        mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeaddress(registerWriteAddress),.readAdressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0));
 
+        logic[31:0] progCount;
+        logic[31:0] progCountTemp;
+        logic[31:0] progNext;
+        assign progNext = progCount + 4; //this is for J-type jumps as we need to get the value correct
+
+        logic[31:0] registerHi;
+        logic[31:0] registerLo;
+
+        assign registerWriteEnable
+       /*-------------------*/
+
+
+       /*---Jump controls---*/
+
+       logic willJump;
 
        /*-------------------*/
 
@@ -86,10 +104,6 @@ module mips_cpu_bus(
         	stateHalted = 3'b111
         } typeState; //type declaration for the CPU states
 
-        assign writedata = (instructionOpcode = opcodeSW )
-
-        logic[31:0] progCount;
-        logic[31:0] progCountTemp;
          //normally progCountTemp = progCount + 4;
          //but when JR=1 progCountTemp = value of register A;
 
@@ -103,7 +117,7 @@ module mips_cpu_bus(
                 //other things as well
             end
             else if(state == stateFetch) begin
-            	$display("") //add useful testing messages
+            	$display("---FETCH---")
             	if(address == 32'h00000000) begin
             		active <= 0;
             		state <= stateHalted;
@@ -113,30 +127,14 @@ module mips_cpu_bus(
             	else begin
             		state <= stateDecode;
             	end
-            	registerWriteEnable <= 0 //make sure register isn't writing (W.B sets it to 1)
+            	registerWriteEnable <= 0; //make sure register isn't writing (W.B sets it to 1)
             end
             else if(state == stateDecode) begin
+                $display("---DECODE---")
             	instruction <=readdata; //avalon output = our instruction
             	registerAddressA <= instructionSource1;
             	registerAddressB <= instructionSource2;
 
-                /* JR contrl signal from decode */
-                if(instructionOpcode == opcodeRType) begin
-                    if(instructionFnCode == fnCodeJR) begin
-                        JRControl = 1;
-                    end
-                    else if(instructionFnCode == fncodeJALR) begin
-                        JALRcontrol = 1;
-                    end
-                end
-
-                if(instructionOpcode == opcodeJ) begin
-                    Jcontrol = 1;
-                end
-
-                if(instructionOpcode == opcodeJAL) begin
-                        JALcontrol = 1;
-                end
                 /*-------------------------------*/
                 //JALR
                  //change
@@ -148,25 +146,20 @@ module mips_cpu_bus(
             end
             else if(state == stateExecute) begin
 
-                /*JR execute*/
-                progCountTemp <= (JRControl == 1) ? registerdataA << 2: // jr
-                progCountTemp <= (Jcontrol == 1) ? {progCount[31:28],instructionAddressJ << 2}: progCount + 4;
-                // J
-                
-                if(JALcontrol == 1) begin
-                    registerWriteAddress <= 5'b11111;
-                    registerWriteEnable <= 1;
-                    registerDataIn <=  progCount + 4;
-                    progCountTemp <= {progCount[31:28],instructionAddressJ << 2}
+                /*---Jump instruction control signals--- */
+                if(instructionOpcode == opcodeRType) begin
+                    if((instructionFnCode == fnCodeJR) || (instructionFnCode == fncodeJALR))begin
+                        willJump = 1;
+                        progTemp <=registerReadA;
+                    end
                 end
-                // JAL
-                if(JALRcontrol == 1) begin
-                    registerWriteAddress <= instructionDest;
-                    registerWriteEnable <= 1;
-                    registerDataIn <=  progCount + 4;
-                    progCountTemp <= registerReadA ; 
 
+                if((instructionOpcode == opcodeJ)||(instructionOpcode == opcodeJAL)) begin
+                    willJump <= 1;
+                    progTemp <= {progNext[31:28],instructionAddressJ << 2};
                 end
+                /*-----------------------------------*/
+
                 //JALR
 
                 //ALU
@@ -186,10 +179,20 @@ module mips_cpu_bus(
                 //moves --> WriteBack
             end
             else if(state == stateWriteBack) begin
+                
+                registerWriteEnable < (instructionOpcode == opcodeJAL ||
+                                      (instructionOpcode == opcodeRType && instructionFnCode == fncodeJALR)) ? 1 : 0;
+                registerWriteAddress <= (instructionOpcode == opcodeJAL) ? 5'd31:
+                                        (instructionOpcode == opcodeRType) ? instructionDest: instructionSource2;
+                registerDataIn <= (instructionOpcode == opcodeJAL ||
+                                  (instructionOpcode == opcodeRType && instructionFnCode == fncodeJALR)) ? progCount + 8: AluOut;
+
+
                 //write to registers
                 //mthi and mtlo also happens here
                 //PC updates here depending on normal,jump or branch
                 progCountTemp <= progCountTemp
+                state <= stateFetch
             end
             else if(state == stateHalted) begin
                 //halted
