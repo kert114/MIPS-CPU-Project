@@ -17,10 +17,10 @@ module mips_cpu_bus(
         logic[31:0] instruction; //todo: get instr from avalon thing
 
         logic[5:0] instructionOpcode = instruction[31:26]; //R,I,J
-        logic[5:0] instructionSource1 = instruction[25:21]; //R,I
-        logic[5:0] instructionSource2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
-        logic[5:0] instructionDest = instruction[15:11]; //R
-        logic[5:0] instructionShift = instruction[10:6]; //R
+        logic[4:0] instructionSource1 = instruction[25:21]; //R,I
+        logic[4:0] instructionSource2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
+        logic[4:0] instructionDest = instruction[15:11]; //R
+        logic[4:0] instructionShift = instruction[10:6]; //R
         logic[5:0] instructionFnCode = instruction[5:0]; //R
         logic[15:0] instructionAddressI = instruction[15:0]; //I
         logic[25:0] instructionAddressJ = instruction[25:0]; //J
@@ -62,15 +62,18 @@ module mips_cpu_bus(
        /*-------------------*/
 
         typedef enum logic[5:0] {
-            opcodeJR = 6'b000000,
+            opcodeRType = 6'b000000,
             opcodeADDU = 6'b000000,
             opcodeADDIU = 6'b001001,
             opcodeLW = 6'b100011,
             opcodeSW = 6'b101011,
+            opcodeJ = 6'b000010,
+            opcodeJAL = 6'b000011,
         } typeOpCode; //type declaration of a decoder (need to be redone for big CPU)
 
         typedef enum logic[5:0] {
-            fnCodJR = 6'b001000,
+            fnCodeJR = 6'b001000,
+            fncodeJALR = 6'b001001,
         } typeFnCode;
 
 
@@ -114,17 +117,28 @@ module mips_cpu_bus(
             end
             else if(state == stateDecode) begin
             	instruction <=readdata; //avalon output = our instruction
-            	registerReadA <=instructionSource1;
-            	registerReadB <= instructionSource2;
+            	registerAddressA <= instructionSource1;
+            	registerAddressB <= instructionSource2;
 
                 /* JR contrl signal from decode */
-                if(instructionOpcode == opcodeJR) begin
-                    if(instructionFnCode == fnCodJR) begin
-                        JRControl = 1
+                if(instructionOpcode == opcodeRType) begin
+                    if(instructionFnCode == fnCodeJR) begin
+                        JRControl = 1;
+                    end
+                    else if(instructionFnCode == fncodeJALR) begin
+                        JALRcontrol = 1;
                     end
                 end
-                /*-------------------------------*/
 
+                if(instructionOpcode == opcodeJ) begin
+                    Jcontrol = 1;
+                end
+
+                if(instructionOpcode == opcodeJAL) begin
+                        JALcontrol = 1;
+                end
+                /*-------------------------------*/
+                //JALR
                  //change
                 //data --> comb logic --> decoded stuff
                 //honestly, if it's comb logic, we can just put the decoder on this sheet
@@ -135,8 +149,25 @@ module mips_cpu_bus(
             else if(state == stateExecute) begin
 
                 /*JR execute*/
-                progCountTemp <= (JRControl == 1) ? registerReadA : progCount + 4;
-                /*----------*/
+                progCountTemp <= (JRControl == 1) ? registerdataA << 2: // jr
+                progCountTemp <= (Jcontrol == 1) ? {progCount[31:28],instructionAddressJ << 2}: progCount + 4;
+                // J
+                
+                if(JALcontrol == 1) begin
+                    registerWriteAddress <= 5'b11111;
+                    registerWriteEnable <= 1;
+                    registerDataIn <=  progCount + 4;
+                    progCountTemp <= {progCount[31:28],instructionAddressJ << 2}
+                end
+                // JAL
+                if(JALRcontrol == 1) begin
+                    registerWriteAddress <= instructionDest;
+                    registerWriteEnable <= 1;
+                    registerDataIn <=  progCount + 4;
+                    progCountTemp <= registerReadA ; 
+
+                end
+                //JALR
 
                 //ALU
                 //Jumps will occur here (J,JAL,JR,JAlR)
