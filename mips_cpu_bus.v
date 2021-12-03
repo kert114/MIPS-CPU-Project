@@ -119,6 +119,8 @@ module mips_cpu_bus(
             progCountTemp <= 32'd0;
             registerHi <= 0;
             registerHi <= 0;
+            branch <= 0;
+            registerDataIn <= 0; //don't know if this is necessary but might as well right
             //other things as well
         end
         else if(state == S_FETCH) begin
