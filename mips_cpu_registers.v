@@ -17,8 +17,8 @@ module mips_cpu_registers(
 
 	logic[31:0] regs[31:0]; //32 registers of size 32
 
-	assign register_v0 = (write && wrAddr == 2) ? wrData: Register[2]; //comb for tb
-	
+	assign register_v0 = (writeEnable && writeAddress == 2) ? dataIn: regs[2]; //comb for tb
+
 	integer i;
 	always_ff @(posedge clk) begin
 		if(reset == 1) begin

@@ -29,7 +29,7 @@ module mips_cpu_bus(
 
     /*----Memory combinational things-------------------*/
     assign write = (state == S_MEMORY && instructionOpcode == OP_SW); //add SH and SB later
-    assign writedata = (instr_opcode == OP_SW) ? registerReadDataB : 32'h00000000; //placeholder logic for SH and SB later
+    assign writedata = (instructionOpcode == OP_SW) ? registerReadB : 32'h00000000; //placeholder logic for SH and SB later
     
     assign read = (state == S_FETCH || (state == S_MEMORY && instructionOpcode == OP_LW));
 
@@ -59,7 +59,7 @@ module mips_cpu_bus(
     logic[4:0] registerAddressB;
     logic[31:0] registerReadB;  
 
-    mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeaddress(registerWriteAddress),.readAdressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0));
+    mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeAddress(registerWriteAddress),.readAddressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0));
     
     logic[31:0] registerHi;
     logic[31:0] registerLo;
@@ -67,9 +67,13 @@ module mips_cpu_bus(
 
     /*---Program Counter---*/
     logic[31:0] progCount;
-    logic[31:0] progCountTemp;
+    logic[31:0] progTemp;
     logic[31:0] progNext;
     assign progNext = progCount + 4; //this is for J-type jumps as we need to get the value correct
+    /*---*/
+
+    /*---State------------*/
+    logic[2:0] state;
     /*---*/
 
 
@@ -106,17 +110,17 @@ module mips_cpu_bus(
         S_HALTED = 3'b111
     } typeState; //type declaration for the CPU states
 
-         //normally progCountTemp = progCount + 4;
-         //but when JR=1 progCountTemp = value of register A;
+         //normally progTemp = progCount + 4;
+         //but when JR=1 progTemp = value of register A;
 
-         //progCount <-- progCountTemp
+         //progCount <-- progTemp
         //5 cycle CPU: Fetch, Decode, Execute,Memory,W.B
         //CPU has 6 states, 5 cycles + HALT
 
     always @(posedge clk) begin
         if (reset == 1) begin
             progCount <=32'hBFC00000;
-            progCountTemp <= 32'd0;
+            progTemp <= 32'd0;
             registerHi <= 0;
             registerHi <= 0;
             branch <= 0;
@@ -142,7 +146,7 @@ module mips_cpu_bus(
         	registerAddressA <= instructionSource1;
         	registerAddressB <= instructionSource2;
 
-            AluCOntrol <= (instructionOpcode == OP_ADDIU  || instructionOpcode == OP_LW)    ? ALU_ADD :
+            AluControl <= (instructionOpcode == OP_ADDIU  || instructionOpcode == OP_LW)    ? ALU_ADD :
             		      (instructionOpcode == OP_R_TYPE || instructionOpcode == FN_ADDU) ? ALU_ADD : ALU_DEFAULT;
 
             /*-------------------------------*/
@@ -170,7 +174,7 @@ module mips_cpu_bus(
 
             /*---Jump instruction control signals--- */
             if(instructionOpcode == OP_R_TYPE) begin
-                if(instructionFnCode == FN_JR || instructionFnCode == fncodeJALR) begin
+                if(instructionFnCode == FN_JR || instructionFnCode == FN_JALR) begin
                     branch = 1;
                     progTemp <=registerReadA;
                 end
@@ -214,7 +218,7 @@ module mips_cpu_bus(
 
         	
             registerDataIn <= (instructionOpcode == OP_JAL)                                      ? progCount + 8:
-                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FUNC_JALR) ? progCount + 8: AluOut;
+                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FN_JALR) ? progCount + 8: AluOut;
     		
             //write to registers
             //mthi and mtlo also happens here

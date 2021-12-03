@@ -2,10 +2,10 @@ module mips_cpu_ALU(
     input reset,
     input clk,
 
-    input logic[4:0] control, //ALU control <-- comes from decoder
+    input logic[3:0] control, //ALU control <-- comes from decoder
     input logic[31:0] a, // from register
     input logic[31:0] b, //comes from decoded register/immediate
-    input logic[5:0] sa, //decoder figures this out
+    input logic[4:0] sa, //decoder figures this out
 
     output logic[31:0] r,
     output logic zero //only unsigned instructions and no carry flags as dictated by the spec
@@ -13,10 +13,11 @@ module mips_cpu_ALU(
 
     logic[4:0] saVar; //for variable shifts
     logic[15:0] lower; //for half word stuff
+    logic result;
 
     assign zero = (result == 0) ? 1 : 0;
     assign lower = b[15:0];
-    assign sav = (control == 6'b1010 || control == 6'b1011 || control == 6'b1101) ? a[4:0] : 5'b0; 
+    assign sa = (control == 6'b1010 || control == 6'b1011 || control == 6'b1101) ? a[4:0] : 5'b0; 
 
     always_ff  @(posedge clk) begin
         if(reset == 1) begin
