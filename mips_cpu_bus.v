@@ -44,10 +44,10 @@ module mips_cpu_bus(
     logic[31:0] AluA;
     logic[31:0] AluB;
     logic[31:0] AluOut;
-    logic ALUZero;
+    logic AluZero;
     logic[4:0] shiftAmount;
 
-    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(ALUZero));
+    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
     /*---*/
 
     /*---Register0-31+HI+LO+progCountS---*/
