@@ -28,10 +28,10 @@ module mips_cpu_bus(
     /*---*/
 
     /*----Memory combinational things-------------------*/
-    assign write = ((state == S_MEMORY) && (instructionOpcode == OP_SW)); //add SH and SB later
+    assign write = (state == S_MEMORY && instructionOpcode == OP_SW); //add SH and SB later
     assign writedata = (instr_opcode == OP_SW) ? registerReadDataB : 32'h00000000; //placeholder logic for SH and SB later
     
-    assign read = ((state == S_FETCH) || ((state == S_MEMORY) && (instructionOpcode == OP_LW)));
+    assign read = (state == S_FETCH || (state == S_MEMORY && instructionOpcode == OP_LW));
 
     logic[31:0] address_temp;
     assign address_temp = (state == S_FETCH) ? progCount : AluOut;
@@ -140,8 +140,8 @@ module mips_cpu_bus(
         	registerAddressA <= instructionSource1;
         	registerAddressB <= instructionSource2;
 
-            AluCOntrol <= ((instructionOpcode == OP_ADDIU) || (instructionOpcode == OP_LW))    ? ALU_ADD :
-            		      ((instructionOpcode == OP_R_TYPE) || (instructionOpcode) == FN_ADDU) ? ALU_ADD : ALU_DEFAULT;
+            AluCOntrol <= (instructionOpcode == OP_ADDIU  || instructionOpcode == OP_LW)    ? ALU_ADD :
+            		      (instructionOpcode == OP_R_TYPE || instructionOpcode == FN_ADDU) ? ALU_ADD : ALU_DEFAULT;
 
             /*-------------------------------*/
             //JALR
@@ -168,13 +168,13 @@ module mips_cpu_bus(
 
             /*---Jump instruction control signals--- */
             if(instructionOpcode == OP_R_TYPE) begin
-                if((instructionFnCode == FN_JR) || (instructionFnCode == fncodeJALR))begin
+                if(instructionFnCode == FN_JR || instructionFnCode == fncodeJALR) begin
                     branch = 1;
                     progTemp <=registerReadA;
                 end
             end
 
-            if((instructionOpcode == OP_J)||(instructionOpcode == OP_JAL)) begin
+            if(instructionOpcode == OP_J || instructionOpcode == OP_JAL) begin
                 branch <= 1;
                 progTemp <= {progNext[31:28],instructionAddressJ << 2};
             end
@@ -200,13 +200,12 @@ module mips_cpu_bus(
         end
         else if(state == S_WRITEBACK) begin
 
-        	registerWriteEnable <= ((instructionOpcode == OP_R_TYPE || (instructionFnCode == FN_ADDU)
-        														    || (instructionFnCode == FN_JALR)
-        														    || (0)) //place holder
-        						    ||(instructionOpcode == OP_JAL)
-        						    ||(instructionOpcode == OP_ADDIU)
-        						    ||(instructionOpcode == OP_LW)
-        							||(0)); //placeholder
+        	registerWriteEnable <= (instructionOpcode == OP_R_TYPE && (instructionFnCode == FN_ADDU || instructionFnCode == FN_JALR
+        																						    || (0))//placeholder
+        						    || instructionOpcode == OP_JAL
+        						    || instructionOpcode == OP_ADDIU
+        						    || instructionOpcode == OP_LW
+        							|| (0)); //placeholder
 
         	registerWriteAddress <= (instructionOpcode == OP_JAL)    ? 5'd31 :
         							(instructionOpcode == OP_R_TYPE) ? instructionDest: instructionSource2;
