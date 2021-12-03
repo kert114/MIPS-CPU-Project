@@ -81,7 +81,6 @@ module mips_cpu_bus(
 
         typedef enum logic[5:0] {
             opcodeRType = 6'b000000,
-            opcodeADDU = 6'b000000,
             opcodeADDIU = 6'b001001,
             opcodeLW = 6'b100011,
             opcodeSW = 6'b101011,
@@ -91,7 +90,8 @@ module mips_cpu_bus(
 
         typedef enum logic[5:0] {
             fnCodeJR = 6'b001000,
-            fncodeJALR = 6'b001001,
+            fnCodeJALR = 6'b001001,
+            fnCodeADDU = 6'b100001,
         } typeFnCode;
 
 
@@ -135,6 +135,17 @@ module mips_cpu_bus(
             	registerAddressA <= instructionSource1;
             	registerAddressB <= instructionSource2;
 
+            	/*ALU CONTROLS*/
+            	if(instructionOpcode == opcodeADDIU) begin
+                    AluControl <= 4'b0100; //add instruction
+                end
+                else if(instructionOpcode = opcodeRType && instructionFnCode == fnCodeADDU) begin
+                	AluControl <= 4'b0100;
+                end
+                else begin
+                	AluControl <= 4'b1111;
+                end
+
                 /*-------------------------------*/
                 //JALR
                  //change
@@ -145,6 +156,19 @@ module mips_cpu_bus(
                 state <= stateExecute
             end
             else if(state == stateExecute) begin
+
+            	if(instructionOpcode == opcodeRType) begin
+            		AluA <= registerReadA;
+            		AluB <=registerReadB;
+            		shiftAmount <= instructionShift;
+            	end
+            	else begin
+            		AluA <= registerReadA;
+            		AluB <= {16{instructionImmediate[15]} , instructionImmediateI};
+            		shiftAmount <= 0;
+            	end
+
+
 
                 /*---Jump instruction control signals--- */
                 if(instructionOpcode == opcodeRType) begin
@@ -180,8 +204,12 @@ module mips_cpu_bus(
             end
             else if(state == stateWriteBack) begin
 
-                registerWriteEnable < (instructionOpcode == opcodeJAL ||
-                                      (instructionOpcode == opcodeRType && instructionFnCode == fncodeJALR)) ? 1 : 0;
+                registerWriteEnable <= (instructionOpcode == opcodeJAL ||
+                                      (instructionOpcode == opcodeRType &&  ((instructionFnCode == fnCodeJALR)||
+                                      										(instructionFnCode == fnCodeADDU))   ||
+                                      (instructionOpcode == opcodeAddIU) ||
+                                      (instructionOPcode == opcodeLW) ? 1 : 0;
+
                 registerWriteAddress <= (instructionOpcode == opcodeJAL) ? 5'd31:
                                         (instructionOpcode == opcodeRType) ? instructionDest: instructionSource2;
                 registerDataIn <= (instructionOpcode == opcodeJAL ||
@@ -191,7 +219,6 @@ module mips_cpu_bus(
                 //write to registers
                 //mthi and mtlo also happens here
                 //PC updates here depending on normal,jump or branch
-                progCountTemp <= progCountTemp
                 state <= stateFetch
             end
 
