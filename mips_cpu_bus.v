@@ -167,7 +167,7 @@ module mips_cpu_bus(
         	end
         	else begin
         		AluA <= registerReadA;
-        		AluB <= {{16{instructionImmediate[15]}} , instructionImmediateI};
+        		AluB <= {{16{instructionImmediateI[15]}} , instructionImmediateI};
         		shiftAmount <= 0;
         	end
 
