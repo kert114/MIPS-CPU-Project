@@ -75,7 +75,7 @@ module mips_cpu_bus(
 
 
     /*---Jump controls---*/
-    logic willJump;
+    logic[1:0] branch; //0 = normal, 1 = jump instr, 2 = previous jump
     /*---*/
 
     typedef enum logic[5:0] {
@@ -173,13 +173,13 @@ module mips_cpu_bus(
             /*---Jump instruction control signals--- */
             if(instructionOpcode == OP_R_TYPE) begin
                 if((instructionFnCode == FN_JR) || (instructionFnCode == fncodeJALR))begin
-                    willJump = 1;
+                    branch = 1;
                     progTemp <=registerReadA;
                 end
             end
 
             if((instructionOpcode == OP_J)||(instructionOpcode == OP_JAL)) begin
-                willJump <= 1;
+                branch <= 1;
                 progTemp <= {progNext[31:28],instructionAddressJ << 2};
             end
             /*-----------------------------------*/
@@ -204,43 +204,20 @@ module mips_cpu_bus(
         end
         else if(state == S_WRITEBACK) begin
 
-        	/*---registerWriteEnable Control Logic---*/
-        	if(instructionOPcode == OP_R_TYPE) begin
-        		if(instructionFnCode == FN_JALR) begin
-        			registerWriteEnable <= 1;
-        		end
-        		else if(instructionFnCode == FN_ADDU) begin
-        			registerWriteEnable <= 1;
-        		end
-        	end
-        	else if(instructionOPcode == OP_JAL) begin
-        		registerWriteEnable <= 1;
-        	end
-        	else if(instructionOPcode == OP_ADDIU) begin
-        		registerWriteEnable <= 1;
-        	end
-        	else if(instructionOpcode == OP_LW) begin
-        		registerWriteEnable <= 1;
-        	end
-        	else begin
-        		registerWriteEnable <= 0;
-        	end //removed nasty 1 liner in favour of a more clear but repetitive if statement lol
-        	/*-------------------------------------------------------------------*/
+        	registerWriteEnable <= ((instructionOpcode == OP_R_TYPE || (instructionFnCode == FN_ADDU)
+        														    || (instructionFnCode == FN_JALR)
+        														    || (0)) //place holder
+        						    ||(instructionOpcode == OP_JAL)
+        						    ||(instructionOpcode == OP_ADDIU)
+        						    ||(instructionOpcode == OP_LW)
+        							||(0)); //placeholder
 
-        	/*---registerWriteAddress Control Logic---*/
-        	if(instructionOpcode == OP_JAL) begin
-        		registerWriteAddress <= 5'd31;
-        	end
-        	else if(instructionOpcode == OP_R_TYPE) begin
-        		registerWriteAddress <= instructionDest;
-        	end
-        	else begin
-        		registerWriteAddress <= instructionSource2; //I-type dest
-        	end//i think if looks nicer ngl, but can change back depending on other's opinion
-        	/*------------*/
+        	registerWriteAddress <= (instructionOpcode == OP_JAL)    ? 5'd31 :
+        							(instructionOpcode == OP_R_TYPE) ? instructionDest: instructionSource2;
+
         	
             registerDataIn <= (instructionOpcode == OP_JAL ||
-                              (instructionOpcode == OP_R_TYPE && instructionFnCode == fncodeJALR)) ? progCount + 8: AluOut;
+                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FUNC_JALR)) ? progCount + 8: AluOut;
 
 
             //write to registers
@@ -248,14 +225,20 @@ module mips_cpu_bus(
             //PC updates here depending on normal,jump or branch
             state <= S_FETCH;
 
-        	/*----PC stuff---*/
-        	if(willJump == 1) begin
-            	progCount <= progCountTemp;
-        	end
-        	else begin
+        	/*---ProgramCounter stuff---*/
+        	if(branch == 1) begin
+        		branch <= 2;
             	progCount <= progNext;
         	end
-        	/*---------*/
+        	else if(branch == 2) begin
+        		branch <= 0;
+        		progCount <= progTemp;
+        	end
+        	else begin
+        		branch <= 0; //just to be sure lol
+            	progCount <= progNext;
+        	end
+        	/*---*/
     	end
 
     	else if(state == S_HALTED) begin
