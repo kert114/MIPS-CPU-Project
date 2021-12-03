@@ -121,6 +121,9 @@ module mips_cpu_bus(
         always @(posedge clk) begin
             if (reset == 1) begin
                 progCount <=32'hBFC00000;
+                progCountTemp <= 32'd0;
+                registerHi <= 0;
+                registerHi <= 0;
                 //other things as well
             end
             else if(state == stateFetch) begin
@@ -143,7 +146,7 @@ module mips_cpu_bus(
             	registerAddressB <= instructionSource2;
 
             	/*ALU CONTROLS*/
-            	if(instructionOpcode == opcodeADDIU) begin
+            	if(instructionOpcode == opcodeADDIU) || (instructionOpcode == opcodeLW) begin
                     AluControl <= 4'b0100; //add instruction
                 end
                 else if(instructionOpcode = opcodeRType && instructionFnCode == fnCodeADDU) begin
@@ -174,7 +177,6 @@ module mips_cpu_bus(
             		AluB <= {16{instructionImmediate[15]} , instructionImmediateI};
             		shiftAmount <= 0;
             	end
-
 
 
                 /*---Jump instruction control signals--- */
