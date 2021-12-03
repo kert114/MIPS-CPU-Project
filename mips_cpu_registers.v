@@ -27,13 +27,16 @@ module mips_cpu_registers(
 			end
 		end
 		else if (writeEnable == 1) begin
+
 			if (writeAddress == 0) begin
 			end //don't overwrite reg0 cus it's 0 forever.
-			else begin reg[writeAddress] <= dataIn; end
+			else begin 
+				regs[writeAddress] <= dataIn;
+			end
 		end
 		else begin
-			readDataA <= reset == 1 ? 0 : reg[readAddressA];
-			readDataB <= reset == 1 ? 0 : reg[readAddressB]; 
+			readDataA <= reset == 1 ? 0 : regs[readAddressA];
+			readDataB <= reset == 1 ? 0 : regs[readAddressB]; 
 		end
 	end
 

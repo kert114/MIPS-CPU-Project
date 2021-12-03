@@ -8,7 +8,7 @@ module mips_cpu_ALU(
     input logic[5:0] sa, //decoder figures this out
 
     output logic[31:0] r,
-    output logic zero, //only unsigned instructions and no carry flags as dictated by the spec
+    output logic zero //only unsigned instructions and no carry flags as dictated by the spec
 );
 
     logic[4:0] saVar; //for variable shifts
