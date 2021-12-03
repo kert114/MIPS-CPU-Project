@@ -47,7 +47,7 @@ module mips_cpu_bus(
     logic ALUZero;
     logic[4:0] shiftAmount;
 
-    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
+    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(ALUZero));
     /*---*/
 
     /*---Register0-31+HI+LO+progCountS---*/
@@ -267,7 +267,9 @@ Do JR, ADDU, ADDIU, LW, SW first
 max CPI of 36
 
 /rtl/mips_cpu_bus.v
-/rtl/mips_cpu/*.v
+*/
+// /rtl/mips_cpu/*.v
+/*
 /test/test_mips_cpu_bus.sh
 /docs/mips_data_sheet.pdf:
         Overall architecture,
