@@ -16,7 +16,7 @@ module mips_cpu_bus(
 );
 
 	/*---Comb Decode---*/
-	logic[31:0] instruction; //todo: get instr from avalon thing
+	logic[31:0] instruction;
     logic[5:0] instructionOpcode = instruction[31:26]; //R,I,J
     logic[4:0] instructionSource1 = instruction[25:21]; //R,I
     logic[4:0] instructionSource2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
@@ -30,14 +30,13 @@ module mips_cpu_bus(
     /*----Memory combinational things-------------------*/
     assign write = ((state == S_MEMORY) && (instructionOpcode == OP_SW)); //add SH and SB later
     assign writedata = (instr_opcode == OP_SW) ? registerReadDataB : 32'h00000000; //placeholder logic for SH and SB later
+    
     assign read = ((state == S_FETCH) || ((state == S_MEMORY) && (instructionOpcode == OP_LW)));
+
     logic[31:0] address_temp;
     assign address_temp = (state == S_FETCH) ? progCount : AluOut;
     assign address = {address_temp[31:2] << 2}; //uses ALU to compute instrSource1 + instrImmI
     // ^ setting address to read from to be what's dictated by the instruction
-    assign registerWriteEnable = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW));
-    assign registerWriteAddress = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW)) ? instructionSource2 : registerWriteAddress;
-    assign registerDataIn = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW)) ? readdata : registerDataIn;
     /*---*/
 
     /*---ALU things---*/
@@ -93,6 +92,11 @@ module mips_cpu_bus(
         FN_ADDU = 6'b100001
     } typeFnCode;
 
+    typedef enum logic[3:0] {
+    	ALU_ADD = 4'b0100,
+    	ALU_DEFAULT = 4'b1111
+    } typeALUOp;
+
     typedef enum logic[2:0] {
        	S_FETCH = 3'b000,
         S_DECODE = 3'b001,
@@ -136,16 +140,8 @@ module mips_cpu_bus(
         	registerAddressA <= instructionSource1;
         	registerAddressB <= instructionSource2;
 
-        	/*ALU CONTROLS*/
-        	if((instructionOpcode == OP_ADDIU) || (instructionOpcode == OP_LW)) begin
-                AluControl <= 4'b0100; //add instruction
-            end
-            else if ((instructionOpcode == OP_R_TYPE && instructionFnCode == FN_ADDU)) begin
-            	AluControl <= 4'b0100;
-            end
-            else begin
-            	AluControl <= 4'b1111;
-            end
+            AluCOntrol <= ((instructionOpcode == OP_ADDIU) || (instructionOpcode == OP_LW))   ? ALU_ADD :
+            		      ((instructionOpcode == OP_R_TYPE) || (instructionOpcode) == FN_ADDU ? ALU_ADD : ALU_DEFAULT
 
             /*-------------------------------*/
             //JALR
@@ -216,10 +212,10 @@ module mips_cpu_bus(
         							(instructionOpcode == OP_R_TYPE) ? instructionDest: instructionSource2;
 
         	
-            registerDataIn <= (instructionOpcode == OP_JAL ||
-                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FUNC_JALR)) ? progCount + 8: AluOut;
-
-
+            registerDataIn <= (instructionOpcode == OP_JAL                                       ? progCount + 8:
+                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FUNC_JALR) ? progCount + 8:
+                              (instructionOPcode == OP_LW)                                       ? readdata: AluOut;
+    		
             //write to registers
             //mthi and mtlo also happens here
             //PC updates here depending on normal,jump or branch
@@ -243,10 +239,6 @@ module mips_cpu_bus(
 
     	else if(state == S_HALTED) begin
         	$display("Halted kekw");
-            //halted
-            //PC stays perpetually the same
-            //nothing happens
-            //add some $display to show it when testing I guess?
         end
     end
 endmodule : mips_cpu_bus
