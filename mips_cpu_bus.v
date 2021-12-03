@@ -40,7 +40,7 @@ module mips_cpu_bus(
         /*----LW combinational things----------------------*/
         
         assign read = ((state == stateDecode) && (instructionOpcode == opcodeLW));
-        assign address = ((state == stateDecode) && (instructionOpcode == opcodeLW)) ? (instructionSource1 + instructionImmediateI) << 4 : 32'h00000000;
+        assign address = ((state == stateDecode) && (instructionOpcode == opcodeLW)) ? (instructionSource1 + instructionImmediateI) : 32'h00000000;
         // ^ setting address to read from to be what's dictated by the instruction
         assign registerWriteEnable = ((state == stateExecute) && (instructionOpcode == opcodeLW)) ? 1 : 0;
         assign registerWriteAddress = ((state == stateExecute) && (instructionOpcode == opcodeLW)) ? instructionSource2 : 4'b0000;
