@@ -15,101 +15,92 @@ module mips_cpu_bus(
     input logic[31:0] readdata //not avaliable until cycle following read request
 );
 
-        /*---Comb Decode---*/
-        logic[31:0] instruction; //todo: get instr from avalon thing
-        logic[5:0] instructionOpcode = instruction[31:26]; //R,I,J
-        logic[4:0] instructionSource1 = instruction[25:21]; //R,I
-        logic[4:0] instructionSource2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
-        logic[4:0] instructionDest = instruction[15:11]; //R
-        logic[4:0] instructionShift = instruction[10:6]; //R
-        logic[5:0] instructionFnCode = instruction[5:0]; //R
-        logic[15:0] instructionImmediateI = instruction[15:0]; //I
-        logic[25:0] instructionAddressJ = instruction[25:0]; //J
-        /*------*/
+	/*---Comb Decode---*/
+	logic[31:0] instruction; //todo: get instr from avalon thing
+    logic[5:0] instructionOpcode = instruction[31:26]; //R,I,J
+    logic[4:0] instructionSource1 = instruction[25:21]; //R,I
+    logic[4:0] instructionSource2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
+    logic[4:0] instructionDest = instruction[15:11]; //R
+    logic[4:0] instructionShift = instruction[10:6]; //R
+    logic[5:0] instructionFnCode = instruction[5:0]; //R
+    logic[15:0] instructionImmediateI = instruction[15:0]; //I
+    logic[25:0] instructionAddressJ = instruction[25:0]; //J
+    /*---*/
+
+    /*----Memory combinational things-------------------*/
+    assign write = ((state == S_MEMORY) && (instructionOpcode == OP_SW)); //add SH and SB later
+    assign writedata = (instr_opcode == OP_SW) ? registerReadDataB : 32'h00000000; //placeholder logic for SH and SB later
+    assign read = ((state == S_FETCH) || ((state == S_MEMORY) && (instructionOpcode == OP_LW)));
+    logic[31:0] address_temp;
+    assign address_temp = (state == S_FETCH) ? progCount : AluOut;
+    assign address = {address_temp[31:2] << 2}; //uses ALU to compute instrSource1 + instrImmI
+    // ^ setting address to read from to be what's dictated by the instruction
+    assign registerWriteEnable = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW));
+    assign registerWriteAddress = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW)) ? instructionSource2 : registerWriteAddress;
+    assign registerDataIn = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW)) ? readdata : registerDataIn;
+    /*---*/
+
+    /*---ALU things---*/
+    logic [3:0] AluControl;
+    logic[31:0] AluA;
+    logic[31:0] AluB;
+    logic[31:0] AluOut;
+    logic ALUZero;
+    logic[4:0] shiftAmount;
+
+    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
+    /*---*/
+
+    /*---Register0-31+HI+LO+progCountS---*/
+    logic registerWriteEnable;
+    logic[31:0] registerDataIn;
+    logic[4:0] registerWriteAddress;
+    logic[4:0] registerAddressA;
+    logic[31:0] registerReadA;
+    logic[4:0] registerAddressB;
+    logic[31:0] registerReadB;  
+
+    mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeaddress(registerWriteAddress),.readAdressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0));
+    
+    logic[31:0] registerHi;
+    logic[31:0] registerLo;
+    /*---*/
+
+    /*---Program Counter---*/
+    logic[31:0] progCount;
+    logic[31:0] progCountTemp;
+    logic[31:0] progNext;
+    assign progNext = progCount + 4; //this is for J-type jumps as we need to get the value correct
+    /*---*/
 
 
-        /*----Memory combinational things-------------------*/
+    /*---Jump controls---*/
+    logic willJump;
+    /*---*/
 
-        assign write = ((state == S_MEMORY) && (instructionOpcode == OP_SW)); //add SH and SB later
-        assign writedata = (instr_opcode == OP_SW) ? registerReadDataB : 32'h00000000; //placeholder logic for SH and SB later
-        
-        assign read = ((state == S_FETCH) || ((state == S_MEMORY) && (instructionOpcode == OP_LW)));
+    typedef enum logic[5:0] {
+        OP_R_TYPE = 6'b000000,
+        OP_ADDIU  = 6'b001001,
+        OP_LW     = 6'b100011,
+        OP_SW     = 6'b101011,
+        OP_J      = 6'b000010,
+        OP_JAL    = 6'b000011
+    } typeOpCode; 
 
-        logic[31:0] address_temp;
-        assign address_temp = (state == S_FETCH) ? progCount : AluOut;
-        assign address = {address_temp[31:2] << 2}; //uses ALU to compute instrSource1 + instrImmI
-        // ^ setting address to read from to be what's dictated by the instruction
-        assign registerWriteEnable = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW));
-        assign registerWriteAddress = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW)) ? instructionSource2 : registerWriteAddress;
-        assign registerDataIn = ((state == S_WRITEBACK) && (instructionOpcode == OP_LW)) ? readdata : registerDataIn;
-        
-        /*-------------------------------------------------*/
+    typedef enum logic[5:0] {
+        FN_JR = 6'b001000,
+        FN_JALR = 6'b001001,
+        FN_ADDU = 6'b100001
+    } typeFnCode;
 
-        /*-----ALU things----*/
-
-        logic [3:0] AluControl;
-        logic[31:0] AluA;
-        logic[31:0] AluB;
-        logic[31:0] AluOut;
-        logic ALUZero;
-        logic[4:0] shiftAmount;
-
-        mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
-
-        /*--------------------*/
-
-        /*----Register0-31+HI+LO+progCountS---*/
-
-        logic registerWriteEnable;
-        logic[31:0] registerDataIn;
-        logic[4:0] registerWriteAddress;
-        logic[4:0] registerAddressA;
-        logic[31:0] registerReadA;
-        logic[4:0] registerAddressB;
-        logic[31:0] registerReadB;  
-        mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeaddress(registerWriteAddress),.readAdressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0));
-
-        logic[31:0] progCount;
-        logic[31:0] progCountTemp;
-        logic[31:0] progNext;
-        assign progNext = progCount + 4; //this is for J-type jumps as we need to get the value correct
-
-        logic[31:0] registerHi;
-        logic[31:0] registerLo;
-
-       /*-------------------*/
-
-
-       /*---Jump controls---*/
-
-       logic willJump;
-
-       /*-------------------*/
-
-        typedef enum logic[5:0] {
-            OP_R_TYPE = 6'b000000,
-            OP_ADDIU  = 6'b001001,
-            OP_LW     = 6'b100011,
-            OP_SW     = 6'b101011,
-            OP_J      = 6'b000010,
-            OP_JAL    = 6'b000011
-        } typeOpCode; 
-
-        typedef enum logic[5:0] {
-            FN_JR = 6'b001000,
-            FN_JALR = 6'b001001,
-            FN_ADDU = 6'b100001
-        } typeFnCode;
-
-
-        typedef enum logic[2:0] {
-        	S_FETCH = 3'b000,
-        	S_DECODE = 3'b001,
-        	S_EXECUTE = 3'b010,
-        	S_MEMORY = 3'b011,
-        	S_WRITEBACK = 3'b100,
-        	S_HALTED = 3'b111
-        } typeState; //type declaration for the CPU states
+    typedef enum logic[2:0] {
+       	S_FETCH = 3'b000,
+        S_DECODE = 3'b001,
+        S_EXECUTE = 3'b010,
+        S_MEMORY = 3'b011,
+        S_WRITEBACK = 3'b100,
+        S_HALTED = 3'b111
+    } typeState; //type declaration for the CPU states
 
          //normally progCountTemp = progCount + 4;
          //but when JR=1 progCountTemp = value of register A;
@@ -118,164 +109,164 @@ module mips_cpu_bus(
         //5 cycle CPU: Fetch, Decode, Execute,Memory,W.B
         //CPU has 6 states, 5 cycles + HALT
 
-        always @(posedge clk) begin
-            if (reset == 1) begin
-                progCount <=32'hBFC00000;
-                progCountTemp <= 32'd0;
-                registerHi <= 0;
-                registerHi <= 0;
-                //other things as well
+    always @(posedge clk) begin
+        if (reset == 1) begin
+            progCount <=32'hBFC00000;
+            progCountTemp <= 32'd0;
+            registerHi <= 0;
+            registerHi <= 0;
+            //other things as well
+        end
+        else if(state == S_FETCH) begin
+        	$display("---FETCH---");
+        	if(address == 32'h00000000) begin
+        		active <= 0;
+        		state <= S_HALTED;
+        	end
+        	else if(waitrequest) begin
+        	end//if waitrequest = 1, keep waiting
+        	else begin
+        		state <= S_DECODE;
+        	end
+        	registerWriteEnable <= 0; //make sure register isn't writing (W.B sets it to 1)
+        end
+        else if(state == S_DECODE) begin
+            $display("---DECODE---");
+        	instruction <=readdata; //avalon output = our instruction
+        	registerAddressA <= instructionSource1;
+        	registerAddressB <= instructionSource2;
+
+        	/*ALU CONTROLS*/
+        	if((instructionOpcode == OP_ADDIU) || (instructionOpcode == OP_LW)) begin
+                AluControl <= 4'b0100; //add instruction
             end
-            else if(state == S_FETCH) begin
-            	$display("---FETCH---");
-            	if(address == 32'h00000000) begin
-            		active <= 0;
-            		state <= S_HALTED;
-            	end
-            	else if(waitrequest) begin
-            	end//if waitrequest = 1, keep waiting
-            	else begin
-            		state <= S_DECODE;
-            	end
-            	registerWriteEnable <= 0; //make sure register isn't writing (W.B sets it to 1)
+            else if ((instructionOpcode == OP_R_TYPE && instructionFnCode == FN_ADDU)) begin
+            	AluControl <= 4'b0100;
             end
-            else if(state == S_DECODE) begin
-                $display("---DECODE---");
-            	instruction <=readdata; //avalon output = our instruction
-            	registerAddressA <= instructionSource1;
-            	registerAddressB <= instructionSource2;
-
-            	/*ALU CONTROLS*/
-            	if((instructionOpcode == OP_ADDIU) || (instructionOpcode == OP_LW)) begin
-                    AluControl <= 4'b0100; //add instruction
-                end
-                else if ((instructionOpcode == OP_R_TYPE && instructionFnCode == FN_ADDU)) begin
-                	AluControl <= 4'b0100;
-                end
-                else begin
-                	AluControl <= 4'b1111;
-                end
-
-                /*-------------------------------*/
-                //JALR
-                 //change
-                //data --> comb logic --> decoded stuff
-                //honestly, if it's comb logic, we can just put the decoder on this sheet
-                //ALU control gets set in this cycle
-                //sets to 1111 (default) when ALU is not used
-                state <= S_EXECUTE;
+            else begin
+            	AluControl <= 4'b1111;
             end
-            else if(state == S_EXECUTE) begin
 
-            	if(instructionOpcode == OP_R_TYPE) begin
-            		AluA <= registerReadA;
-            		AluB <=registerReadB;
-            		shiftAmount <= instructionShift;
-            	end
-            	else begin
-            		AluA <= registerReadA;
-            		AluB <= {{16{instructionImmediate[15]}} , instructionImmediateI};
-            		shiftAmount <= 0;
-            	end
+            /*-------------------------------*/
+            //JALR
+             //change
+            //data --> comb logic --> decoded stuff
+            //honestly, if it's comb logic, we can just put the decoder on this sheet
+            //ALU control gets set in this cycle
+            //sets to 1111 (default) when ALU is not used
+            state <= S_EXECUTE;
+        end
+        else if(state == S_EXECUTE) begin
 
-
-                /*---Jump instruction control signals--- */
-                if(instructionOpcode == OP_R_TYPE) begin
-                    if((instructionFnCode == FN_JR) || (instructionFnCode == fncodeJALR))begin
-                        willJump = 1;
-                        progTemp <=registerReadA;
-                    end
-                end
-
-                if((instructionOpcode == OP_J)||(instructionOpcode == OP_JAL)) begin
-                    willJump <= 1;
-                    progTemp <= {progNext[31:28],instructionAddressJ << 2};
-                end
-                /*-----------------------------------*/
-
-                //JALR
-
-                //ALU
-                //Jumps will occur here (J,JAL,JR,JAlR)
-                //moves --> Memory
-            end
-            else if(state == S_MEMORY) begin
-            	//some logic to check if execute is done for multicycle executes (don't know what tho)
-            	if (waitrequest == 1) begin
-            	end
-            	
-
-            	//make sure avalon is avaliable before starting
-            	//write is already taken care of in the comb logic written above I think?
-                //(maybe additonal criteria for pauses but not sure yet)
-                //branches will occur here I think?(BNE,BGTZ,BLEZ)
-                //moves --> WriteBack
-            end
-            else if(state == S_WRITEBACK) begin
-
-            	/*---registerWriteEnable Control Logic---*/
-            	if(instructionOPcode == OP_R_TYPE) begin
-            		if(instructionFnCode == FN_JALR) begin
-            			registerWriteEnable <= 1;
-            		end
-            		else if(instructionFnCode == FN_ADDU) begin
-            			registerWriteEnable <= 1;
-            		end
-            	end
-            	else if(instructionOPcode == OP_JAL) begin
-            		registerWriteEnable <= 1;
-            	end
-            	else if(instructionOPcode == OP_ADDIU) begin
-            		registerWriteEnable <= 1;
-            	end
-            	else if(instructionOpcode == OP_LW) begin
-            		registerWriteEnable <= 1;
-            	end
-            	else begin
-            		registerWriteEnable <= 0;
-            	end //removed nasty 1 liner in favour of a more clear but repetitive if statement lol
-            	/*-------------------------------------------------------------------*/
-
-            	/*---registerWriteAddress Control Logic---*/
-            	if(instructionOpcode == OP_JAL) begin
-            		registerWriteAddress <= 5'd31;
-            	end
-            	else if(instructionOpcode == OP_R_TYPE) begin
-            		registerWriteAddress <= instructionDest;
-            	end
-            	else begin
-            		registerWriteAddress <= instructionSource2; //I-type dest
-            	end//i think if looks nicer ngl, but can change back depending on other's opinion
-            	/*------------*/
-            	
-                registerDataIn <= (instructionOpcode == OP_JAL ||
-                                  (instructionOpcode == OP_R_TYPE && instructionFnCode == fncodeJALR)) ? progCount + 8: AluOut;
-
-
-                //write to registers
-                //mthi and mtlo also happens here
-                //PC updates here depending on normal,jump or branch
-                state <= S_FETCH;
-
-            	/*----PC stuff---*/
-            	if(willJump == 1) begin
-                	progCount <= progCountTemp;
-            	end
-            	else begin
-                	progCount <= progNext;
-            	end
-            	/*---------*/
+        	if(instructionOpcode == OP_R_TYPE) begin
+        		AluA <= registerReadA;
+        		AluB <=registerReadB;
+        		shiftAmount <= instructionShift;
+        	end
+        	else begin
+        		AluA <= registerReadA;
+        		AluB <= {{16{instructionImmediate[15]}} , instructionImmediateI};
+        		shiftAmount <= 0;
         	end
 
-        	else if(state == S_HALTED) begin
-            	$display("Halted kekw");
-                //halted
-                //PC stays perpetually the same
-                //nothing happens
-                //add some $display to show it when testing I guess?
+
+            /*---Jump instruction control signals--- */
+            if(instructionOpcode == OP_R_TYPE) begin
+                if((instructionFnCode == FN_JR) || (instructionFnCode == fncodeJALR))begin
+                    willJump = 1;
+                    progTemp <=registerReadA;
+                end
             end
+
+            if((instructionOpcode == OP_J)||(instructionOpcode == OP_JAL)) begin
+                willJump <= 1;
+                progTemp <= {progNext[31:28],instructionAddressJ << 2};
+            end
+            /*-----------------------------------*/
+
+            //JALR
+
+            //ALU
+            //Jumps will occur here (J,JAL,JR,JAlR)
+            //moves --> Memory
         end
-    endmodule : mips_cpu_bus
+        else if(state == S_MEMORY) begin
+        	//some logic to check if execute is done for multicycle executes (don't know what tho)
+        	if (waitrequest == 1) begin
+        	end
+        	
+
+        	//make sure avalon is avaliable before starting
+        	//write is already taken care of in the comb logic written above I think?
+            //(maybe additonal criteria for pauses but not sure yet)
+            //branches will occur here I think?(BNE,BGTZ,BLEZ)
+            //moves --> WriteBack
+        end
+        else if(state == S_WRITEBACK) begin
+
+        	/*---registerWriteEnable Control Logic---*/
+        	if(instructionOPcode == OP_R_TYPE) begin
+        		if(instructionFnCode == FN_JALR) begin
+        			registerWriteEnable <= 1;
+        		end
+        		else if(instructionFnCode == FN_ADDU) begin
+        			registerWriteEnable <= 1;
+        		end
+        	end
+        	else if(instructionOPcode == OP_JAL) begin
+        		registerWriteEnable <= 1;
+        	end
+        	else if(instructionOPcode == OP_ADDIU) begin
+        		registerWriteEnable <= 1;
+        	end
+        	else if(instructionOpcode == OP_LW) begin
+        		registerWriteEnable <= 1;
+        	end
+        	else begin
+        		registerWriteEnable <= 0;
+        	end //removed nasty 1 liner in favour of a more clear but repetitive if statement lol
+        	/*-------------------------------------------------------------------*/
+
+        	/*---registerWriteAddress Control Logic---*/
+        	if(instructionOpcode == OP_JAL) begin
+        		registerWriteAddress <= 5'd31;
+        	end
+        	else if(instructionOpcode == OP_R_TYPE) begin
+        		registerWriteAddress <= instructionDest;
+        	end
+        	else begin
+        		registerWriteAddress <= instructionSource2; //I-type dest
+        	end//i think if looks nicer ngl, but can change back depending on other's opinion
+        	/*------------*/
+        	
+            registerDataIn <= (instructionOpcode == OP_JAL ||
+                              (instructionOpcode == OP_R_TYPE && instructionFnCode == fncodeJALR)) ? progCount + 8: AluOut;
+
+
+            //write to registers
+            //mthi and mtlo also happens here
+            //PC updates here depending on normal,jump or branch
+            state <= S_FETCH;
+
+        	/*----PC stuff---*/
+        	if(willJump == 1) begin
+            	progCount <= progCountTemp;
+        	end
+        	else begin
+            	progCount <= progNext;
+        	end
+        	/*---------*/
+    	end
+
+    	else if(state == S_HALTED) begin
+        	$display("Halted kekw");
+            //halted
+            //PC stays perpetually the same
+            //nothing happens
+            //add some $display to show it when testing I guess?
+        end
+    end
+endmodule : mips_cpu_bus
 
 
         //32'hBFC00000 is progCount on reset
