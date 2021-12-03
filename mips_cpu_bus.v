@@ -140,8 +140,8 @@ module mips_cpu_bus(
         	registerAddressA <= instructionSource1;
         	registerAddressB <= instructionSource2;
 
-            AluCOntrol <= ((instructionOpcode == OP_ADDIU) || (instructionOpcode == OP_LW))   ? ALU_ADD :
-            		      ((instructionOpcode == OP_R_TYPE) || (instructionOpcode) == FN_ADDU ? ALU_ADD : ALU_DEFAULT
+            AluCOntrol <= ((instructionOpcode == OP_ADDIU) || (instructionOpcode == OP_LW))    ? ALU_ADD :
+            		      ((instructionOpcode == OP_R_TYPE) || (instructionOpcode) == FN_ADDU) ? ALU_ADD : ALU_DEFAULT;
 
             /*-------------------------------*/
             //JALR
@@ -212,9 +212,8 @@ module mips_cpu_bus(
         							(instructionOpcode == OP_R_TYPE) ? instructionDest: instructionSource2;
 
         	
-            registerDataIn <= (instructionOpcode == OP_JAL                                       ? progCount + 8:
-                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FUNC_JALR) ? progCount + 8:
-                              (instructionOPcode == OP_LW)                                       ? readdata: AluOut;
+            registerDataIn <= (instructionOpcode == OP_JAL)                                      ? progCount + 8:
+                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FUNC_JALR) ? progCount + 8: AluOut;
     		
             //write to registers
             //mthi and mtlo also happens here
