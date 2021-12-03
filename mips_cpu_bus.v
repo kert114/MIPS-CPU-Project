@@ -34,13 +34,9 @@ module mips_cpu_bus(
 
         assign write = ((state == stateMemory) && (instructionOpcode == opcodeSW)); //add SH and SB later
         assign writedata = (instr_opcode == opcodeSW) ? registerReadDataB : 32'h00000000 //placeholder logic for SH and SB later
-
-        /*-------------------------------------------------*/
-
-        /*----LW combinational things----------------------*/
         
-        assign read = ((state == stateMemory) && (instructionOpcode == opcodeLW));
-        assign address = ((state == stateMemory) && (instructionOpcode == opcodeLW)) ? (instructionSource1 + instructionImmediateI) : address;
+        assign read = ((state == stateFetch) || ((state == stateMemory) && (instructionOpcode == opcodeLW)));
+        assign address = {(state == stateFetch) ? progCount : AluOut)[31:2] << 2} //uses ALU to compute instrSource1 + instrImmI
         // ^ setting address to read from to be what's dictated by the instruction
         assign registerWriteEnable = ((state == stateWriteBack) && (instructionOpcode == opcodeLW));
         assign registerWriteAddress = ((state == stateWriteBack) && (instructionOpcode == opcodeLW)) ? instructionSource2 : registerWriteAddress;
