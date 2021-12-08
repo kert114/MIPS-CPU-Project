@@ -12,11 +12,11 @@ for i in ${CASES}; do
 	>&2 echo " 1 - Assembling input file"
 	expected=$(< test/testcases/${INSTR}}/${TESTNAME}.ref) #expected output
 
-	#CHECK OUT MU0 ASSEMBLER FOR MORE INFO**********
+	#CHECK OUT MU0 ASSEMBLER FOR MORE stuff to put here**********
 
 	>& echo " 2 - Compiling test-bench"
 
-	#CHECK OUT MU0 - should just be a iverilog command
+	#CHECK OUT MU0 - should just be a iverilog command****
 
 	>& echo " 3 - Running test-bench"
 	set +e #don't know what this does but copied from MU0
@@ -27,7 +27,7 @@ for i in ${CASES}; do
 	set -e
 
 	if [[ "${RESULT}" -ne 0 ]] ; then
-   		echo "  ${VARIANT}, ${TESTCASE}, FAIL"
+   		echo "  ${VARIANT}, ${TESTCASE}, Fail"
    		exit
 	fi
 
@@ -47,9 +47,9 @@ for i in ${CASES}; do
     set -e
 
     if [[ "${RESULT}" -ne 0 && "$var" != "$fail" ]] ; then
-    	echo "${TESTNAME} ${INSTR} FAIL - Mismatch reference" 
+    	echo "${TESTNAME} ${INSTR} Fail - Mismatch reference" 
     else
-    	echo "${TESTNAME} ${INSTR} PASS :)" 
+    	echo "${TESTNAME} ${INSTR} Pass" 
     fi
 done
 

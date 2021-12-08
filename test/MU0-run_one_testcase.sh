@@ -70,7 +70,7 @@ set -e
 
 # Based on whether differences were found, either pass or fail
 if [[ "${RESULT}" -ne 0 ]] ; then
-   echo "  ${VARIANT}, ${TESTCASE}, FAIL"
+   echo "  ${VARIANT}, ${TESTCASE}, Fail"
 else
-   echo "  ${VARIANT}, ${TESTCASE}, pass"
+   echo "  ${VARIANT}, ${TESTCASE}, Pass"
 fi
