@@ -32,15 +32,15 @@ module mips_cpu_bus(
     assign writedata = (instrOp == OP_SW) ? registerReadB : 32'h00000000; //placeholder logic for SH and SB later
     
     assign read = (state == S_FETCH) ? 1:
-                  (state == S_MEMORY && (instrOp == OP_LH || instrOp == OP_SH) && AluOut[0] = 2'b0) ? 1:
+                  (state == S_MEMORY && (instrOp == OP_LH || instrOp == OP_SH) && AluOut[0] == 2'b0) ? 1:
                   (state == S_MEMORY && instrOp == OP_LW || AluOut[1:0] == 2'b00) ? 1:
                   (state == S_MEMORY && (instrOp == OP_LWL || instrOp == OP_LWR)) ? 1:
-                  (state == S_MEMORY && (instrOp == OP_LB || instrOp == OP_LBU)) ? 1:0;
+                  (state == S_MEMORY && (instrOp == OP_LB || instrOp == OP_LBU)) ? 1 :0;
 
 
-    logic[31:0] addressemp;
+    logic[31:0] addressTemp;
     assign addressTemp = (state == S_FETCH) ? progCount : AluOut;
-    assign address = {addressTemp[31:2], 2b'00}; //uses ALU to compute instrSource1 + instrImmI
+    assign address = {addressTemp[31:2], 2'b00}; //uses ALU to compute instrSource1 + instrImmI
     // ^ setting address to read from to be what's dictated by the instruction
     logic[3:0] bytemappingB; //bytemapping byte
     assign bytemappingB = (addressTemp[1:0] == 2'b00) ? 4'b0001 :
@@ -91,22 +91,22 @@ module mips_cpu_bus(
     /*---Mult things---*/
     logic [63:0] multOut;
     logic multSign;
-    assign multSign = (instrOp == OPCODE_R && R_instr_func == FUNC_MULT) ? 1'b1:1'b0;
-    mips_cpu_mult MULT0 (.a(registerReadA), .b(registerReadB),.r(multOut),.reset(reset),.clk(clk),.sign(multSign))
+    assign multSign = (instrOp == OP_R_TYPE && instrFn == FN_MULT) ? 1'b1:1'b0;
+    mips_cpu_mult MULT0 (.a(registerReadA), .b(registerReadB),.r(multOut),.reset(reset),.clk(clk),.sign(multSign));
     /*---*/
 
     /*---Div things---*/
     logic divStart, divDone, divDBZ, divSign;
     logic [31:0] divQuotient, divRemainder;
 
-    assign divStart = (state == EXEC && instrOp == OP_R && (instrFn == FN_DIV ||instrFn == FN_DIVU))
-    assign divSign = (instrOp == OP_R && instrFn == FN_DIV) ? 1'b1; 1'b0;
+    assign divStart = (state == S_EXECUTE && instrOp == OP_R_TYPE && (instrFn == FN_DIV ||instrFn == FN_DIVU));
+    assign divSign = (instrOp == OP_R_TYPE && instrFn == FN_DIV) ? 1'b1: 1'b0;
     //comb logic so that divstart can be 0 without needing to specify
 
     mips_cpu_div DIV0(.reset(reset),.clk(clk),.start(divStart),
-    					  .done(divDone),.dbz(divDBZ),.reset(reset),
+    					  .done(divDone),.dbz(divDBZ),
     				      .dividend(registerReadA),.divisor(registerReadB),
-    				      .quotient(divQuotient),.remainder(divRemainder)
+    				      .quotient(divQuotient),.remainder(divRemainder),
     				      .sign(divSign));
     /*---*/
 
@@ -207,7 +207,7 @@ module mips_cpu_bus(
         FN_XOR   = 6'b100110,
 
         FN_SLT   = 6'b101010,
-        FN_SLTU  = 6'b101011,
+        FN_SLTU  = 6'b101011
     } typeFnCode;
 
     typedef enum logic[3:0] {
@@ -254,7 +254,7 @@ module mips_cpu_bus(
             branch <= 0;
             registerDataIn <= 0; //don't know if this is necessary but might as well right
             //other things as well
-            reset <=1;
+            active <= 1;
             state <= S_FETCH;
         end
         else if(state == S_FETCH) begin
@@ -297,34 +297,34 @@ module mips_cpu_bus(
         					  (instrOp == FN_SLTU) ? ALU_SLTU : ALU_DEFAULT;
             end
             else begin
-            	(instrOp == OP_REGIMM) ? ALU_A    :
-        		(instrOp == OP_BEQ)    ? ALU_SUB  :
-        		(instrOp == OP_BNE)    ? ALU_SUB  :
-        		(instrOp == OP_BLEZ)   ? ALU_A    :
-        		(instrOp == OP_BGTZ)   ? ALU_A    :
-        		(instrOp == OP_SLTI)   ? ALU_SLT  :
-        		(instrOp == OP_SLTIU)  ? ALU_SLTU :
-        		(instrOp == OP_ADDIU)  ? ALU_ADD  :
-        		(instrOp == OP_ANDI)   ? ALU_AND  :
-        		(instrOp == OP_ORI)    ? ALU_OR   :
-        		(instrOp == OP_XORI)   ? ALU_XOR  :
-        		(instrOp == OP_LUI)    ? ALU_ADD  :
-        		(instrOp == OP_LB)     ? ALU_ADD  :
-        		(instrOp == OP_LH)     ? ALU_ADD  :
-        		(instrOp == OP_LWL)    ? ALU_ADD  :
-        		(instrOp == OP_LW)     ? ALU_ADD  :
-        		(instrOp == OP_LBU)    ? ALU_ADD  :
-        		(instrOp == OP_LHU)    ? ALU_ADD  :
-        		(instrOp == OP_LWR)    ? ALU_ADD  :
-        		(instrOp == OP_SB)     ? ALU_ADD  :
-        		(instrOp == OP_SH)     ? ALU_ADD  :
-        		(instrOp == OP_SW)     ? ALU_ADD  : ALU_DEFAULT
+            	AluControl <= (instrOp == OP_REGIMM) ? ALU_A    :
+        		              (instrOp == OP_BEQ)    ? ALU_SUB  :
+        		              (instrOp == OP_BNE)    ? ALU_SUB  :
+        		              (instrOp == OP_BLEZ)   ? ALU_A    :
+        		              (instrOp == OP_BGTZ)   ? ALU_A    :
+        		              (instrOp == OP_SLTI)   ? ALU_SLT  :
+        		              (instrOp == OP_SLTIU)  ? ALU_SLTU :
+        		              (instrOp == OP_ADDIU)  ? ALU_ADD  :
+        		              (instrOp == OP_ANDI)   ? ALU_AND  :
+        		              (instrOp == OP_ORI)    ? ALU_OR   :
+        		              (instrOp == OP_XORI)   ? ALU_XOR  :
+        		              (instrOp == OP_LUI)    ? ALU_ADD  :
+        		              (instrOp == OP_LB)     ? ALU_ADD  :
+        		              (instrOp == OP_LH)     ? ALU_ADD  :
+        		              (instrOp == OP_LWL)    ? ALU_ADD  :
+        		              (instrOp == OP_LW)     ? ALU_ADD  :
+        		              (instrOp == OP_LBU)    ? ALU_ADD  :
+        		              (instrOp == OP_LHU)    ? ALU_ADD  :
+        		              (instrOp == OP_LWR)    ? ALU_ADD  :
+        		              (instrOp == OP_SB)     ? ALU_ADD  :
+        		              (instrOp == OP_SH)     ? ALU_ADD  :
+        		              (instrOp == OP_SW)     ? ALU_ADD  : ALU_DEFAULT;
             end
 
             state <= S_EXECUTE;
         end
         else if(state == S_EXECUTE) begin
-        	$display("---EXEC---")
+        	$display("---EXEC---");
 
         	if(instrOp == OP_R_TYPE) begin
         		if(instrFn == FN_JR || instrFn == FN_JALR) begin
@@ -345,34 +345,34 @@ module mips_cpu_bus(
         		shiftAmount <= 0;
         	end
 
-        	state <= S_MEMORY
+        	state <= S_MEMORY;
         end
         else if(state == S_MEMORY) begin
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
         	if (waitrequest == 1) begin
         	end
-        	else if(DivDone == 0 && instrOp	== OP_R_TYPE && (instrFn == FN_DIVU || instrFn == FN_DIV)) begin
+        	else if(divDone == 0 && instrOp	== OP_R_TYPE && (instrFn == FN_DIVU || instrFn == FN_DIV)) begin
         	end
         	else begin
-        		state <= S_MEMORY
+        		state <= S_WRITEBACK;
         	end
 
         	//branch logic here
         	if(instrOp == OP_BEQ && AluZero) begin
                 branch <= 1;
-                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
             end
             else if(instrOp == OP_BNE && !AluZero) begin
                 branch <= 1;
-                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
             end
             else if(instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero) begin
                 branch <= 1;
-                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
             end
             else if(instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero)) begin
                 branch <= 1;
-                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
             end
             else if(instrOp == OP_REGIMM) begin
             	//need to fill in logic here
