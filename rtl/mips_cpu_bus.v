@@ -28,15 +28,51 @@ module mips_cpu_bus(
     /*---*/
 
     /*----Memory combinational things-------------------*/
-    assign write = (state == S_MEMORY && instrOp == OP_SW); //add SH and SB later
+    assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB)); //add SH and SB later
     assign writedata = (instrOp == OP_SW) ? registerReadB : 32'h00000000; //placeholder logic for SH and SB later
     
-    assign read = (state == S_FETCH || (state == S_MEMORY && instrOp == OP_LW));
+    assign read = (state == S_FETCH) ? 1:
+                  (state == S_MEMORY && (instrOp == OP_LH || instrOp == OP_SH) && AluOut[0] = 2'b0) ? 1:
+                  (state == S_MEMORY && instrOp == OP_LW || AluOut[1:0] == 2'b00) ? 1:
+                  (state == S_MEMORY && (instrOp == OP_LWL || instrOp == OP_LWR)) ? 1:
+                  (state == S_MEMORY && (instrOp == OP_LB || instrOp == OP_LBU)) ? 1:0;
 
-    logic[31:0] address_temp;
-    assign address_temp = (state == S_FETCH) ? progCount : AluOut;
-    assign address = {address_temp[31:2], 2b'00}; //uses ALU to compute instrSource1 + instrImmI
+
+    logic[31:0] addressemp;
+    assign addressTemp = (state == S_FETCH) ? progCount : AluOut;
+    assign address = {addressTemp[31:2], 2b'00}; //uses ALU to compute instrSource1 + instrImmI
     // ^ setting address to read from to be what's dictated by the instruction
+    logic[3:0] bytemappingB; //bytemapping byte
+    assign bytemappingB = (addressTemp[1:0] == 2'b00) ? 4'b0001 :
+                          (addressTemp[1:0] == 2'b01) ? 4'b0010 :
+                          (addressTemp[1:0] == 2'b10) ? 4'b0100 :
+                          (addressTemp[1:0] == 2'b11) ? 4'b1000 : 4'b0000;
+
+    logic[3:0] bytemappingLWL; //byte mapping word left
+    assign bytemappingLWL = (addressTemp[1:0] == 2'b00) ? 4'b0001 :
+                            (addressTemp[1:0] == 2'b01) ? 4'b0011 :
+                            (addressTemp[1:0] == 2'b10) ? 4'b0111 :
+                            (addressTemp[1:0] == 2'b11) ? 4'b1111 : 4'b0000;
+
+    logic[3:0] bytemappingLWR; //byte mapping word right
+    assign bytemappingLWR = (addressTemp[1:0] == 2'b00) ? 4'b1111 :
+                            (addressTemp[1:0] == 2'b01) ? 4'b110 :
+                            (addressTemp[1:0] == 2'b10) ? 4'b1100 :
+                            (addressTemp[1:0] == 2'b11) ? 4'b1000 : 4'b0000;
+
+    logic[3:0] bytemappingH; //byte mapping half
+    assign bytemappingH = (addressTemp[1:0] == 2'b01) ? 4'b0011 :
+                          (addressTemp[1:0] == 2'b10) ? 4'b1100 : 4'b0000;
+
+
+
+
+    assign byteenable = (state == S_FETCH) ? 4'b1111 :
+                        (state == S_MEMORY && (instrOp == OP_LW || instrOp == OP_SW) && addressTemp[1:0] == 2'b00) ? 4'b1111:
+                        (state == S_MEMORY && instrOp == OP_LWL) ? bytemappingLWL:
+                        (state == S_MEMORY && instrOp == OP_LWL) ? bytemappingLWR:
+                        (state == S_MEMORY && (instrOp == OP_LB || instrOp == OP_LBU || instrOp == OP_SB)) ? bytemappingB:
+                        (state == S_MEMORY && (instrOp == OP_LH || instrOp == OP_LHU || instrOp == OP_SH)) ? bytemappingH: 4'b0000;
     /*---*/
 
     /*---ALU things---*/
@@ -53,6 +89,10 @@ module mips_cpu_bus(
     /*---*/
 
     /*---Mult things---*/
+    logic [63:0] multOut;
+    logic multSign;
+    assign multSign = (instrOp == OPCODE_R && R_instr_func == FUNC_MULT) ? 1'b1:1'b0;
+    mips_cpu_mult MULT0 (.a(registerReadA), .b(registerReadB),.r(multOut),.reset(reset),.clk(clk),.sign(multSign))
     /*---*/
 
     /*---Div things---*/
@@ -63,7 +103,7 @@ module mips_cpu_bus(
     assign divSign = (instrOp == OP_R && instrFn == FN_DIV) ? 1'b1; 1'b0;
     //comb logic so that divstart can be 0 without needing to specify
 
-    mips_cpu_devider DIV0(.reset(reset),.clk(clk),.start(divStart),
+    mips_cpu_div DIV0(.reset(reset),.clk(clk),.start(divStart),
     					  .done(divDone),.dbz(divDBZ),.reset(reset),
     				      .dividend(registerReadA),.divisor(registerReadB),
     				      .quotient(divQuotient),.remainder(divRemainder)
@@ -102,7 +142,7 @@ module mips_cpu_bus(
 
 
     /*---Jump controls---*/
-    logic[1:0] branch; //0 = normal, 1 = jump instr, 2 = previous jump
+    logic[1:0] branch; //0 = normal, 1 = jump instr current, 2 = previous instr jump
     /*---*/
 
     typedef enum logic[5:0] {
@@ -347,7 +387,7 @@ module mips_cpu_bus(
         else if(state == S_WRITEBACK) begin
 
         	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_JALR
-        																						    || (0))//placeholder
+        																	    || (0))//placeholder
         						    || instrOp == OP_JAL
         						    || instrOp == OP_ADDIU
         						    || instrOp == OP_LW
@@ -357,9 +397,22 @@ module mips_cpu_bus(
         							(instrOp == OP_R_TYPE) ? instrD: instrS2;
 
         	
-            registerDataIn <= (instrOp == OP_JAL)                                      ? progCount + 8:
+            registerDataIn <= (instrOp == OP_JAL)                          ? progCount + 8:
                               (instrOp == OP_R_TYPE && instrFn == FN_JALR) ? progCount + 8: AluOut;
-    		
+
+
+
+    		if(instrOp == OP_R_TYPE) begin
+                registerHi <= (instrFn == FN_MULT || instrFn == FN_MULTU) ? multOut[63:32] :
+                              (instrFn == FN_DIV || instrFn == FN_DIVU)   ? divRemainder :
+                              (instrFn == FN_MTHI)                        ? AluOut : registerHi;
+
+
+                registerLo <= (instrFn == FN_MULT || instrFn == FN_MULTU) ? multOut[31:0] :
+                              (instrFn == FN_DIV || instrFn == FN_DIVU)   ? divQuotient :
+                              (instrFn == FN_MTHI)                        ? AluOut : registerLo;
+            end //Hi, Lo register logic here
+
             //write to registers
             //mthi and mtlo also happens here
             //PC updates here depending on normal,jump or branch
