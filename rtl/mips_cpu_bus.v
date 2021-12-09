@@ -35,7 +35,7 @@ module mips_cpu_bus(
 
     logic[31:0] address_temp;
     assign address_temp = (state == S_FETCH) ? progCount : AluOut;
-    assign address = {address_temp[31:2] << 2}; //uses ALU to compute instrSource1 + instrImmI
+    assign address = {address_temp[31:2], 2b'0}; //uses ALU to compute instrSource1 + instrImmI
     // ^ setting address to read from to be what's dictated by the instruction
     /*---*/
 
@@ -126,6 +126,8 @@ module mips_cpu_bus(
             branch <= 0;
             registerDataIn <= 0; //don't know if this is necessary but might as well right
             //other things as well
+            reset <=1;
+            state <= S_FETCH;
         end
         else if(state == S_FETCH) begin
         	$display("---FETCH---");
