@@ -17,21 +17,21 @@ module mips_cpu_bus(
 
 	/*---Comb Decode---*/
 	logic[31:0] instruction;
-    logic[5:0] instructionOpcode = instruction[31:26]; //R,I,J
-    logic[4:0] instructionSource1 = instruction[25:21]; //R,I
-    logic[4:0] instructionSource2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
-    logic[4:0] instructionDest = instruction[15:11]; //R
-    logic[4:0] instructionShift = instruction[10:6]; //R
-    logic[5:0] instructionFnCode = instruction[5:0]; //R
-    logic[15:0] instructionImmediateI = instruction[15:0]; //I
-    logic[25:0] instructionAddressJ = instruction[25:0]; //J
+    logic[5:0] instrOp = instruction[31:26]; //R,I,J
+    logic[4:0] instrS1 = instruction[25:21]; //R,I
+    logic[4:0] instrS2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
+    logic[4:0] instrD = instruction[15:11]; //R
+    logic[4:0] instrShift = instruction[10:6]; //R
+    logic[5:0] instrFn = instruction[5:0]; //R
+    logic[15:0] instrImmI = instruction[15:0]; //I
+    logic[25:0] instrAddrJ = instruction[25:0]; //J
     /*---*/
 
     /*----Memory combinational things-------------------*/
-    assign write = (state == S_MEMORY && instructionOpcode == OP_SW); //add SH and SB later
-    assign writedata = (instructionOpcode == OP_SW) ? registerReadB : 32'h00000000; //placeholder logic for SH and SB later
+    assign write = (state == S_MEMORY && instrOp == OP_SW); //add SH and SB later
+    assign writedata = (instrOp == OP_SW) ? registerReadB : 32'h00000000; //placeholder logic for SH and SB later
     
-    assign read = (state == S_FETCH || (state == S_MEMORY && instructionOpcode == OP_LW));
+    assign read = (state == S_FETCH || (state == S_MEMORY && instrOp == OP_LW));
 
     logic[31:0] address_temp;
     assign address_temp = (state == S_FETCH) ? progCount : AluOut;
@@ -47,7 +47,27 @@ module mips_cpu_bus(
     logic AluZero;
     logic[4:0] shiftAmount;
 
-    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),.a(AluA),.b(AluB),.sa(shiftAmount),.r(AluOut),.zero(AluZero));
+    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),
+    				  .a(AluA),.b(AluB),.sa(shiftAmount),
+    				  .r(AluOut),.zero(AluZero));
+    /*---*/
+
+    /*---Mult things---*/
+    /*---*/
+
+    /*---Div things---*/
+    logic divStart, divDone, divDBZ, divSign;
+    logic [31:0] divQuotient, divRemainder;
+
+    assign divStart = (state == EXEC && instrOp == OP_R && (instrFn == FN_DIV ||instrFn == FN_DIVU))
+    assign divSign = (instrOp == OP_R && instrFn == FN_DIV) ? 1'b1; 1'b0;
+    //comb logic so that divstart can be 0 without needing to specify
+
+    mips_cpu_devider DIV0(.reset(reset),.clk(clk),.start(divStart),
+    					  .done(divDone),.dbz(divDBZ),.reset(reset),
+    				      .dividend(registerReadA),.divisor(registerReadB),
+    				      .quotient(divQuotient),.remainder(divRemainder)
+    				      .sign(divSign));
     /*---*/
 
     /*---Register0-31+HI+LO+progCountS---*/
@@ -59,7 +79,11 @@ module mips_cpu_bus(
     logic[4:0] registerAddressB;
     logic[31:0] registerReadB;  
 
-    mips_cpu_registers Regs0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),.dataIn(registerDataIn),.writeAddress(registerWriteAddress),.readAddressA(registerAddressA),.readDataA(registerReadA),.readAddressB(registerAddressB),.readDataB(registerReadB),.register_v0(register_v0));
+    mips_cpu_registers REGS0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),
+    						 .dataIn(registerDataIn),.writeAddress(registerWriteAddress),
+    						 .readAddressA(registerAddressA),.readDataA(registerReadA),
+    						 .readAddressB(registerAddressB),.readDataB(registerReadB),
+    						 .register_v0(register_v0));
     
     logic[31:0] registerHi;
     logic[31:0] registerLo;
@@ -83,21 +107,85 @@ module mips_cpu_bus(
 
     typedef enum logic[5:0] {
         OP_R_TYPE = 6'b000000,
-        OP_ADDIU  = 6'b001001,
-        OP_LW     = 6'b100011,
-        OP_SW     = 6'b101011,
+
+        OP_REGIMM = 6'b000001,
+
         OP_J      = 6'b000010,
-        OP_JAL    = 6'b000011
+        OP_JAL    = 6'b000011,
+
+        OP_BEQ    = 6'b000100,
+        OP_BNE    = 6'b000101,
+        OP_BLEZ   = 6'b000110,
+        OP_BGTZ   = 6'b000111,
+        OP_SLTI   = 6'b001010,
+        OP_SLTIU  = 6'b001011,
+
+        OP_ADDIU  = 6'b001001,
+        OP_ANDI   = 6'b001100,
+        OP_ORI    = 6'b001101,
+        OP_XORI   = 6'b001110,
+
+        OP_LUI    = 6'b001111,
+        OP_LB     = 6'b100000,
+        OP_LH     = 6'b100001,
+        OP_LWL    = 6'b100010,
+        OP_LW     = 6'b100011,
+        OP_LBU    = 6'b100100,
+        OP_LHU    = 6'b100101,
+        OP_LWR    = 6'b100110,
+
+        OP_SB     = 6'b101000,
+        OP_SH     = 6'b101001,
+        OP_SW     = 6'b101011
     } typeOpCode; 
 
     typedef enum logic[5:0] {
-        FN_JR = 6'b001000,
-        FN_JALR = 6'b001001,
-        FN_ADDU = 6'b100001
+    	FN_SLL   = 6'b000000,
+        FN_SRL   = 6'b000010,
+        FN_SRA   = 6'b000011,
+        FN_SLLV  = 6'b000100,
+        FN_SRLV  = 6'b000110,
+        FN_SRAV  = 6'b000111,
+
+        FN_JR    = 6'b001000,
+        FN_JALR  = 6'b001001,
+
+        FN_MFHI  = 6'b010000,
+        FN_MTHI  = 6'b010001,
+        FN_MFLO  = 6'b010010,
+        FN_MTLO  = 6'b010011,
+
+        FN_MULT  = 6'b011000,
+        FN_MULTU = 6'b011001,
+        FN_DIV   = 6'b011010,
+        FN_DIVU  = 6'b011011,
+
+        FN_ADDU  = 6'b100001,
+        FN_SUBU  = 6'b100011,
+        FN_AND   = 6'b100100,
+        FN_OR    = 6'b100101,
+        FN_XOR   = 6'b100110,
+
+        FN_SLT   = 6'b101010,
+        FN_SLTU  = 6'b101011,
     } typeFnCode;
 
     typedef enum logic[3:0] {
-    	ALU_ADD = 4'b0100,
+    	ALU_AND    = 4'b0000,
+    	ALU_OR     = 4'b0001,
+    	ALU_XOR    = 4'b0010,
+    	ALU_LOW    = 4'b0011,
+    	ALU_ADD    = 4'b0100,
+    	ALU_SUB    = 4'b0101,
+    	ALU_SLTU   = 4'b0110,
+    	ALU_A      = 4'b0111,
+    	ALU_SLL    = 4'b1000,
+    	ALU_SRL    = 4'b1001,
+    	ALU_SLLV   = 4'b1010,
+    	ALU_SRLV   = 4'b1011,
+    	ALU_SRA    = 4'b1100,
+    	ALU_SRAV   = 4'b1101,
+    	ALU_SLT    = 4'b1110,
     	ALU_DEFAULT = 4'b1111
     } typeALUOp;
 
@@ -142,61 +230,111 @@ module mips_cpu_bus(
         end
         else if(state == S_DECODE) begin
             $display("---DECODE---");
-        	instruction <=readdata; //avalon output = our instruction
-        	registerAddressA <= instructionSource1;
-        	registerAddressB <= instructionSource2;
+        	instruction <=readdata;
+        	registerAddressA <= instrS1;
+        	registerAddressB <= instrS2; //decode comb logic above
 
-            AluControl <= (instructionOpcode == OP_ADDIU  || instructionOpcode == OP_LW)    ? ALU_ADD :
-            		      (instructionOpcode == OP_R_TYPE || instructionOpcode == FN_ADDU) ? ALU_ADD : ALU_DEFAULT;
+            AluControl <= (instrOp == OP_ADDIU  || instrOp == OP_LW)    ? ALU_ADD :
+            		      (instrOp == OP_R_TYPE || instrOp == FN_ADDU)  ? ALU_ADD : ALU_DEFAULT;
 
-            /*-------------------------------*/
-            //JALR
-             //change
-            //data --> comb logic --> decoded stuff
-            //honestly, if it's comb logic, we can just put the decoder on this sheet
-            //ALU control gets set in this cycle
-            //sets to 1111 (default) when ALU is not used
+            if(instrOp == OP_R_TYPE) begin
+            	AluControl <= (instrOp == FN_SLL)  ? ALU_SLL  :
+        					  (instrOp == FN_SRL)  ? ALU_SRL  :
+        					  (instrOp == FN_SRA)  ? ALU_SRA  :
+        					  (instrOp == FN_SLLV) ? ALU_SLLV :
+        					  (instrOp == FN_SRLV) ? ALU_SRLV :
+        					  (instrOp == FN_SRAV) ? ALU_SRAV :
+        					  (instrOp == FN_MFHI) ? ALU_ADD  :
+        					  (instrOp == FN_MTHI) ? ALU_ADD  :
+        					  (instrOp == FN_ADDU) ? ALU_ADD  :
+        					  (instrOp == FN_SUBU) ? ALU_SUB  :
+        					  (instrOp == FN_AND)  ? ALU_AND  :
+        					  (instrOp == FN_OR)   ? ALU_OR   :
+        					  (instrOp == FN_XOR)  ? ALU_XOR  :
+        					  (instrOp == FN_SLT)  ? ALU_SLT  :
+        					  (instrOp == FN_SLTU) ? ALU_SLTU : ALU_DEFAULT;
+            end
+            else begin
+            	(instrOp == OP_REGIMM) ? ALU_A    :
+        		(instrOp == OP_BEQ)    ? ALU_SUB  :
+        		(instrOp == OP_BNE)    ? ALU_SUB  :
+        		(instrOp == OP_BLEZ)   ? ALU_A    :
+        		(instrOp == OP_BGTZ)   ? ALU_A    :
+        		(instrOp == OP_SLTI)   ? ALU_SLT  :
+        		(instrOp == OP_SLTIU)  ? ALU_SLTU :
+        		(instrOp == OP_ADDIU)  ? ALU_ADD  :
+        		(instrOp == OP_ANDI)   ? ALU_AND  :
+        		(instrOp == OP_ORI)    ? ALU_OR   :
+        		(instrOp == OP_XORI)   ? ALU_XOR  :
+        		(instrOp == OP_LUI)    ? ALU_ADD  :
+        		(instrOp == OP_LB)     ? ALU_ADD  :
+        		(instrOp == OP_LH)     ? ALU_ADD  :
+        		(instrOp == OP_LWL)    ? ALU_ADD  :
+        		(instrOp == OP_LW)     ? ALU_ADD  :
+        		(instrOp == OP_LBU)    ? ALU_ADD  :
+        		(instrOp == OP_LHU)    ? ALU_ADD  :
+        		(instrOp == OP_LWR)    ? ALU_ADD  :
+        		(instrOp == OP_SB)     ? ALU_ADD  :
+        		(instrOp == OP_SH)     ? ALU_ADD  :
+        		(instrOp == OP_SW)     ? ALU_ADD  : ALU_DEFAULT
+            end
+
             state <= S_EXECUTE;
         end
         else if(state == S_EXECUTE) begin
+        	$display("---EXEC---")
 
-        	if(instructionOpcode == OP_R_TYPE) begin
+        	if(instrOp == OP_R_TYPE) begin
+        		if(instrFn == FN_JR || instrFn == FN_JALR) begin
+                    branch <= 1;
+                    progTemp <=registerReadA;
+                end
         		AluA <= registerReadA;
         		AluB <=registerReadB;
-        		shiftAmount <= instructionShift;
+        		shiftAmount <= instrShift;
         	end
+        	else if(instrOp == OP_J || instrOp == OP_JAL) begin
+                branch <= 1;
+                progTemp <= {progNext[31:28],instrAddrJ << 2'd00};
+            end
         	else begin
         		AluA <= registerReadA;
-        		AluB <= {{16{instructionImmediateI[15]}} , instructionImmediateI};
+        		AluB <= {{16{instrImmI[15]}} , instrImmI};
         		shiftAmount <= 0;
         	end
 
-
-            /*---Jump instruction control signals--- */
-            if(instructionOpcode == OP_R_TYPE) begin
-                if(instructionFnCode == FN_JR || instructionFnCode == FN_JALR) begin
-                    branch = 1;
-                    progTemp <=registerReadA;
-                end
-            end
-
-            if(instructionOpcode == OP_J || instructionOpcode == OP_JAL) begin
-                branch <= 1;
-                progTemp <= {progNext[31:28],instructionAddressJ << 2};
-            end
-            /*-----------------------------------*/
-
-            //JALR
-
-            //ALU
-            //Jumps will occur here (J,JAL,JR,JAlR)
-            //moves --> Memory
+        	state <= S_MEMORY
         end
         else if(state == S_MEMORY) begin
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
         	if (waitrequest == 1) begin
         	end
-        	
+        	else if(DivDone == 0 && instrOp	== OP_R_TYPE && (instrFn == FN_DIVU || instrFn == FN_DIV)) begin
+        	end
+        	else begin
+        		state <= S_MEMORY
+        	end
+
+        	//branch logic here
+        	if(instrOp == OP_BEQ && AluZero) begin
+                branch <= 1;
+                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+            end
+            else if(instrOp == OP_BNE && !AluZero) begin
+                branch <= 1;
+                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+            end
+            else if(instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero) begin
+                branch <= 1;
+                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+            end
+            else if(instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero)) begin
+                branch <= 1;
+                PC_temp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+            end
+            else if(instrOp == OP_REGIMM) begin
+            	//need to fill in logic here
+            end
 
         	//make sure avalon is avaliable before starting
         	//write is already taken care of in the comb logic written above I think?
@@ -206,19 +344,19 @@ module mips_cpu_bus(
         end
         else if(state == S_WRITEBACK) begin
 
-        	registerWriteEnable <= (instructionOpcode == OP_R_TYPE && (instructionFnCode == FN_ADDU || instructionFnCode == FN_JALR
+        	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_JALR
         																						    || (0))//placeholder
-        						    || instructionOpcode == OP_JAL
-        						    || instructionOpcode == OP_ADDIU
-        						    || instructionOpcode == OP_LW
+        						    || instrOp == OP_JAL
+        						    || instrOp == OP_ADDIU
+        						    || instrOp == OP_LW
         							|| (0)); //placeholder
 
-        	registerWriteAddress <= (instructionOpcode == OP_JAL)    ? 5'd31 :
-        							(instructionOpcode == OP_R_TYPE) ? instructionDest: instructionSource2;
+        	registerWriteAddress <= (instrOp == OP_JAL)    ? 5'd31 :
+        							(instrOp == OP_R_TYPE) ? instrD: instrS2;
 
         	
-            registerDataIn <= (instructionOpcode == OP_JAL)                                      ? progCount + 8:
-                              (instructionOpcode == OP_R_TYPE && instructionFnCode == FN_JALR) ? progCount + 8: AluOut;
+            registerDataIn <= (instrOp == OP_JAL)                                      ? progCount + 8:
+                              (instrOp == OP_R_TYPE && instrFn == FN_JALR) ? progCount + 8: AluOut;
     		
             //write to registers
             //mthi and mtlo also happens here
