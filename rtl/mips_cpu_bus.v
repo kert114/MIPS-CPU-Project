@@ -15,24 +15,21 @@ module mips_cpu_bus(
     input logic[31:0] readdata //not avaliable until cycle following read request
 );
 
+    logic moduleReset;
+    assign moduleReset = (reset) ? 1:0; //some weird error happened and this fixed it
+
 	/*---Comb Decode---*/
-	logic[31:0] instruction;
-    logic[5:0] instrOp;
-    logic[4:0] instrS1;
-    logic[4:0] instrS2;
-    logic[4:0] instrD;
-    logic[4:0] instrShift;
-    logic[5:0] instrFn;
-    logic[15:0] instrImmI;
-    logic[25:0] instrAddrJ;
-    assign instrOp = instruction[31:26]; //R,I,J
-    assign instrS1 = instruction[25:21]; //R,I
-    assign instrS2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
-    assign instrD = instruction[15:11]; //R
-    assign instrShift = instruction[10:6]; //R
-    assign instrFn = instruction[5:0]; //R
-    assign instrImmI = instruction[15:0]; //I
-    assign instrAddrJ = instruction[25:0]; //J
+    reg[31:0] instruction;
+
+    wire[5:0] instrOp = instruction[31:26];
+    wire[4:0] instrS2 = instruction[20:16];
+    wire[4:0] instrD = instruction[15:11];
+    wire[15:0] instrImmI = instruction[15:0];
+    wire[5:0] instrFn = instruction[5:0];
+
+    reg[31:0] exImm, zeImm; //sign,unsign
+    reg[4:0] shiftAmount;
+    wire[25:0] instrAddrJ = instruction[25:0];
     /*---*/
     
     /*---Register0-31+HI+LO+progCountS---*/
@@ -98,9 +95,20 @@ module mips_cpu_bus(
     logic[31:0] AluB;
     logic[31:0] AluOut;
     logic AluZero;
-    logic[4:0] shiftAmount;
 
-    mips_cpu_ALU ALU0(.reset(reset),.clk(clk),.control(AluControl),
+    assign AluA = registerReadA;
+    assign AluB = (instrOp == OP_ORI) ? zeImm :
+                  (instrOp == OP_XORI) ? zeImm :
+                  (instrOp == OP_ANDI) ? zeImm :
+                  (instrOp == OP_R_TYPE) ? registerReadB:
+                  (instrOp == OP_J) ? registerReadB:
+                  (instrOp == OP_JAL) ? registerReadB:
+                  (instrOp == OP_BEQ) ? registerReadB:
+                  (instrOp == OP_BNE) ? registerReadB:
+                  (instrOp == OP_REGIMM) ? registerReadB: exImm;
+
+
+    mips_cpu_ALU ALU0(.reset(moduleReset),.clk(clk),.control(AluControl),
     				  .a(AluA),.b(AluB),.sa(shiftAmount),
     				  .r(AluOut),.zero(AluZero));
     /*---*/
@@ -114,7 +122,7 @@ module mips_cpu_bus(
         .b(registerReadB),
         .clk(clk),
         .sign(multSign),
-        .reset(reset),
+        .reset(moduleReset),
         .r(multOut)
         );
     /*---*/
@@ -132,7 +140,7 @@ module mips_cpu_bus(
         .start(divStart),
         .divisor(registerReadB),
     	.dividend(registerReadA),
-        .reset(reset),
+        .reset(moduleReset),
         .sign(divSign),
     	.quotient(divQuotient),
         .remainder(divRemainder),
@@ -141,7 +149,7 @@ module mips_cpu_bus(
         );
     /*---*/
 
-    mips_cpu_registers REGS0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),
+    mips_cpu_registers REGS0(.reset(moduleReset),.clk(clk),.writeEnable(registerWriteEnable),
     						 .dataIn(registerDataIn),.writeAddress(registerWriteAddress),
     						 .readAddressA(registerAddressA),.readDataA(registerReadA),
     						 .readAddressB(registerAddressB),.readDataB(registerReadB),
@@ -247,7 +255,7 @@ module mips_cpu_bus(
     	ALU_AND    = 4'b0000,
     	ALU_OR     = 4'b0001,
     	ALU_XOR    = 4'b0010,
-    	ALU_LOW    = 4'b0011,
+    	ALU_LUI    = 4'b0011,
     	ALU_ADD    = 4'b0100,
     	ALU_SUB    = 4'b0101,
     	ALU_SLTU   = 4'b0110,
@@ -291,6 +299,10 @@ module mips_cpu_bus(
             state <= S_FETCH;
         end
         else if(state == S_FETCH) begin
+            $display("reg write enable", registerWriteEnable);
+            $display("progTemp %h", progTemp);
+            $display("reg data in", registerDataIn);
+            $display("-----REGISTER V0 VALUE:----- %h", register_v0);
         	$display("---FETCH---");
             $display("Read:",read,"Write:",write);
             $display("Fetching instruction at %h. Branch status is:", address, branch);
@@ -308,54 +320,54 @@ module mips_cpu_bus(
         else if(state == S_DECODE) begin
             $display("---DECODE---");
             $display("Read:",read,"Write:",write);
-            $display("Fetched instruction is %h. Accessing registers %d, %d", readdata, instrS1,instrS2);
+            $display("Fetched instruction is %h. Accessing registers %d, %d", readdata, readdata[25:21],readdata[20:16]);
         	instruction <=readdata;
-        	registerAddressA <= instrS1;
-        	registerAddressB <= instrS2; //decode comb logic above
+        	registerAddressA <= readdata[25:21];
+        	registerAddressB <= readdata[20:16]; //used direct for timing sadness
+            exImm <= {{16{readdata[15]}},readdata[15:0]};
+            zeImm <= {16'b0, readdata[15:0]};
+            shiftAmount <= readdata[10:6];
 
-            AluControl <= (instrOp == OP_ADDIU  || instrOp == OP_LW)    ? ALU_ADD :
-            		      (instrOp == OP_R_TYPE || instrOp == FN_ADDU)  ? ALU_ADD : ALU_DEFAULT;
-
-            if(instrOp == OP_R_TYPE) begin
-            	AluControl <= (instrOp == FN_SLL)  ? ALU_SLL  :
-        					  (instrOp == FN_SRL)  ? ALU_SRL  :
-        					  (instrOp == FN_SRA)  ? ALU_SRA  :
-        					  (instrOp == FN_SLLV) ? ALU_SLLV :
-        					  (instrOp == FN_SRLV) ? ALU_SRLV :
-        					  (instrOp == FN_SRAV) ? ALU_SRAV :
-        					  (instrOp == FN_MFHI) ? ALU_ADD  :
-        					  (instrOp == FN_MTHI) ? ALU_ADD  :
-        					  (instrOp == FN_ADDU) ? ALU_ADD  :
-        					  (instrOp == FN_SUBU) ? ALU_SUB  :
-        					  (instrOp == FN_AND)  ? ALU_AND  :
-        					  (instrOp == FN_OR)   ? ALU_OR   :
-        					  (instrOp == FN_XOR)  ? ALU_XOR  :
-        					  (instrOp == FN_SLT)  ? ALU_SLT  :
-        					  (instrOp == FN_SLTU) ? ALU_SLTU : ALU_DEFAULT;
+            if(readdata[31:26] == OP_R_TYPE) begin
+            	AluControl <= (readdata[5:0]  == FN_SLL)  ? ALU_SLL  :
+        					  (readdata[5:0]  == FN_SRL)  ? ALU_SRL  :
+        					  (readdata[5:0]  == FN_SRA)  ? ALU_SRA  :
+        					  (readdata[5:0]  == FN_SLLV) ? ALU_SLLV :
+        					  (readdata[5:0]  == FN_SRLV) ? ALU_SRLV :
+        					  (readdata[5:0]  == FN_SRAV) ? ALU_SRAV :
+        					  (readdata[5:0]  == FN_MFHI) ? ALU_ADD  :
+        					  (readdata[5:0]  == FN_MTHI) ? ALU_ADD  :
+        					  (readdata[5:0]  == FN_ADDU) ? ALU_ADD  :
+        					  (readdata[5:0]  == FN_SUBU) ? ALU_SUB  :
+        					  (readdata[5:0]  == FN_AND)  ? ALU_AND  :
+        					  (readdata[5:0]  == FN_OR)   ? ALU_OR   :
+        					  (readdata[5:0]  == FN_XOR)  ? ALU_XOR  :
+        					  (readdata[5:0]  == FN_SLT)  ? ALU_SLT  :
+        					  (readdata[5:0]  == FN_SLTU) ? ALU_SLTU : ALU_DEFAULT;
             end
             else begin
-            	AluControl <= (instrOp == OP_REGIMM) ? ALU_A    :
-        		              (instrOp == OP_BEQ)    ? ALU_SUB  :
-        		              (instrOp == OP_BNE)    ? ALU_SUB  :
-        		              (instrOp == OP_BLEZ)   ? ALU_A    :
-        		              (instrOp == OP_BGTZ)   ? ALU_A    :
-        		              (instrOp == OP_SLTI)   ? ALU_SLT  :
-        		              (instrOp == OP_SLTIU)  ? ALU_SLTU :
-        		              (instrOp == OP_ADDIU)  ? ALU_ADD  :
-        		              (instrOp == OP_ANDI)   ? ALU_AND  :
-        		              (instrOp == OP_ORI)    ? ALU_OR   :
-        		              (instrOp == OP_XORI)   ? ALU_XOR  :
-        		              (instrOp == OP_LUI)    ? ALU_ADD  :
-        		              (instrOp == OP_LB)     ? ALU_ADD  :
-        		              (instrOp == OP_LH)     ? ALU_ADD  :
-        		              (instrOp == OP_LWL)    ? ALU_ADD  :
-        		              (instrOp == OP_LW)     ? ALU_ADD  :
-        		              (instrOp == OP_LBU)    ? ALU_ADD  :
-        		              (instrOp == OP_LHU)    ? ALU_ADD  :
-        		              (instrOp == OP_LWR)    ? ALU_ADD  :
-        		              (instrOp == OP_SB)     ? ALU_ADD  :
-        		              (instrOp == OP_SH)     ? ALU_ADD  :
-        		              (instrOp == OP_SW)     ? ALU_ADD  : ALU_DEFAULT;
+            	AluControl <= (readdata[31:26] == OP_REGIMM) ? ALU_A    :
+        		              (readdata[31:26] == OP_BEQ)    ? ALU_SUB  :
+        		              (readdata[31:26] == OP_BNE)    ? ALU_SUB  :
+        		              (readdata[31:26] == OP_BLEZ)   ? ALU_A    :
+        		              (readdata[31:26] == OP_BGTZ)   ? ALU_A    :
+        		              (readdata[31:26] == OP_SLTI)   ? ALU_SLT  :
+        		              (readdata[31:26] == OP_SLTIU)  ? ALU_SLTU :
+        		              (readdata[31:26] == OP_ADDIU)  ? ALU_ADD  :
+        		              (readdata[31:26] == OP_ANDI)   ? ALU_AND  :
+        		              (readdata[31:26] == OP_ORI)    ? ALU_OR   :
+        		              (readdata[31:26] == OP_XORI)   ? ALU_XOR  :
+        		              (readdata[31:26] == OP_LUI)    ? ALU_LUI  :
+        		              (readdata[31:26] == OP_LB)     ? ALU_ADD  :
+        		              (readdata[31:26] == OP_LH)     ? ALU_ADD  :
+        		              (readdata[31:26] == OP_LWL)    ? ALU_ADD  :
+        		              (readdata[31:26] == OP_LW)     ? ALU_ADD  :
+        		              (readdata[31:26] == OP_LBU)    ? ALU_ADD  :
+        		              (readdata[31:26] == OP_LHU)    ? ALU_ADD  :
+        		              (readdata[31:26] == OP_LWR)    ? ALU_ADD  :
+        		              (readdata[31:26] == OP_SB)     ? ALU_ADD  :
+        		              (readdata[31:26] == OP_SH)     ? ALU_ADD  :
+        		              (readdata[31:26] == OP_SW)     ? ALU_ADD  : ALU_DEFAULT;
             end
 
             state <= S_EXECUTE;
@@ -363,31 +375,26 @@ module mips_cpu_bus(
         else if(state == S_EXECUTE) begin
         	$display("---EXEC---");
             $display("Read:",read,"Write:",write);
+            $display("ALU operation", AluControl);
             $display("Reg %d = %h. Reg %d = %h", registerAddressA, registerReadA, registerAddressB, registerReadB);
         	if(instrOp == OP_R_TYPE) begin
         		if(instrFn == FN_JR || instrFn == FN_JALR) begin
                     branch <= 1;
                     progTemp <=registerReadA;
                 end
-        		AluA <= registerReadA;
-        		AluB <=registerReadB;
-        		shiftAmount <= instrShift;
         	end
         	else if(instrOp == OP_J || instrOp == OP_JAL) begin
                 branch <= 1;
-                progTemp <= {progNext[31:28],instrAddrJ << 2'd00};
+                progTemp <= {progNext[31:28],instrAddrJ, 2'd00};
             end
-        	else begin
-        		AluA <= registerReadA;
-        		AluB <= {{16{instrImmI[15]}} , instrImmI};
-        		shiftAmount <= 0;
-        	end
 
         	state <= S_MEMORY;
         end
         else if(state == S_MEMORY) begin
             $display("---MEMORY---");
             $display("Read:",read,"Write:",write);
+            $display("AluOut:", AluOut);
+            $display("regB data:", registerReadB);
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
         	if (waitrequest == 1) begin
         	end
@@ -397,20 +404,17 @@ module mips_cpu_bus(
         		state <= S_WRITEBACK;
         	end
 
-        	//branch logic here
-            branch <= ((instrOp == OP_BEQ && AluZero) && (instrOp == OP_BNE && !AluZero)
-                                                      && (instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero)
-                                                      && (instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero))
-                                                      && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
-                                                      && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL)))
-                        ? 1 : branch;
-
-            progTemp <= ((instrOp == OP_BEQ && AluZero) && (instrOp == OP_BNE && !AluZero)
-                                                        && (instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero)
-                                                        && (instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero))
-                                                        && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
-                                                        && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL)))
-                        ? progNext + {{14{instrImmI[15]}},instrImmI, 2'd0} : progTemp;
+            if(
+                 (instrOp == OP_BEQ && AluZero) 
+              && (instrOp == OP_BNE && !AluZero)
+              && (instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero)
+              && (instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero))
+              && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
+              && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
+              ) begin
+                branch <= 1;
+                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
+            end
 
         	//make sure avalon is avaliable before starting
         	//write is already taken care of in the comb logic written above I think?
@@ -421,6 +425,8 @@ module mips_cpu_bus(
         else if(state == S_WRITEBACK) begin
             $display("---WRITEBACK---");
             $display("Read:",read,"Write:",write);
+            $display("curr AluOut", AluOut);
+            $display("writing to reg:", instrS2);
 
         	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_SLL
         																	    || instrFn == FN_SRL
@@ -436,7 +442,7 @@ module mips_cpu_bus(
                                                                                 || instrFn == FN_OR
                                                                                 || instrFn == FN_XOR
                                                                                 || instrFn == FN_SLT
-                                                                                || instrFn == FN_SLTU)
+                                                                                || instrFn == FN_SLTU))
         						    || (instrOp == OP_REGIMM && (instrS2 == B_BLTZAL || instrS2 == B_BGEZAL))
         						    || instrOp == OP_JAL
         						    || instrOp == OP_SLTI
@@ -452,7 +458,7 @@ module mips_cpu_bus(
                                     || (instrOp == OP_LW && AluOut[1:0] == 2'b00)
                                     || instrOp == OP_LBU
                                     || (instrOp == OP_LHU && AluOut[0] == 1'b0)
-                                    || instrOp == OP_LWR); //I hope I didn't miss one lol
+                                    || instrOp == OP_LWR; //I hope I didn't miss one lol
 
         	registerWriteAddress <= (instrOp == OP_JAL)                                                    ? 5'd31 :
                                     (instrOp == OP_REGIMM && (instrS2 == B_BLTZAL || instrS2 == B_BGEZAL)) ? 5'd31 :
@@ -514,7 +520,6 @@ module mips_cpu_bus(
             //write to registers
             //mthi and mtlo also happens here
             //PC updates here depending on normal,jump or branch
-            state <= S_FETCH;
 
         	/*---ProgramCounter stuff---*/
         	if(branch == 1) begin
@@ -530,6 +535,7 @@ module mips_cpu_bus(
             	progCount <= progNext;
         	end
         	/*---*/
+            state <= S_FETCH;
     	end
 
     	else if(state == S_HALTED) begin

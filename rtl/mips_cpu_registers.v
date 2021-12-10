@@ -17,27 +17,23 @@ module mips_cpu_registers(
 
 	logic[31:0] regs[31:0]; //32 registers of size 32
 
-	assign register_v0 = (writeEnable && writeAddress == 2) ? dataIn: regs[2]; //comb for tb
+    assign register_v0 = (writeEnable && writeAddress == 2) ? dataIn : regs[2];
+    assign readDataA = reset ? 0 : regs[readAddressA];
+    assign readDataB = reset ? 0 : regs[readAddressB];
+
 
 	integer i;
-	always_ff @(posedge clk) begin
+	always @(posedge clk) begin //no _ff so i can use $display
 		if(reset == 1) begin
 			for (i = 0; i < 32; i += 1) begin
 				regs[i] <= 0;
 			end
+            $display("!!REGISTER RESET");
 		end
-		else if (writeEnable == 1) begin
-
-			if (writeAddress == 0) begin
-			end //don't overwrite reg0 cus it's 0 forever.
-			else begin 
-				regs[writeAddress] <= dataIn;
-			end
-		end
-		else begin
-			readDataA <= reset == 1 ? 0 : regs[readAddressA];
-			readDataB <= reset == 1 ? 0 : regs[readAddressB]; 
-		end
+        else if (writeEnable == 1 && writeAddress != 0) begin
+            $display("!! REG %d is being written with data %h", writeAddress, dataIn);
+            regs[writeAddress] <= dataIn;
+        end
 	end
 
 endmodule : mips_cpu_registers

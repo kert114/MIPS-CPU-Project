@@ -13,15 +13,14 @@ module mips_cpu_ALU(
 
     logic[4:0] saVar; //for variable shifts
     logic[15:0] lower; //for half word stuff
-    logic result;
 
-    assign zero = (result == 0) ? 1 : 0;
+    assign zero = (r == 0) ? 1 : 0;
     assign lower = b[15:0];
-    assign sa = (control == 6'b1010 || control == 6'b1011 || control == 6'b1101) ? a[4:0] : 5'b0; 
+    assign saVar = (control == 6'b1010 || control == 6'b1011 || control == 6'b1101) ? a[4:0] : 5'b0; 
 
     always_ff  @(posedge clk) begin
         if(reset == 1) begin
-            result <= 0;
+            r <= 0;
         end
         else begin
             case (control)
