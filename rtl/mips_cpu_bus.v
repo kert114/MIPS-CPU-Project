@@ -258,18 +258,19 @@ module mips_cpu_bus(
 
     always @(posedge clk) begin
         if (reset == 1) begin
+            $display("CPU Reset");
             progCount <=32'hBFC00000;
             progTemp <= 32'd0;
             registerHi <= 0;
             registerHi <= 0;
             branch <= 0;
             registerDataIn <= 0; //don't know if this is necessary but might as well right
-            //other things as well
             active <= 1;
             state <= S_FETCH;
         end
         else if(state == S_FETCH) begin
         	$display("---FETCH---");
+            $display("Fetching instruction at %h. Branch status is:", address, branch);
         	if(address == 32'h00000000) begin
         		active <= 0;
         		state <= S_HALTED;
@@ -283,6 +284,7 @@ module mips_cpu_bus(
         end
         else if(state == S_DECODE) begin
             $display("---DECODE---");
+            $display("Fetched instruction is %h. Accessing registers %d, %d", readdata, instrS1,instrS2);
         	instruction <=readdata;
         	registerAddressA <= instrS1;
         	registerAddressB <= instrS2; //decode comb logic above
@@ -336,7 +338,7 @@ module mips_cpu_bus(
         end
         else if(state == S_EXECUTE) begin
         	$display("---EXEC---");
-
+            $display("Reg %d = %h. Reg %d = %h", registerAddressA, registerReadA, registerAddressB, registerReadB);
         	if(instrOp == OP_R_TYPE) begin
         		if(instrFn == FN_JR || instrFn == FN_JALR) begin
                     branch <= 1;
