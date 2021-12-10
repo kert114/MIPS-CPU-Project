@@ -101,7 +101,14 @@ module mips_cpu_bus(
     logic [63:0] multOut;
     logic multSign;
     assign multSign = (instrOp == OP_R_TYPE && instrFn == FN_MULT) ? 1'b1:1'b0;
-    mips_cpu_mult MULT0 (.a(registerReadA), .b(registerReadB),.r(multOut),.reset(reset),.clk(clk),.sign(multSign));
+    mips_cpu_mult MULT0(
+        .a(registerReadA), 
+        .b(registerReadB),
+        .clk(clk),
+        .sign(multSign),
+        .reset(reset),
+        .r(multOut)
+        );
     /*---*/
 
     /*---Div things---*/
@@ -112,11 +119,18 @@ module mips_cpu_bus(
     assign divSign = (instrOp == OP_R_TYPE && instrFn == FN_DIV) ? 1'b1: 1'b0;
     //comb logic so that divstart can be 0 without needing to specify
 
-    mips_cpu_div DIV0(.reset(reset),.clk(clk),.start(divStart),
-    					  .done(divDone),.dbz(divDBZ),
-    				      .dividend(registerReadA),.divisor(registerReadB),
-    				      .quotient(divQuotient),.remainder(divRemainder),
-    				      .sign(divSign));
+    mips_cpu_div DIV0(
+        .clk(clk),
+        .start(divStart),
+        .divisor(registerReadB),
+    	.dividend(registerReadA),
+        .reset(reset),
+        .sign(divSign),
+    	.quotient(divQuotient),
+        .remainder(divRemainder),
+    	.done(divDone),
+        .dbz(divDBZ)
+        );
     /*---*/
 
     mips_cpu_registers REGS0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),
