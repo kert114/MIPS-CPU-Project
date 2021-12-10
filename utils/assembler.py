@@ -99,6 +99,7 @@ def to_bin(x, i):
         print(x)
     return binary
 
+
 def to_hex(asm_in, hex_out):
     
     asm_file = open(asm_in)
@@ -106,7 +107,8 @@ def to_hex(asm_in, hex_out):
     asm_input = asm_file.readlines()
 
     instructions = []
-    
+    line_count = 0
+
     for i,words in enumerate(asm_input):
         if i > 5:
             clean = [x.replace("$","").replace(",","") for x in words.split()]
@@ -120,8 +122,17 @@ def to_hex(asm_in, hex_out):
             Rs = int(words[2])
             Imm = int(words[3])
             hex_instr = hex(int(opcode + to_bin(Rt, 5) + to_bin(Rs, 5) + to_bin(Imm, 16), 2))
+        elif words[0] in ['JR', 'JALR']:
+            Rs = int(words[1])
+            if len(words) == 3: Rd = int(words[2])
+            elif words[0].upper() == 'JALR': Rd = 31
+            else: Rd = 0
+            hex_instr = hex(int(opcode + to_bin(Rs, 5) + "00000" + to_bin(Rd, 5) + "00000" + funct_codes[words[0]], 2))
         hex_instr = hex_instr.split("x")[-1].zfill(8)
         print(", ".join(words).ljust(20, " "), hex_instr)
+        for i in range(4):
+            hex_file.write(hex_instr[-2*i-3:-2*i-1]+'\n')
+            line_count += 1
         
 for file in sys.argv[1]:
     if file.endswith(".asm.txt"):
