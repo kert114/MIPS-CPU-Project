@@ -17,14 +17,22 @@ module mips_cpu_bus(
 
 	/*---Comb Decode---*/
 	logic[31:0] instruction;
-    logic[5:0] instrOp = instruction[31:26]; //R,I,J
-    logic[4:0] instrS1 = instruction[25:21]; //R,I
-    logic[4:0] instrS2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
-    logic[4:0] instrD = instruction[15:11]; //R
-    logic[4:0] instrShift = instruction[10:6]; //R
-    logic[5:0] instrFn = instruction[5:0]; //R
-    logic[15:0] instrImmI = instruction[15:0]; //I
-    logic[25:0] instrAddrJ = instruction[25:0]; //J
+    logic[5:0] instrOp;
+    logic[4:0] instrS1;
+    logic[4:0] instrS2;
+    logic[4:0] instrD;
+    logic[4:0] instrShift;
+    logic[5:0] instrFn;
+    logic[15:0] instrImmI;
+    logic[25:0] instrAddrJ;
+    assign instrOp = instruction[31:26]; //R,I,J
+    assign instrS1 = instruction[25:21]; //R,I
+    assign instrS2 = instruction[20:16]; //R,I (note for I, source2 also refered as dest sometimes maybe)
+    assign instrD = instruction[15:11]; //R
+    assign instrShift = instruction[10:6]; //R
+    assign instrFn = instruction[5:0]; //R
+    assign instrImmI = instruction[15:0]; //I
+    assign instrAddrJ = instruction[25:0]; //J
     /*---*/
     
     /*---Register0-31+HI+LO+progCountS---*/
@@ -284,6 +292,7 @@ module mips_cpu_bus(
         end
         else if(state == S_FETCH) begin
         	$display("---FETCH---");
+            $display("Read:",read,"Write:",write);
             $display("Fetching instruction at %h. Branch status is:", address, branch);
         	if(address == 32'h00000000) begin
         		active <= 0;
@@ -298,6 +307,7 @@ module mips_cpu_bus(
         end
         else if(state == S_DECODE) begin
             $display("---DECODE---");
+            $display("Read:",read,"Write:",write);
             $display("Fetched instruction is %h. Accessing registers %d, %d", readdata, instrS1,instrS2);
         	instruction <=readdata;
         	registerAddressA <= instrS1;
@@ -352,6 +362,7 @@ module mips_cpu_bus(
         end
         else if(state == S_EXECUTE) begin
         	$display("---EXEC---");
+            $display("Read:",read,"Write:",write);
             $display("Reg %d = %h. Reg %d = %h", registerAddressA, registerReadA, registerAddressB, registerReadB);
         	if(instrOp == OP_R_TYPE) begin
         		if(instrFn == FN_JR || instrFn == FN_JALR) begin
@@ -374,9 +385,9 @@ module mips_cpu_bus(
 
         	state <= S_MEMORY;
         end
-        $display("Read:,read");
         else if(state == S_MEMORY) begin
             $display("---MEMORY---");
+            $display("Read:",read,"Write:",write);
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
         	if (waitrequest == 1) begin
         	end
@@ -407,9 +418,9 @@ module mips_cpu_bus(
             //branches will occur here I think?(BNE,BGTZ,BLEZ)
             //moves --> WriteBack
         end
-        $display("Write:,write");
         else if(state == S_WRITEBACK) begin
             $display("---WRITEBACK---");
+            $display("Read:",read,"Write:",write);
 
         	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_SLL
         																	    || instrFn == FN_SRL
