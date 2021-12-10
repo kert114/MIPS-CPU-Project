@@ -26,6 +26,15 @@ module mips_cpu_bus(
     logic[15:0] instrImmI = instruction[15:0]; //I
     logic[25:0] instrAddrJ = instruction[25:0]; //J
     /*---*/
+    
+    /*---Register0-31+HI+LO+progCountS---*/
+    logic registerWriteEnable;
+    logic[31:0] registerDataIn;
+    logic[4:0] registerWriteAddress;
+    logic[4:0] registerAddressA;
+    logic[31:0] registerReadA;
+    logic[4:0] registerAddressB;
+    logic[31:0] registerReadB;  
 
     /*----Memory combinational things-------------------*/
     assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB)); //add SH and SB later
@@ -109,15 +118,6 @@ module mips_cpu_bus(
     				      .quotient(divQuotient),.remainder(divRemainder),
     				      .sign(divSign));
     /*---*/
-
-    /*---Register0-31+HI+LO+progCountS---*/
-    logic registerWriteEnable;
-    logic[31:0] registerDataIn;
-    logic[4:0] registerWriteAddress;
-    logic[4:0] registerAddressA;
-    logic[31:0] registerReadA;
-    logic[4:0] registerAddressB;
-    logic[31:0] registerReadB;  
 
     mips_cpu_registers REGS0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),
     						 .dataIn(registerDataIn),.writeAddress(registerWriteAddress),
