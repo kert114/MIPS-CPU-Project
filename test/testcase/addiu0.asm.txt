@@ -1,0 +1,8 @@
+addiu1
+addiu
+Addition 
+0x0000000f
+
+ADDIU $2, $2, 5
+ADDIU $2, $2, 10
+JR $0
