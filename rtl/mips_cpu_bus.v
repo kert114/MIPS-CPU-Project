@@ -26,6 +26,15 @@ module mips_cpu_bus(
     logic[15:0] instrImmI = instruction[15:0]; //I
     logic[25:0] instrAddrJ = instruction[25:0]; //J
     /*---*/
+    
+    /*---Register0-31+HI+LO+progCountS---*/
+    logic registerWriteEnable;
+    logic[31:0] registerDataIn;
+    logic[4:0] registerWriteAddress;
+    logic[4:0] registerAddressA;
+    logic[31:0] registerReadA;
+    logic[4:0] registerAddressB;
+    logic[31:0] registerReadB;  
 
     /*----Memory combinational things-------------------*/
     assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB)); //add SH and SB later
@@ -92,7 +101,14 @@ module mips_cpu_bus(
     logic [63:0] multOut;
     logic multSign;
     assign multSign = (instrOp == OP_R_TYPE && instrFn == FN_MULT) ? 1'b1:1'b0;
-    mips_cpu_mult MULT0 (.a(registerReadA), .b(registerReadB),.r(multOut),.reset(reset),.clk(clk),.sign(multSign));
+    mips_cpu_mult MULT0(
+        .a(registerReadA), 
+        .b(registerReadB),
+        .clk(clk),
+        .sign(multSign),
+        .reset(reset),
+        .r(multOut)
+        );
     /*---*/
 
     /*---Div things---*/
@@ -103,21 +119,19 @@ module mips_cpu_bus(
     assign divSign = (instrOp == OP_R_TYPE && instrFn == FN_DIV) ? 1'b1: 1'b0;
     //comb logic so that divstart can be 0 without needing to specify
 
-    mips_cpu_div DIV0(.reset(reset),.clk(clk),.start(divStart),
-    					  .done(divDone),.dbz(divDBZ),
-    				      .dividend(registerReadA),.divisor(registerReadB),
-    				      .quotient(divQuotient),.remainder(divRemainder),
-    				      .sign(divSign));
+    mips_cpu_div DIV0(
+        .clk(clk),
+        .start(divStart),
+        .divisor(registerReadB),
+    	.dividend(registerReadA),
+        .reset(reset),
+        .sign(divSign),
+    	.quotient(divQuotient),
+        .remainder(divRemainder),
+    	.done(divDone),
+        .dbz(divDBZ)
+        );
     /*---*/
-
-    /*---Register0-31+HI+LO+progCountS---*/
-    logic registerWriteEnable;
-    logic[31:0] registerDataIn;
-    logic[4:0] registerWriteAddress;
-    logic[4:0] registerAddressA;
-    logic[31:0] registerReadA;
-    logic[4:0] registerAddressB;
-    logic[31:0] registerReadB;  
 
     mips_cpu_registers REGS0(.reset(reset),.clk(clk),.writeEnable(registerWriteEnable),
     						 .dataIn(registerDataIn),.writeAddress(registerWriteAddress),
@@ -360,6 +374,7 @@ module mips_cpu_bus(
 
         	state <= S_MEMORY;
         end
+        $display("Read:,read");
         else if(state == S_MEMORY) begin
             $display("---MEMORY---");
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
@@ -392,6 +407,7 @@ module mips_cpu_bus(
             //branches will occur here I think?(BNE,BGTZ,BLEZ)
             //moves --> WriteBack
         end
+        $display("Write:,write");
         else if(state == S_WRITEBACK) begin
             $display("---WRITEBACK---");
 
