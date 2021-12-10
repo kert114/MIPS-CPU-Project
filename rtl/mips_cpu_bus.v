@@ -127,6 +127,10 @@ module mips_cpu_bus(
     
     logic[31:0] registerHi;
     logic[31:0] registerLo;
+
+    logic[31:0] regBLSB, regBLSH;
+    assign regBLSB = {4{registerReadB[7:0]}};
+    assign regBLSH = {2{registerReadB[15:0]}}; //for use in SB and SH instructions
     /*---*/
 
     /*---Program Counter---*/
@@ -177,7 +181,14 @@ module mips_cpu_bus(
         OP_SB     = 6'b101000,
         OP_SH     = 6'b101001,
         OP_SW     = 6'b101011
-    } typeOpCode; 
+    } typeOpCode;
+
+    typedef enum logic[4:0] {
+        B_BLTZ = 5'b00000,
+        B_BLTZAL = 5'b10000,
+        B_BGEZ = 5'b00001,
+        B_BGEZAL = 5'b10001
+    } typeBranchCode;
 
     typedef enum logic[5:0] {
     	FN_SLL   = 6'b000000,
@@ -358,25 +369,19 @@ module mips_cpu_bus(
         	end
 
         	//branch logic here
-        	if(instrOp == OP_BEQ && AluZero) begin
-                branch <= 1;
-                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
-            end
-            else if(instrOp == OP_BNE && !AluZero) begin
-                branch <= 1;
-                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
-            end
-            else if(instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero) begin
-                branch <= 1;
-                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
-            end
-            else if(instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero)) begin
-                branch <= 1;
-                progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
-            end
-            else if(instrOp == OP_REGIMM) begin
-            	//need to fill in logic here
-            end
+            branch <= ((instrOp == OP_BEQ && AluZero) && (instrOp == OP_BNE && !AluZero)
+                                                      && (instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero)
+                                                      && (instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero))
+                                                      && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
+                                                      && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL)))
+                        ? 1 : branch;
+
+            progTemp <= ((instrOp == OP_BEQ && AluZero) && (instrOp == OP_BNE && !AluZero)
+                                                        && (instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero)
+                                                        && (instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero))
+                                                        && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
+                                                        && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL)))
+                        ? progNext + {{14{instrImmI[15]}},instrImmI, 2'd0} : progTemp;
 
         	//make sure avalon is avaliable before starting
         	//write is already taken care of in the comb logic written above I think?
@@ -386,19 +391,81 @@ module mips_cpu_bus(
         end
         else if(state == S_WRITEBACK) begin
 
-        	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_JALR
-        																	    || (0))//placeholder
+        	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_SLL
+        																	    || instrFn == FN_SRL
+                                                                                || instrFn == FN_SRA
+                                                                                || instrFn == FN_SLLV
+                                                                                || instrFn == FN_SRLV
+                                                                                || instrFn == FN_SRAV
+                                                                                || instrFn == FN_JALR
+                                                                                || instrFn == FN_MFHI
+                                                                                || instrFn == FN_MFLO
+                                                                                || instrFn == FN_SUBU
+                                                                                || instrFn == FN_AND
+                                                                                || instrFn == FN_OR
+                                                                                || instrFn == FN_XOR
+                                                                                || instrFn == FN_SLT
+                                                                                || instrFn == FN_SLTU)
+        						    || (instrOp == OP_REGIMM && (instrS2 == B_BLTZAL || instrS2 == B_BGEZAL))
         						    || instrOp == OP_JAL
-        						    || instrOp == OP_ADDIU
-        						    || instrOp == OP_LW
-        							|| (0)); //placeholder
+        						    || instrOp == OP_SLTI
+                                    || instrOp == OP_SLTIU
+                                    || instrOp == OP_ADDIU
+                                    || instrOp == OP_ANDI
+                                    || instrOp == OP_ORI
+                                    || instrOp == OP_XORI
+                                    || instrOp == OP_LUI
+                                    || instrOp == OP_LB
+                                    || (instrOp == OP_LH && AluOut[0] == 1'b0)
+                                    || instrOp == OP_LWL
+                                    || (instrOp == OP_LW && AluOut[1:0] == 2'b00)
+                                    || instrOp == OP_LBU
+                                    || (instrOp == OP_LHU && AluOut[0] == 1'b0)
+                                    || instrOp == OP_LWR); //I hope I didn't miss one lol
 
-        	registerWriteAddress <= (instrOp == OP_JAL)    ? 5'd31 :
-        							(instrOp == OP_R_TYPE) ? instrD: instrS2;
+        	registerWriteAddress <= (instrOp == OP_JAL)                                                    ? 5'd31 :
+                                    (instrOp == OP_REGIMM && (instrS2 == B_BLTZAL || instrS2 == B_BGEZAL)) ? 5'd31 :
+        							(instrOp == OP_R_TYPE)                                                 ? instrD: instrS2;
+
+
+            registerDataIn <= (instrOp == OP_LB)  ? ((addressTemp[1:0] == 2'b00) ? {{24{readdata[7]}},readdata[7:0]}    :
+                                                     (addressTemp[1:0] == 2'b01) ? {{24{readdata[15]}},readdata[15:8]}  :
+                                                     (addressTemp[1:0] == 2'b10) ? {{24{readdata[23]}},readdata[23:16]} :
+                                                                                   {{24{readdata[31]}},readdata[31:24]} 
+                                                    ) :
+                              (instrOp == OP_LBU) ? ((addressTemp[1:0] == 2'b00) ? {24'b0,readdata[7:0]}   :
+                                                     (addressTemp[1:0] == 2'b01) ? {24'b0,readdata[15:8]}  :
+                                                     (addressTemp[1:0] == 2'b10) ? {24'b0,readdata[23:16]} :
+                                                                                   {24'b0,readdata[31:24]} 
+                                                    ) :
+                              (instrOp == OP_LH)  ? ((addressTemp[1:0] == 2'b01) ? {{16{readdata[15]}},readdata[15:0]}  :
+                                                                                   {{16{readdata[31]}},readdata[31:16]}
+                                                    ) :
+                              (instrOp == OP_LHU) ? ((addressTemp[1:0] == 2'b01) ? {16'b0,readdata[15:0]}  :
+                                                                                   {16'b0,readdata[31:16]}
+                                                    ) :
+                              (instrOp == OP_LWL) ? ((addressTemp[1:0] == 2'b00) ? {readdata[7:0],registerReadB[23:0]}  :
+                                                     (addressTemp[1:0] == 2'b01) ? {readdata[15:0],registerReadB[15:0]} :
+                                                     (addressTemp[1:0] == 2'b10) ? {readdata[23:0],registerReadB[7:0]}  :
+                                                                                   readdata
+                                                    ) :
+                              (instrOp == OP_LWR) ? ((addressTemp[1:0] == 2'b00) ? readdata                               :
+                                                     (addressTemp[1:0] == 2'b01) ? {registerReadB[31:24],readdata[31:8]}  :
+                                                     (addressTemp[1:0] == 2'b10) ? {registerReadB[31:16],readdata[31:16]} :
+                                                                                   {registerReadB[31:8],readdata[31:24]} 
+                                                    ) :
+                              (instrOp == OP_LW)                                                     ? readdata      :
+                              (instrOp == OP_REGIMM && (instrFn == B_BLTZAL || instrFn == B_BGEZAL)) ? progCount + 8 :
+                              (instrOp == OP_JAL)                                                    ? progCount + 8 :
+                              (instrOp == OP_R_TYPE && (instrFn == FN_JALR))                         ? progCount + 8 :
+                              (instrOp == OP_R_TYPE && (instrFn == FN_MFHI))                         ? registerHi    :
+                              (instrOp == OP_R_TYPE && (instrFn == FN_MFLO))                         ? registerLo    : AluOut;
+
+
 
         	
             registerDataIn <= (instrOp == OP_JAL)                          ? progCount + 8:
-                              (instrOp == OP_R_TYPE && instrFn == FN_JALR) ? progCount + 8: AluOut;
+                              (instrOp == OP_R_TYPE && instrFn == FN_JALR) ? progCount + 8: AluOut; //to do more
 
 
 
