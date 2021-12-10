@@ -359,6 +359,7 @@ module mips_cpu_bus(
         	state <= S_MEMORY;
         end
         else if(state == S_MEMORY) begin
+            $display("---MEMORY---");
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
         	if (waitrequest == 1) begin
         	end
@@ -390,6 +391,7 @@ module mips_cpu_bus(
             //moves --> WriteBack
         end
         else if(state == S_WRITEBACK) begin
+            $display("---WRITEBACK---");
 
         	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_SLL
         																	    || instrFn == FN_SRL
