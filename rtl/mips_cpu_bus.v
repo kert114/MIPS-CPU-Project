@@ -372,6 +372,7 @@ module mips_cpu_bus(
 
         	state <= S_MEMORY;
         end
+        $display("Read:,read");
         else if(state == S_MEMORY) begin
             $display("---MEMORY---");
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
@@ -404,6 +405,7 @@ module mips_cpu_bus(
             //branches will occur here I think?(BNE,BGTZ,BLEZ)
             //moves --> WriteBack
         end
+        $display("Write:,write");
         else if(state == S_WRITEBACK) begin
             $display("---WRITEBACK---");
 
