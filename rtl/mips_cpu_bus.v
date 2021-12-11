@@ -39,18 +39,30 @@ module mips_cpu_bus(
     logic[4:0] registerAddressA;
     logic[31:0] registerReadA;
     logic[4:0] registerAddressB;
-    logic[31:0] registerReadB;  
+    logic[31:0] registerReadB;
+
+    wire[7:0] regByte = registerReadB[7:0];
+    wire[15:0] regHalf = registerReadB[15:0];
 
     /*----Memory combinational things-------------------*/
     assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB)); //add SH and SB later
-    assign writedata = (instrOp == OP_SW) ? registerReadB : 32'h00000000; //placeholder logic for SH and SB later
+    assign writedata = (instrOp == OP_SW) ? registerReadB :
+                       (instrOp == OP_SH) ? ((addressTemp[1:0] == 2'b00) ? {16'b0,regHalf[15:0]} :
+                                                                          {regHalf[15:0], 16'b0}
+                                            ):
+                       (instrOp == OP_SB) ? ((addressTemp[1:0] == 2'b00) ? {24'b0,regByte[7:0]}      :
+                                             (addressTemp[1:0] == 2'b01) ? {16'b0,regByte[7:0],8'b0} :
+                                             (addressTemp[1:0] == 2'b10) ? {8'b0,regByte[7:0],16'b0} :
+                                                                           {regByte[7:0], 24'b0}
+                                            ): 32'b0;
     
-    assign read = (state == S_FETCH) ? 1:
-                  (state == S_MEMORY && (instrOp == OP_LH || instrOp == OP_SH) && AluOut[0] == 2'b0) ? 1:
-                  (state == S_MEMORY && instrOp == OP_LW || AluOut[1:0] == 2'b00) ? 1:
-                  (state == S_MEMORY && (instrOp == OP_LWL || instrOp == OP_LWR)) ? 1:
-                  (state == S_MEMORY && (instrOp == OP_LB || instrOp == OP_LBU)) ? 1 :0;
-
+    assign read = (state == S_FETCH)
+                ||(state == S_MEMORY && (((instrOp == OP_LH || instrOp == OP_LHU) && AluOut[0] == 1'b0)
+                                        ||(instrOp == OP_LW && AluOut[1:0] == 2'b00)
+                                        ||(instrOp == OP_LWL|| instrOp == OP_LWR)
+                                        ||(instrOp == OP_LB || instrOp == OP_LBU)
+                                        )
+                  );
 
     logic[31:0] addressTemp;
     assign addressTemp = (state == S_FETCH) ? progCount : AluOut;
@@ -75,7 +87,7 @@ module mips_cpu_bus(
                             (addressTemp[1:0] == 2'b11) ? 4'b1000 : 4'b0000;
 
     logic[3:0] bytemappingH; //byte mapping half
-    assign bytemappingH = (addressTemp[1:0] == 2'b01) ? 4'b0011 :
+    assign bytemappingH = (addressTemp[1:0] == 2'b00) ? 4'b0011 :
                           (addressTemp[1:0] == 2'b10) ? 4'b1100 : 4'b0000;
 
 
@@ -405,12 +417,12 @@ module mips_cpu_bus(
         	end
 
             if(
-                 (instrOp == OP_BEQ && AluZero) 
-              && (instrOp == OP_BNE && !AluZero)
-              && (instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero)
-              && (instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero))
-              && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
-              && (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL))
+                 (instrOp == OP_BEQ && AluZero == 1) 
+              || (instrOp == OP_BNE && AluZero == 0)
+              || (instrOp == OP_BGTZ && AluOut[31] == 0 && !AluZero)
+              || (instrOp == OP_BLEZ && (AluOut[31] == 1 || AluZero))
+              || (instrOp == OP_REGIMM && (instrS2 == B_BGEZ || instrS2 == B_BGEZAL) && AluOut[31] == 0)
+              || (instrOp == OP_REGIMM && (instrS2 == B_BLTZ || instrS2 == B_BLTZAL) && AluOut[31] == 1)
               ) begin
                 branch <= 1;
                 progTemp <= progNext + {{14{instrImmI[15]}},instrImmI, 2'd0};
@@ -475,10 +487,10 @@ module mips_cpu_bus(
                                                      (addressTemp[1:0] == 2'b10) ? {24'b0,readdata[23:16]} :
                                                                                    {24'b0,readdata[31:24]} 
                                                     ) :
-                              (instrOp == OP_LH)  ? ((addressTemp[1:0] == 2'b01) ? {{16{readdata[15]}},readdata[15:0]}  :
+                              (instrOp == OP_LH)  ? ((addressTemp[1:0] == 2'b00) ? {{16{readdata[15]}},readdata[15:0]}  :
                                                                                    {{16{readdata[31]}},readdata[31:16]}
                                                     ) :
-                              (instrOp == OP_LHU) ? ((addressTemp[1:0] == 2'b01) ? {16'b0,readdata[15:0]}  :
+                              (instrOp == OP_LHU) ? ((addressTemp[1:0] == 2'b00) ? {16'b0,readdata[15:0]}  :
                                                                                    {16'b0,readdata[31:16]}
                                                     ) :
                               (instrOp == OP_LWL) ? ((addressTemp[1:0] == 2'b00) ? {readdata[7:0],registerReadB[23:0]}  :
@@ -490,19 +502,13 @@ module mips_cpu_bus(
                                                      (addressTemp[1:0] == 2'b01) ? {registerReadB[31:24],readdata[31:8]}  :
                                                      (addressTemp[1:0] == 2'b10) ? {registerReadB[31:16],readdata[31:16]} :
                                                                                    {registerReadB[31:8],readdata[31:24]} 
-                                                    ) :
+                                                    ) : //redo load store logic to match big endian
                               (instrOp == OP_LW)                                                     ? readdata      :
-                              (instrOp == OP_REGIMM && (instrFn == B_BLTZAL || instrFn == B_BGEZAL)) ? progCount + 8 :
+                              (instrOp == OP_REGIMM && (instrS2 == B_BLTZAL || instrS2 == B_BGEZAL)) ? progCount + 8 :
                               (instrOp == OP_JAL)                                                    ? progCount + 8 :
                               (instrOp == OP_R_TYPE && (instrFn == FN_JALR))                         ? progCount + 8 :
                               (instrOp == OP_R_TYPE && (instrFn == FN_MFHI))                         ? registerHi    :
                               (instrOp == OP_R_TYPE && (instrFn == FN_MFLO))                         ? registerLo    : AluOut;
-
-
-
-        	
-            registerDataIn <= (instrOp == OP_JAL)                          ? progCount + 8:
-                              (instrOp == OP_R_TYPE && instrFn == FN_JALR) ? progCount + 8: AluOut; //to do more
 
 
 
@@ -514,7 +520,7 @@ module mips_cpu_bus(
 
                 registerLo <= (instrFn == FN_MULT || instrFn == FN_MULTU) ? multOut[31:0] :
                               (instrFn == FN_DIV || instrFn == FN_DIVU)   ? divQuotient :
-                              (instrFn == FN_MTHI)                        ? AluOut : registerLo;
+                              (instrFn == FN_MTLO)                        ? AluOut : registerLo;
             end //Hi, Lo register logic here
 
             //write to registers

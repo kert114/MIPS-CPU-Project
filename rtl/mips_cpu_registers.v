@@ -17,9 +17,9 @@ module mips_cpu_registers(
 
 	logic[31:0] regs[31:0]; //32 registers of size 32
 
-    assign register_v0 = (writeEnable && writeAddress == 2) ? dataIn : regs[2];
-    assign readDataA = reset ? 0 : regs[readAddressA];
-    assign readDataB = reset ? 0 : regs[readAddressB];
+    assign register_v0 = reset ? 0 : regs[2];
+    assign readDataA = reset   ? 0 : regs[readAddressA];
+    assign readDataB = reset   ? 0 : regs[readAddressB];
 
 
 	integer i;
