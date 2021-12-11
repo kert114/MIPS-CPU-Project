@@ -42,19 +42,19 @@ module mips_cpu_bus(
     logic[31:0] registerReadB;
 
     wire[7:0] regByte = registerReadB[7:0];
-    wire[15:0] regHalf = registerReadB[15:0];
+    wire[15:0] regHalf = registerReadB[15:0]; //least significant bytes
 
     /*----Memory combinational things-------------------*/
-    assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB)); //add SH and SB later
-    assign writedata = (instrOp == OP_SW) ? registerReadB :
-                       (instrOp == OP_SH) ? ((addressTemp[1:0] == 2'b00) ? {16'b0,regHalf[15:0]} :
-                                                                          {regHalf[15:0], 16'b0}
-                                            ):
+    assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB));
+    assign writedata = (instrOp == OP_SW) ? {registerReadB[7:0],registerReadB[15:8],registerReadB[23:16],registerReadB[31:24]}: //changed to big endian
+                       (instrOp == OP_SH) ? ((addressTemp[1:0] == 2'b00) ? {16'b0,regHalf[7:0],regHalf[15:8]} :
+                                                                          {regHalf[7:0],regHalf[15:8], 16'b0}
+                                            ): //changed to big endian
                        (instrOp == OP_SB) ? ((addressTemp[1:0] == 2'b00) ? {24'b0,regByte[7:0]}      :
                                              (addressTemp[1:0] == 2'b01) ? {16'b0,regByte[7:0],8'b0} :
                                              (addressTemp[1:0] == 2'b10) ? {8'b0,regByte[7:0],16'b0} :
                                                                            {regByte[7:0], 24'b0}
-                                            ): 32'b0;
+                                            ): 32'b0; //don't think this needs to change
     
     assign read = (state == S_FETCH)
                 ||(state == S_MEMORY && (((instrOp == OP_LH || instrOp == OP_LHU) && AluOut[0] == 1'b0)
@@ -72,23 +72,23 @@ module mips_cpu_bus(
     assign bytemappingB = (addressTemp[1:0] == 2'b00) ? 4'b0001 :
                           (addressTemp[1:0] == 2'b01) ? 4'b0010 :
                           (addressTemp[1:0] == 2'b10) ? 4'b0100 :
-                          (addressTemp[1:0] == 2'b11) ? 4'b1000 : 4'b0000;
+                          (addressTemp[1:0] == 2'b11) ? 4'b1000 : 4'b0000; //this is fine
 
     logic[3:0] bytemappingLWL; //byte mapping word left
-    assign bytemappingLWL = (addressTemp[1:0] == 2'b00) ? 4'b0001 :
-                            (addressTemp[1:0] == 2'b01) ? 4'b0011 :
-                            (addressTemp[1:0] == 2'b10) ? 4'b0111 :
-                            (addressTemp[1:0] == 2'b11) ? 4'b1111 : 4'b0000;
+    assign bytemappingLWL = (addressTemp[1:0] == 2'b00) ? 4'b1111 :
+                            (addressTemp[1:0] == 2'b01) ? 4'b1110 :
+                            (addressTemp[1:0] == 2'b10) ? 4'b1100 :
+                            (addressTemp[1:0] == 2'b11) ? 4'b1000 : 4'b0000; //changed to big endian
 
     logic[3:0] bytemappingLWR; //byte mapping word right
-    assign bytemappingLWR = (addressTemp[1:0] == 2'b00) ? 4'b1111 :
-                            (addressTemp[1:0] == 2'b01) ? 4'b110 :
-                            (addressTemp[1:0] == 2'b10) ? 4'b1100 :
-                            (addressTemp[1:0] == 2'b11) ? 4'b1000 : 4'b0000;
+    assign bytemappingLWR = (addressTemp[1:0] == 2'b00) ? 4'b0001 :
+                            (addressTemp[1:0] == 2'b01) ? 4'b0011 :
+                            (addressTemp[1:0] == 2'b10) ? 4'b0111 :
+                            (addressTemp[1:0] == 2'b11) ? 4'b1111 : 4'b0000; //changed to big endian
 
     logic[3:0] bytemappingH; //byte mapping half
     assign bytemappingH = (addressTemp[1:0] == 2'b00) ? 4'b0011 :
-                          (addressTemp[1:0] == 2'b10) ? 4'b1100 : 4'b0000;
+                          (addressTemp[1:0] == 2'b10) ? 4'b1100 : 4'b0000; //this is fine i think??
 
 
 
@@ -481,29 +481,29 @@ module mips_cpu_bus(
                                                      (addressTemp[1:0] == 2'b01) ? {{24{readdata[15]}},readdata[15:8]}  :
                                                      (addressTemp[1:0] == 2'b10) ? {{24{readdata[23]}},readdata[23:16]} :
                                                                                    {{24{readdata[31]}},readdata[31:24]} 
-                                                    ) :
+                                                    ) : //i dont think this needs to be changed
                               (instrOp == OP_LBU) ? ((addressTemp[1:0] == 2'b00) ? {24'b0,readdata[7:0]}   :
                                                      (addressTemp[1:0] == 2'b01) ? {24'b0,readdata[15:8]}  :
                                                      (addressTemp[1:0] == 2'b10) ? {24'b0,readdata[23:16]} :
                                                                                    {24'b0,readdata[31:24]} 
-                                                    ) :
-                              (instrOp == OP_LH)  ? ((addressTemp[1:0] == 2'b00) ? {{16{readdata[15]}},readdata[15:0]}  :
-                                                                                   {{16{readdata[31]}},readdata[31:16]}
-                                                    ) :
-                              (instrOp == OP_LHU) ? ((addressTemp[1:0] == 2'b00) ? {16'b0,readdata[15:0]}  :
-                                                                                   {16'b0,readdata[31:16]}
-                                                    ) :
-                              (instrOp == OP_LWL) ? ((addressTemp[1:0] == 2'b00) ? {readdata[7:0],registerReadB[23:0]}  :
-                                                     (addressTemp[1:0] == 2'b01) ? {readdata[15:0],registerReadB[15:0]} :
-                                                     (addressTemp[1:0] == 2'b10) ? {readdata[23:0],registerReadB[7:0]}  :
-                                                                                   readdata
-                                                    ) :
-                              (instrOp == OP_LWR) ? ((addressTemp[1:0] == 2'b00) ? readdata                               :
-                                                     (addressTemp[1:0] == 2'b01) ? {registerReadB[31:24],readdata[31:8]}  :
-                                                     (addressTemp[1:0] == 2'b10) ? {registerReadB[31:16],readdata[31:16]} :
-                                                                                   {registerReadB[31:8],readdata[31:24]} 
-                                                    ) : //redo load store logic to match big endian
-                              (instrOp == OP_LW)                                                     ? readdata      :
+                                                    ) : //i dont think this needs to be changed
+                              (instrOp == OP_LH)  ? ((addressTemp[1:0] == 2'b00) ? {{16{readdata[7]}},readdata[7:0],readdata[15:8]}  :
+                                                                                   {{16{readdata[23]}},readdata[23:16],readdata[31:24]}
+                                                    ) : //changed to big endian 
+                              (instrOp == OP_LHU) ? ((addressTemp[1:0] == 2'b00) ? {16'b0,readdata[7:0],readdata[15:8]}  :
+                                                                                   {16'b0,readdata[23:16],readdata[31:24]}
+                                                    ) : //changed to big endian
+                              (instrOp == OP_LWL) ? ((addressTemp[1:0] == 2'b00) ? {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]} :
+                                                     (addressTemp[1:0] == 2'b01) ? {readdata[15:8],readdata[23:16],registerReadB[31:24],registerReadB[7:0]} :
+                                                     (addressTemp[1:0] == 2'b10) ? {readdata[23:16],readdata[31:24], registerReadB[15:0]}  :
+                                                                                   {readdata[31:24], registerReadB[23:0]}
+                                                    ) : //changed to big endian
+                              (instrOp == OP_LWR) ? ((addressTemp[1:0] == 2'b00) ? {registerReadB[31:8],readdata[7:0]}                  :
+                                                     (addressTemp[1:0] == 2'b01) ? {registerReadB[31:16],readdata[7:0],readdata[15:8]}  :
+                                                     (addressTemp[1:0] == 2'b10) ? {registerReadB[31:24],readdata[7:0],readdata[15:8],readdata[23:16]} :
+                                                                                   {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}
+                                                    ) : //changed to big endian
+                              (instrOp == OP_LW)                                                     ? {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}: //endianness maybe lol
                               (instrOp == OP_REGIMM && (instrS2 == B_BLTZAL || instrS2 == B_BGEZAL)) ? progCount + 8 :
                               (instrOp == OP_JAL)                                                    ? progCount + 8 :
                               (instrOp == OP_R_TYPE && (instrFn == FN_JALR))                         ? progCount + 8 :
