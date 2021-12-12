@@ -96,25 +96,39 @@ def to_bin(x, i):
             binary = "0" + binary
         x = int(x/2)
         n+=1
-        print(x)
     return binary
 
 
 def to_hex(asm_in, hex_out):
-    
+
     asm_file = open(asm_in)
     hex_file = open(hex_out,'w')
     asm_input = asm_file.readlines()
 
     instructions = []
     line_count = 0
+    data_words = {}
 
     for i,words in enumerate(asm_input):
-        if i > 5:
+        if i > 4:
             clean = [x.replace("$","").replace(",","") for x in words.split()]
             if len(clean) > 0:
                 if clean[0] in opcodes:
                     instructions.append(clean)
+                elif clean[0] == "DATA":
+                    data = hex(int(to_bin(int(clean[2]), 32), 2))[2:].zfill(8)
+                    temp = int(clean[1][2:], 16)
+                    data_words[temp] = data[:2]
+                    data_words[temp+1] = data[2:4]
+                    data_words[temp+2] = data[4:6]
+                    data_words[temp+3] = data[6:]
+    
+    for i in range(5120):
+        if i in data_words.keys():
+            hex_file.write(data_words[i] + "\n")
+        else:
+            hex_file.write("00\n")
+
     for words in instructions:
         opcode = opcodes[words[0]]
         if words[0] in ["ADDIU", "ANDI", "ORI", "SLTI", "SLTIU", "XORI"]:
@@ -125,16 +139,22 @@ def to_hex(asm_in, hex_out):
         elif words[0] in ['JR', 'JALR']:
             Rs = int(words[1])
             if len(words) == 3: Rd = int(words[2])
-            elif words[0].upper() == 'JALR': Rd = 31
+            elif words[0] == 'JALR': Rd = 31
             else: Rd = 0
             hex_instr = hex(int(opcode + to_bin(Rs, 5) + "00000" + to_bin(Rd, 5) + "00000" + funct_codes[words[0]], 2))
         hex_instr = hex_instr.split("x")[-1].zfill(8)
         print(", ".join(words).ljust(20, " "), hex_instr)
         for i in range(4):
-            hex_file.write(hex_instr[-2*i-3:-2*i-1]+'\n')
+            hex_file.write(hex_instr[-2*i+6:-2*i+8]+'\n')
             line_count += 1
         
-for file in sys.argv[1]:
+    for i in range(8192 - (line_count + 5120)):
+        if (i + line_count + 5120) in data_words.keys():
+            hex_file.write(data_words[i + line_count + 5120] + "\n")
+        else:
+            hex_file.write('00\n')
+        
+for file in os.listdir(sys.argv[1]):
     if file.endswith(".asm.txt"):
         print(os.path.join(sys.argv[1], file))
         to_hex(os.path.join(sys.argv[1], file), os.path.join(sys.argv[2], file.replace('asm','hex')))
