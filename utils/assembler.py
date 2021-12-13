@@ -87,15 +87,15 @@ br_z_codes = {'BGTZ'   : '00000',
               }
 
 def to_bin(x, i):
-    n = 0
-    binary = ""
-    while n < i:
-        if x % 2 :
-            binary = "1" + binary
-        else:
-            binary = "0" + binary
-        x = int(x/2)
-        n+=1
+    if x < 0:
+        tmp = bin(2**i-1)[2:].zfill(i)
+        tmp2 = bin(-x)[2:].zfill(i)
+        print(tmp)
+        print(tmp2)
+        binary = (int(tmp, 2) ^ int(tmp2, 2)) + int("1", 2)
+        binary = to_bin(binary, i)
+    else:
+        binary = bin(x)[2:].zfill(i)
     return binary
 
 
