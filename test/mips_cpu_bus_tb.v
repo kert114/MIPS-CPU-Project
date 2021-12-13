@@ -53,6 +53,20 @@ module mips_cpu_bus_tb();
         reset <= 0;
         waitrequest <=  0;
 
+        @(posedge clk);
+        reset <= 1;
+        @(posedge clk);
+        reset <= 0;
+        @(posedge clk);
+        assert(active == 1);
+        else $display("TB : CPU did not set active=1 after reset.");
         
+        //check that read and write don't activate at the same time
+        while(active == 1) begin
+            @(posedge clk);
+            assert(~(read && write));
+            else $display("TB : CPU asserted read and write at the same time.");
+        end
 
     end
+endmodule
