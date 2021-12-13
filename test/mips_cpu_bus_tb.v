@@ -25,6 +25,19 @@ module mips_cpu_bus_tb();
         .readdata       (readdata)
     );
 
+    parameter RAM_FILE = "";
+
+    mips_cpu_bus_tb_mem #(RAM_FILE) mem(
+        .clk(clk),
+        .read(read),
+        .write(write),
+        .byteenable(byteenable),
+        .addr(address),
+        .writedata(writedata),
+        .waitrequest(waitrequest),
+        .readdata(readdata)
+    );
+
     initial begin // writing the clock
         $dumpfile("mips_cpu_bus_tb.vcd");
         $dumpvars(0, mips_cpu_bus_tb);
@@ -36,6 +49,10 @@ module mips_cpu_bus_tb();
         $fatal(2, "Simulation did not finish within 100000 cycles.");
     end
 
-    initial begin
+    initial begin // test reset
+        reset <= 0;
+        waitrequest <=  0;
+
         
+
     end
