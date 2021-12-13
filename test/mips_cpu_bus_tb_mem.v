@@ -13,11 +13,11 @@ module mips_cpu_bus_tb_mem(
 
 	parameter RAM_INITIAL = ""; //sh generates a ram file for each test I think
 
-	reg[7:0] memory[1024:0]; //don't know how large this would be
+	reg[7:0] memory[2047:0]; //don't know how large this would be
 	
 	initial begin
 		interger i;
-		for(i=0;i<1025;i++) begin
+		for(i=0;i<2048;i++) begin
 			memory[i] = 0;
 		end
 		waitrequest = 0;
