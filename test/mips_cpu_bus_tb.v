@@ -8,8 +8,10 @@ module mips_cpu_bus_tb();
     logic read;
     logic waitrequest;
     logic [31:0] writedata;
-    logic [31:0] byteenable;
+    logic [3:0] byteenable;
     logic [31:0] readdata;
+
+    logic initialwrite;
 
     mips_cpu_bus cpu(
         .clk            (clk),
@@ -26,6 +28,7 @@ module mips_cpu_bus_tb();
     );
 
     parameter RAM_FILE = "";
+    logic [1:0]  waitrequest_counter;
 
     mips_cpu_bus_tb_mem #(RAM_FILE) mem(
         .clk(clk),
@@ -51,7 +54,9 @@ module mips_cpu_bus_tb();
 
     initial begin // test reset
         reset <= 0;
-        waitrequest <=  0;
+        waitrequest <= 0;
+
+        initialwrite = 1;
 
         @(posedge clk);
         reset <= 1;
@@ -63,10 +68,39 @@ module mips_cpu_bus_tb();
         
         //check that read and write don't activate at the same time
         while(active == 1) begin
-            @(posedge clk);
             assert(~(read && write));
             else $display("TB : CPU asserted read and write at the same time.");
+            @(posedge clk);
         end
 
+        $display("register_v0=%h", register_v0);
+        $display("active=0");
+        $finish;
+
+    end
+
+
+    always @(address or posedge read) 
+    begin
+        if (read)
+        begin
+            if (waitrequest_counter == 0) begin
+                waitrequest = 1;
+                #25;
+                waitrequest = 0;
+            end
+            waitrequest_counter = waitrequest_counter + 1;
+        end
+    end
+
+    // Uses waitrequest to make writes take 4 cycles
+    always @(address or posedge write)   
+    begin
+        if (write == 1 && initialwrite == 1) begin
+            waitrequest = 1;
+            #35;
+            waitrequest = 0;
+            initialwrite = 0;
+        end
     end
 endmodule
