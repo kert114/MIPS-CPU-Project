@@ -123,7 +123,7 @@ def to_hex(asm_in, hex_out):
                     data_words[temp+2] = data[4:6]
                     data_words[temp+3] = data[6:]
     
-    for i in range(5120):
+    for i in range(1024):
         if i in data_words.keys():
             hex_file.write(data_words[i] + "\n")
         else:
@@ -148,9 +148,9 @@ def to_hex(asm_in, hex_out):
             hex_file.write(hex_instr[-2*i+6:-2*i+8]+'\n')
             line_count += 1
         
-    for i in range(8192 - (line_count + 5120)):
-        if (i + line_count + 5120) in data_words.keys():
-            hex_file.write(data_words[i + line_count + 5120] + "\n")
+    for i in range(2048 - (line_count + 1024)):
+        if (i + line_count + 1024) in data_words.keys():
+            hex_file.write(data_words[i + line_count + 1024] + "\n")
         else:
             hex_file.write('00\n')
         
