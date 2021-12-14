@@ -1,0 +1,9 @@
+j0
+j
+standard jump
+0x00000001
+
+J 11267
+ADDIU $2, $2, 1
+ADDIU $2, $2, 1
+JR $0

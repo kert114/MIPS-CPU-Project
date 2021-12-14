@@ -1,0 +1,7 @@
+addiu2
+addiu
+test sign xt
+0x00008000
+
+ADDIU $2, $2, 32768
+JR $0

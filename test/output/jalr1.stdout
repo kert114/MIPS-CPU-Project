@@ -1,0 +1,4162 @@
+Loading initial RAM contents
+VCD info: dumpfile mips_cpu_bus_tb.vcd opened for output.
+waitreq = 0
+!!REGISTER RESET
+waitreq = 0
+waitreq = 0
+addr is 3217031168
+temp addr is    x,          x,          x,          x
+memory is xx, xx, xx, xx
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00000. Branch status is:0
+waitrequest=0
+Fetched instruction is xxxxxxxx. Accessing registers  x,  x
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+TB : CPU asserted read and write at the same time.
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00004. Branch status is:0
+waitreq = 0
+addr is 3217031172
+temp addr is    0,          1,          2,          3
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031176
+temp addr is    4,          5,          6,          7
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00008. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0000c. Branch status is:0
+waitreq = 0
+addr is 3217031180
+temp addr is    8,          9,         10,         11
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031184
+temp addr is   12,         13,         14,         15
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00010. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00014. Branch status is:0
+waitreq = 0
+addr is 3217031188
+temp addr is   16,         17,         18,         19
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031192
+temp addr is   20,         21,         22,         23
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00018. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0001c. Branch status is:0
+waitreq = 0
+addr is 3217031196
+temp addr is   24,         25,         26,         27
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031200
+temp addr is   28,         29,         30,         31
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00020. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00024. Branch status is:0
+waitreq = 0
+addr is 3217031204
+temp addr is   32,         33,         34,         35
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031208
+temp addr is   36,         37,         38,         39
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00028. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0002c. Branch status is:0
+waitreq = 0
+addr is 3217031212
+temp addr is   40,         41,         42,         43
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031216
+temp addr is   44,         45,         46,         47
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00030. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00034. Branch status is:0
+waitreq = 0
+addr is 3217031220
+temp addr is   48,         49,         50,         51
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031224
+temp addr is   52,         53,         54,         55
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00038. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0003c. Branch status is:0
+waitreq = 0
+addr is 3217031228
+temp addr is   56,         57,         58,         59
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031232
+temp addr is   60,         61,         62,         63
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00040. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00044. Branch status is:0
+waitreq = 0
+addr is 3217031236
+temp addr is   64,         65,         66,         67
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031240
+temp addr is   68,         69,         70,         71
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00048. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0004c. Branch status is:0
+waitreq = 0
+addr is 3217031244
+temp addr is   72,         73,         74,         75
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031248
+temp addr is   76,         77,         78,         79
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00050. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00054. Branch status is:0
+waitreq = 0
+addr is 3217031252
+temp addr is   80,         81,         82,         83
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031256
+temp addr is   84,         85,         86,         87
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00058. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0005c. Branch status is:0
+waitreq = 0
+addr is 3217031260
+temp addr is   88,         89,         90,         91
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031264
+temp addr is   92,         93,         94,         95
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00060. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00064. Branch status is:0
+waitreq = 0
+addr is 3217031268
+temp addr is   96,         97,         98,         99
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031272
+temp addr is  100,        101,        102,        103
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00068. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0006c. Branch status is:0
+waitreq = 0
+addr is 3217031276
+temp addr is  104,        105,        106,        107
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031280
+temp addr is  108,        109,        110,        111
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00070. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00074. Branch status is:0
+waitreq = 0
+addr is 3217031284
+temp addr is  112,        113,        114,        115
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031288
+temp addr is  116,        117,        118,        119
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00078. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0007c. Branch status is:0
+waitreq = 0
+addr is 3217031292
+temp addr is  120,        121,        122,        123
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031296
+temp addr is  124,        125,        126,        127
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00080. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00084. Branch status is:0
+waitreq = 0
+addr is 3217031300
+temp addr is  128,        129,        130,        131
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031304
+temp addr is  132,        133,        134,        135
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00088. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0008c. Branch status is:0
+waitreq = 0
+addr is 3217031308
+temp addr is  136,        137,        138,        139
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031312
+temp addr is  140,        141,        142,        143
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00090. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00094. Branch status is:0
+waitreq = 0
+addr is 3217031316
+temp addr is  144,        145,        146,        147
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031320
+temp addr is  148,        149,        150,        151
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00098. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0009c. Branch status is:0
+waitreq = 0
+addr is 3217031324
+temp addr is  152,        153,        154,        155
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031328
+temp addr is  156,        157,        158,        159
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000a0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000a4. Branch status is:0
+waitreq = 0
+addr is 3217031332
+temp addr is  160,        161,        162,        163
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031336
+temp addr is  164,        165,        166,        167
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000a8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000ac. Branch status is:0
+waitreq = 0
+addr is 3217031340
+temp addr is  168,        169,        170,        171
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031344
+temp addr is  172,        173,        174,        175
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000b0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000b4. Branch status is:0
+waitreq = 0
+addr is 3217031348
+temp addr is  176,        177,        178,        179
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031352
+temp addr is  180,        181,        182,        183
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000b8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000bc. Branch status is:0
+waitreq = 0
+addr is 3217031356
+temp addr is  184,        185,        186,        187
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031360
+temp addr is  188,        189,        190,        191
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000c0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000c4. Branch status is:0
+waitreq = 0
+addr is 3217031364
+temp addr is  192,        193,        194,        195
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031368
+temp addr is  196,        197,        198,        199
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000c8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000cc. Branch status is:0
+waitreq = 0
+addr is 3217031372
+temp addr is  200,        201,        202,        203
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031376
+temp addr is  204,        205,        206,        207
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000d0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000d4. Branch status is:0
+waitreq = 0
+addr is 3217031380
+temp addr is  208,        209,        210,        211
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031384
+temp addr is  212,        213,        214,        215
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000d8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000dc. Branch status is:0
+waitreq = 0
+addr is 3217031388
+temp addr is  216,        217,        218,        219
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031392
+temp addr is  220,        221,        222,        223
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000e0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000e4. Branch status is:0
+waitreq = 0
+addr is 3217031396
+temp addr is  224,        225,        226,        227
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031400
+temp addr is  228,        229,        230,        231
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000e8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000ec. Branch status is:0
+waitreq = 0
+addr is 3217031404
+temp addr is  232,        233,        234,        235
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031408
+temp addr is  236,        237,        238,        239
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000f0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000f4. Branch status is:0
+waitreq = 0
+addr is 3217031412
+temp addr is  240,        241,        242,        243
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031416
+temp addr is  244,        245,        246,        247
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000f8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc000fc. Branch status is:0
+waitreq = 0
+addr is 3217031420
+temp addr is  248,        249,        250,        251
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031424
+temp addr is  252,        253,        254,        255
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00100. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00104. Branch status is:0
+waitreq = 0
+addr is 3217031428
+temp addr is  256,        257,        258,        259
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031432
+temp addr is  260,        261,        262,        263
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00108. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0010c. Branch status is:0
+waitreq = 0
+addr is 3217031436
+temp addr is  264,        265,        266,        267
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031440
+temp addr is  268,        269,        270,        271
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00110. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00114. Branch status is:0
+waitreq = 0
+addr is 3217031444
+temp addr is  272,        273,        274,        275
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031448
+temp addr is  276,        277,        278,        279
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00118. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0011c. Branch status is:0
+waitreq = 0
+addr is 3217031452
+temp addr is  280,        281,        282,        283
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031456
+temp addr is  284,        285,        286,        287
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00120. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00124. Branch status is:0
+waitreq = 0
+addr is 3217031460
+temp addr is  288,        289,        290,        291
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031464
+temp addr is  292,        293,        294,        295
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00128. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0012c. Branch status is:0
+waitreq = 0
+addr is 3217031468
+temp addr is  296,        297,        298,        299
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031472
+temp addr is  300,        301,        302,        303
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00130. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00134. Branch status is:0
+waitreq = 0
+addr is 3217031476
+temp addr is  304,        305,        306,        307
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031480
+temp addr is  308,        309,        310,        311
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00138. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0013c. Branch status is:0
+waitreq = 0
+addr is 3217031484
+temp addr is  312,        313,        314,        315
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031488
+temp addr is  316,        317,        318,        319
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00140. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00144. Branch status is:0
+waitreq = 0
+addr is 3217031492
+temp addr is  320,        321,        322,        323
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031496
+temp addr is  324,        325,        326,        327
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00148. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0014c. Branch status is:0
+waitreq = 0
+addr is 3217031500
+temp addr is  328,        329,        330,        331
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031504
+temp addr is  332,        333,        334,        335
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00150. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00154. Branch status is:0
+waitreq = 0
+addr is 3217031508
+temp addr is  336,        337,        338,        339
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031512
+temp addr is  340,        341,        342,        343
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00158. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0015c. Branch status is:0
+waitreq = 0
+addr is 3217031516
+temp addr is  344,        345,        346,        347
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031520
+temp addr is  348,        349,        350,        351
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00160. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00164. Branch status is:0
+waitreq = 0
+addr is 3217031524
+temp addr is  352,        353,        354,        355
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031528
+temp addr is  356,        357,        358,        359
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00168. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0016c. Branch status is:0
+waitreq = 0
+addr is 3217031532
+temp addr is  360,        361,        362,        363
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031536
+temp addr is  364,        365,        366,        367
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00170. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00174. Branch status is:0
+waitreq = 0
+addr is 3217031540
+temp addr is  368,        369,        370,        371
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031544
+temp addr is  372,        373,        374,        375
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00178. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0017c. Branch status is:0
+waitreq = 0
+addr is 3217031548
+temp addr is  376,        377,        378,        379
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031552
+temp addr is  380,        381,        382,        383
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00180. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00184. Branch status is:0
+waitreq = 0
+addr is 3217031556
+temp addr is  384,        385,        386,        387
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031560
+temp addr is  388,        389,        390,        391
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00188. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0018c. Branch status is:0
+waitreq = 0
+addr is 3217031564
+temp addr is  392,        393,        394,        395
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031568
+temp addr is  396,        397,        398,        399
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00190. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00194. Branch status is:0
+waitreq = 0
+addr is 3217031572
+temp addr is  400,        401,        402,        403
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031576
+temp addr is  404,        405,        406,        407
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00198. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0019c. Branch status is:0
+waitreq = 0
+addr is 3217031580
+temp addr is  408,        409,        410,        411
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031584
+temp addr is  412,        413,        414,        415
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001a0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001a4. Branch status is:0
+waitreq = 0
+addr is 3217031588
+temp addr is  416,        417,        418,        419
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031592
+temp addr is  420,        421,        422,        423
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001a8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001ac. Branch status is:0
+waitreq = 0
+addr is 3217031596
+temp addr is  424,        425,        426,        427
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031600
+temp addr is  428,        429,        430,        431
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001b0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001b4. Branch status is:0
+waitreq = 0
+addr is 3217031604
+temp addr is  432,        433,        434,        435
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031608
+temp addr is  436,        437,        438,        439
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001b8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001bc. Branch status is:0
+waitreq = 0
+addr is 3217031612
+temp addr is  440,        441,        442,        443
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031616
+temp addr is  444,        445,        446,        447
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001c0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001c4. Branch status is:0
+waitreq = 0
+addr is 3217031620
+temp addr is  448,        449,        450,        451
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031624
+temp addr is  452,        453,        454,        455
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001c8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001cc. Branch status is:0
+waitreq = 0
+addr is 3217031628
+temp addr is  456,        457,        458,        459
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031632
+temp addr is  460,        461,        462,        463
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001d0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001d4. Branch status is:0
+waitreq = 0
+addr is 3217031636
+temp addr is  464,        465,        466,        467
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031640
+temp addr is  468,        469,        470,        471
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001d8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001dc. Branch status is:0
+waitreq = 0
+addr is 3217031644
+temp addr is  472,        473,        474,        475
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031648
+temp addr is  476,        477,        478,        479
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001e0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001e4. Branch status is:0
+waitreq = 0
+addr is 3217031652
+temp addr is  480,        481,        482,        483
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031656
+temp addr is  484,        485,        486,        487
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001e8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001ec. Branch status is:0
+waitreq = 0
+addr is 3217031660
+temp addr is  488,        489,        490,        491
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031664
+temp addr is  492,        493,        494,        495
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001f0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001f4. Branch status is:0
+waitreq = 0
+addr is 3217031668
+temp addr is  496,        497,        498,        499
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031672
+temp addr is  500,        501,        502,        503
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001f8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc001fc. Branch status is:0
+waitreq = 0
+addr is 3217031676
+temp addr is  504,        505,        506,        507
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031680
+temp addr is  508,        509,        510,        511
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00200. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00204. Branch status is:0
+waitreq = 0
+addr is 3217031684
+temp addr is  512,        513,        514,        515
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031688
+temp addr is  516,        517,        518,        519
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00208. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0020c. Branch status is:0
+waitreq = 0
+addr is 3217031692
+temp addr is  520,        521,        522,        523
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031696
+temp addr is  524,        525,        526,        527
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00210. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00214. Branch status is:0
+waitreq = 0
+addr is 3217031700
+temp addr is  528,        529,        530,        531
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031704
+temp addr is  532,        533,        534,        535
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00218. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0021c. Branch status is:0
+waitreq = 0
+addr is 3217031708
+temp addr is  536,        537,        538,        539
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031712
+temp addr is  540,        541,        542,        543
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00220. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00224. Branch status is:0
+waitreq = 0
+addr is 3217031716
+temp addr is  544,        545,        546,        547
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031720
+temp addr is  548,        549,        550,        551
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00228. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0022c. Branch status is:0
+waitreq = 0
+addr is 3217031724
+temp addr is  552,        553,        554,        555
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031728
+temp addr is  556,        557,        558,        559
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00230. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00234. Branch status is:0
+waitreq = 0
+addr is 3217031732
+temp addr is  560,        561,        562,        563
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031736
+temp addr is  564,        565,        566,        567
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00238. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0023c. Branch status is:0
+waitreq = 0
+addr is 3217031740
+temp addr is  568,        569,        570,        571
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031744
+temp addr is  572,        573,        574,        575
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00240. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00244. Branch status is:0
+waitreq = 0
+addr is 3217031748
+temp addr is  576,        577,        578,        579
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031752
+temp addr is  580,        581,        582,        583
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00248. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0024c. Branch status is:0
+waitreq = 0
+addr is 3217031756
+temp addr is  584,        585,        586,        587
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031760
+temp addr is  588,        589,        590,        591
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00250. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00254. Branch status is:0
+waitreq = 0
+addr is 3217031764
+temp addr is  592,        593,        594,        595
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031768
+temp addr is  596,        597,        598,        599
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00258. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0025c. Branch status is:0
+waitreq = 0
+addr is 3217031772
+temp addr is  600,        601,        602,        603
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031776
+temp addr is  604,        605,        606,        607
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00260. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00264. Branch status is:0
+waitreq = 0
+addr is 3217031780
+temp addr is  608,        609,        610,        611
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031784
+temp addr is  612,        613,        614,        615
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00268. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0026c. Branch status is:0
+waitreq = 0
+addr is 3217031788
+temp addr is  616,        617,        618,        619
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031792
+temp addr is  620,        621,        622,        623
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00270. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00274. Branch status is:0
+waitreq = 0
+addr is 3217031796
+temp addr is  624,        625,        626,        627
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031800
+temp addr is  628,        629,        630,        631
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00278. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0027c. Branch status is:0
+waitreq = 0
+addr is 3217031804
+temp addr is  632,        633,        634,        635
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031808
+temp addr is  636,        637,        638,        639
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00280. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00284. Branch status is:0
+waitreq = 0
+addr is 3217031812
+temp addr is  640,        641,        642,        643
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031816
+temp addr is  644,        645,        646,        647
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00288. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0028c. Branch status is:0
+waitreq = 0
+addr is 3217031820
+temp addr is  648,        649,        650,        651
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031824
+temp addr is  652,        653,        654,        655
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00290. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00294. Branch status is:0
+waitreq = 0
+addr is 3217031828
+temp addr is  656,        657,        658,        659
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031832
+temp addr is  660,        661,        662,        663
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00298. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0029c. Branch status is:0
+waitreq = 0
+addr is 3217031836
+temp addr is  664,        665,        666,        667
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031840
+temp addr is  668,        669,        670,        671
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002a0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002a4. Branch status is:0
+waitreq = 0
+addr is 3217031844
+temp addr is  672,        673,        674,        675
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031848
+temp addr is  676,        677,        678,        679
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002a8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002ac. Branch status is:0
+waitreq = 0
+addr is 3217031852
+temp addr is  680,        681,        682,        683
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031856
+temp addr is  684,        685,        686,        687
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002b0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002b4. Branch status is:0
+waitreq = 0
+addr is 3217031860
+temp addr is  688,        689,        690,        691
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031864
+temp addr is  692,        693,        694,        695
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002b8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002bc. Branch status is:0
+waitreq = 0
+addr is 3217031868
+temp addr is  696,        697,        698,        699
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031872
+temp addr is  700,        701,        702,        703
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002c0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002c4. Branch status is:0
+waitreq = 0
+addr is 3217031876
+temp addr is  704,        705,        706,        707
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031880
+temp addr is  708,        709,        710,        711
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002c8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002cc. Branch status is:0
+waitreq = 0
+addr is 3217031884
+temp addr is  712,        713,        714,        715
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031888
+temp addr is  716,        717,        718,        719
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002d0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002d4. Branch status is:0
+waitreq = 0
+addr is 3217031892
+temp addr is  720,        721,        722,        723
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031896
+temp addr is  724,        725,        726,        727
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002d8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002dc. Branch status is:0
+waitreq = 0
+addr is 3217031900
+temp addr is  728,        729,        730,        731
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031904
+temp addr is  732,        733,        734,        735
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002e0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002e4. Branch status is:0
+waitreq = 0
+addr is 3217031908
+temp addr is  736,        737,        738,        739
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031912
+temp addr is  740,        741,        742,        743
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002e8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002ec. Branch status is:0
+waitreq = 0
+addr is 3217031916
+temp addr is  744,        745,        746,        747
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031920
+temp addr is  748,        749,        750,        751
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002f0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002f4. Branch status is:0
+waitreq = 0
+addr is 3217031924
+temp addr is  752,        753,        754,        755
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031928
+temp addr is  756,        757,        758,        759
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002f8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc002fc. Branch status is:0
+waitreq = 0
+addr is 3217031932
+temp addr is  760,        761,        762,        763
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031936
+temp addr is  764,        765,        766,        767
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00300. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00304. Branch status is:0
+waitreq = 0
+addr is 3217031940
+temp addr is  768,        769,        770,        771
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031944
+temp addr is  772,        773,        774,        775
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00308. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0030c. Branch status is:0
+waitreq = 0
+addr is 3217031948
+temp addr is  776,        777,        778,        779
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031952
+temp addr is  780,        781,        782,        783
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00310. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00314. Branch status is:0
+waitreq = 0
+addr is 3217031956
+temp addr is  784,        785,        786,        787
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031960
+temp addr is  788,        789,        790,        791
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00318. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0031c. Branch status is:0
+waitreq = 0
+addr is 3217031964
+temp addr is  792,        793,        794,        795
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031968
+temp addr is  796,        797,        798,        799
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00320. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00324. Branch status is:0
+waitreq = 0
+addr is 3217031972
+temp addr is  800,        801,        802,        803
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031976
+temp addr is  804,        805,        806,        807
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00328. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0032c. Branch status is:0
+waitreq = 0
+addr is 3217031980
+temp addr is  808,        809,        810,        811
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031984
+temp addr is  812,        813,        814,        815
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00330. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00334. Branch status is:0
+waitreq = 0
+addr is 3217031988
+temp addr is  816,        817,        818,        819
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217031992
+temp addr is  820,        821,        822,        823
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00338. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0033c. Branch status is:0
+waitreq = 0
+addr is 3217031996
+temp addr is  824,        825,        826,        827
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032000
+temp addr is  828,        829,        830,        831
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00340. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00344. Branch status is:0
+waitreq = 0
+addr is 3217032004
+temp addr is  832,        833,        834,        835
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032008
+temp addr is  836,        837,        838,        839
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00348. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0034c. Branch status is:0
+waitreq = 0
+addr is 3217032012
+temp addr is  840,        841,        842,        843
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032016
+temp addr is  844,        845,        846,        847
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00350. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00354. Branch status is:0
+waitreq = 0
+addr is 3217032020
+temp addr is  848,        849,        850,        851
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032024
+temp addr is  852,        853,        854,        855
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00358. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0035c. Branch status is:0
+waitreq = 0
+addr is 3217032028
+temp addr is  856,        857,        858,        859
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032032
+temp addr is  860,        861,        862,        863
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00360. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00364. Branch status is:0
+waitreq = 0
+addr is 3217032036
+temp addr is  864,        865,        866,        867
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032040
+temp addr is  868,        869,        870,        871
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00368. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0036c. Branch status is:0
+waitreq = 0
+addr is 3217032044
+temp addr is  872,        873,        874,        875
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032048
+temp addr is  876,        877,        878,        879
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00370. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00374. Branch status is:0
+waitreq = 0
+addr is 3217032052
+temp addr is  880,        881,        882,        883
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032056
+temp addr is  884,        885,        886,        887
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00378. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0037c. Branch status is:0
+waitreq = 0
+addr is 3217032060
+temp addr is  888,        889,        890,        891
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032064
+temp addr is  892,        893,        894,        895
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00380. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00384. Branch status is:0
+waitreq = 0
+addr is 3217032068
+temp addr is  896,        897,        898,        899
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032072
+temp addr is  900,        901,        902,        903
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00388. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0038c. Branch status is:0
+waitreq = 0
+addr is 3217032076
+temp addr is  904,        905,        906,        907
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032080
+temp addr is  908,        909,        910,        911
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00390. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00394. Branch status is:0
+waitreq = 0
+addr is 3217032084
+temp addr is  912,        913,        914,        915
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032088
+temp addr is  916,        917,        918,        919
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00398. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc0039c. Branch status is:0
+waitreq = 0
+addr is 3217032092
+temp addr is  920,        921,        922,        923
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032096
+temp addr is  924,        925,        926,        927
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003a0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003a4. Branch status is:0
+waitreq = 0
+addr is 3217032100
+temp addr is  928,        929,        930,        931
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032104
+temp addr is  932,        933,        934,        935
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003a8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003ac. Branch status is:0
+waitreq = 0
+addr is 3217032108
+temp addr is  936,        937,        938,        939
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032112
+temp addr is  940,        941,        942,        943
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003b0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003b4. Branch status is:0
+waitreq = 0
+addr is 3217032116
+temp addr is  944,        945,        946,        947
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032120
+temp addr is  948,        949,        950,        951
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003b8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003bc. Branch status is:0
+waitreq = 0
+addr is 3217032124
+temp addr is  952,        953,        954,        955
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032128
+temp addr is  956,        957,        958,        959
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003c0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003c4. Branch status is:0
+waitreq = 0
+addr is 3217032132
+temp addr is  960,        961,        962,        963
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032136
+temp addr is  964,        965,        966,        967
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003c8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003cc. Branch status is:0
+waitreq = 0
+addr is 3217032140
+temp addr is  968,        969,        970,        971
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032144
+temp addr is  972,        973,        974,        975
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003d0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003d4. Branch status is:0
+waitreq = 0
+addr is 3217032148
+temp addr is  976,        977,        978,        979
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032152
+temp addr is  980,        981,        982,        983
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003d8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003dc. Branch status is:0
+waitreq = 0
+addr is 3217032156
+temp addr is  984,        985,        986,        987
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032160
+temp addr is  988,        989,        990,        991
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003e0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003e4. Branch status is:0
+waitreq = 0
+addr is 3217032164
+temp addr is  992,        993,        994,        995
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032168
+temp addr is  996,        997,        998,        999
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003e8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003ec. Branch status is:0
+waitreq = 0
+addr is 3217032172
+temp addr is 1000,       1001,       1002,       1003
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032176
+temp addr is 1004,       1005,       1006,       1007
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003f0. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003f4. Branch status is:0
+waitreq = 0
+addr is 3217032180
+temp addr is 1008,       1009,       1010,       1011
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032184
+temp addr is 1012,       1013,       1014,       1015
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003f8. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc003fc. Branch status is:0
+waitreq = 0
+addr is 3217032188
+temp addr is 1016,       1017,       1018,       1019
+memory is 00, 00, 00, 00
+waitreq = 0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032192
+temp addr is 1020,       1021,       1022,       1023
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00400. Branch status is:0
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00404. Branch status is:0
+waitreq = 0
+addr is 3217032196
+temp addr is 1024,       1025,       1026,       1027
+memory is 09, 10, 80, 01
+waitreq = 0
+waitrequest=0
+Fetched instruction is 01801009. Accessing registers 12,  0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+addr is 3217032200
+temp addr is 1028,       1029,       1030,       1031
+memory is 00, 00, 00, 00
+waitrequest=0
+waitrequest=0
+Fetching instruction at bfc00408. Branch status is:2
+!! REG  2 is being written with data bfc0040c
+waitrequest=0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitreq = 0
+waitreq = 0
+waitrequest=0
+waitrequest=0
+waitrequest=0
+Fetching instruction at 00000000. Branch status is:0
+waitreq = 0
+addr is          0
+temp addr is 1032,       1033,       1034,       1035
+memory is 00, 00, 00, 00
+register_v0=bfc0040c
+active=0
+test/mips_cpu_bus_tb.v:78: $finish called at 25975 (1s)
+waitreq = 0

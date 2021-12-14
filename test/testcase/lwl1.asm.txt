@@ -1,0 +1,8 @@
+lwl1
+lwl
+2 lsb as msb
+0xcd150000
+
+LWL $2, 9($0)
+JR $1
+DATA 0x00000009, 123456789

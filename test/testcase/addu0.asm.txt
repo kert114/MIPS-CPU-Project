@@ -1,0 +1,8 @@
+addu0
+addu
+simple addition
+0x00000010
+
+ADDIU $3, $3, 8
+ADDU $2, $3, $3
+JR $0

@@ -1,0 +1,8 @@
+lwl3
+lwl
+load 4 lsb bytes
+0x075BCD15
+
+LWL $2, 11($0)
+JR $1
+DATA 0x0000000b, 123456789

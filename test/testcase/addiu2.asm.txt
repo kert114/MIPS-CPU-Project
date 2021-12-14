@@ -1,0 +1,7 @@
+addiu2
+addiu
+test -1
+0xffffffff
+
+ADDIU $2, $2, -1
+JR $0

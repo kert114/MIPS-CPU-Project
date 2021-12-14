@@ -1,0 +1,9 @@
+or0
+or
+basic or
+0x000001d9
+
+ADDIU $8, $8, 456
+ADDIU $7, $7, 345
+OR $2, $7, $8
+JR $0

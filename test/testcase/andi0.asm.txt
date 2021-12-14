@@ -1,0 +1,8 @@
+andi0
+andi
+and i
+0x00000003
+
+ADDIU $20, $20, 7
+ANDI $2, $20, 11
+JR $0

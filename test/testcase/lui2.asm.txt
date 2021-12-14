@@ -1,0 +1,7 @@
+lui0
+lui
+all bits work
+0xffff0000
+
+LUI $2, 65535
+JR $0

@@ -1,0 +1,9 @@
+xor0
+xor0
+xor basic
+0x000003a9
+
+ADDIU $8, $8, 564
+ADDIU $7, $7, 413
+XOR $2, $7, $8
+JR $0

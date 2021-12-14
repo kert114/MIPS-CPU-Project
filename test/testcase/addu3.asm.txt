@@ -1,0 +1,9 @@
+addu3
+addu
+- and - add
+0xffffffd6
+
+ADDIU $12, $12, -30
+ADDIU $30, $30, -12
+ADDU $2, $30, $12
+JR $0

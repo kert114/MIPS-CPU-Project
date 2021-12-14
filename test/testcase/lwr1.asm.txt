@@ -1,0 +1,8 @@
+lwr0
+lwr
+load full word right
+0x00075bcd
+
+LWR $2, 9($0)
+JR $1
+DATA 0x00000008, 123456789

@@ -45,7 +45,7 @@ module mips_cpu_bus(
     wire[15:0] regHalf = registerReadB[15:0]; //least significant bytes
 
     /*----Memory combinational things-------------------*/
-    assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB));
+    assign write = (state == S_MEMORY && (instrOp == OP_SW || instrOp == OP_SH || instrOp == OP_SB)) ? 1:0;
     assign writedata = (instrOp == OP_SW) ? {registerReadB[7:0],registerReadB[15:8],registerReadB[23:16],registerReadB[31:24]}: //changed to big endian
                        (instrOp == OP_SH) ? ((addressTemp[1:0] == 2'b00) ? {16'b0,regHalf[7:0],regHalf[15:8]} :
                                                                           {regHalf[7:0],regHalf[15:8], 16'b0}
@@ -56,13 +56,13 @@ module mips_cpu_bus(
                                                                            {regByte[7:0], 24'b0}
                                             ): 32'b0; //don't think this needs to change
     
-    assign read = (state == S_FETCH)
+    assign read = ((state == S_FETCH)
                 ||(state == S_MEMORY && (((instrOp == OP_LH || instrOp == OP_LHU) && AluOut[0] == 1'b0)
                                         ||(instrOp == OP_LW && AluOut[1:0] == 2'b00)
                                         ||(instrOp == OP_LWL|| instrOp == OP_LWR)
                                         ||(instrOp == OP_LB || instrOp == OP_LBU)
                                         )
-                  );
+                  )) ? 1:0;
 
     logic[31:0] addressTemp;
     assign addressTemp = (state == S_FETCH) ? progCount : AluOut;
@@ -300,7 +300,7 @@ module mips_cpu_bus(
 
     always @(posedge clk) begin
         if (reset == 1) begin
-            $display("CPU Reset");
+            //$display("CPU Reset");
             progCount <=32'hBFC00000;
             progTemp <= 32'd0;
             registerHi <= 0;
@@ -311,12 +311,12 @@ module mips_cpu_bus(
             state <= S_FETCH;
         end
         else if(state == S_FETCH) begin
-            $display("reg write enable", registerWriteEnable);
-            $display("progTemp %h", progTemp);
-            $display("reg data in", registerDataIn);
-            $display("-----REGISTER V0 VALUE:----- %h", register_v0);
+            //$display("reg write enable", registerWriteEnable);
+            //$display("progTemp %h", progTemp);
+            //$display("reg data in", registerDataIn);
+            //$display("-----REGISTER V0 VALUE:----- %h", register_v0);
         	$display("---FETCH---");
-            $display("Read:",read,"Write:",write);
+            //$display("Read:",read,"Write:",write);
             $display("Fetching instruction at %h. Branch status is:", address, branch);
         	if(address == 32'h00000000) begin
         		active <= 0;
@@ -331,6 +331,7 @@ module mips_cpu_bus(
         end
         else if(state == S_DECODE) begin
             $display("---DECODE---");
+<<<<<<< HEAD
             $display("Read:",read,"Write:",write);
             $display("Fetched instruction is %h. Accessing registers %d, %d", {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}, readdata[25:21],readdata[20:16]);
         	instruction <={readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}; //big endian'd
@@ -339,6 +340,16 @@ module mips_cpu_bus(
             exImm <= {{16{readdata[23]}},readdata[23:16], readdata[31:24]};
             zeImm <= {16'b0, readdata[23:16], readdata[31:24]};
             shiftAmount <= {readdata[18:16], readdata[31:30]};
+=======
+            //$display("Read:",read,"Write:",write);
+            $display("Fetched instruction is %h. Accessing registers %d, %d", readdata, readdata[25:21],readdata[20:16]);
+        	instruction <=readdata;
+        	registerAddressA <= readdata[25:21];
+        	registerAddressB <= readdata[20:16]; //used direct for timing sadness
+            exImm <= {{16{readdata[15]}},readdata[15:0]};
+            zeImm <= {16'b0, readdata[15:0]};
+            shiftAmount <= readdata[10:6];
+>>>>>>> d232c584b83356a81fe4bdffbc29f01edf23e9c0
 
             if(readdata[31:26] == OP_R_TYPE) begin
             	AluControl <= (readdata[29:24]  == FN_SLL)  ? ALU_SLL  :
@@ -386,9 +397,9 @@ module mips_cpu_bus(
         end
         else if(state == S_EXECUTE) begin
         	$display("---EXEC---");
-            $display("Read:",read,"Write:",write);
-            $display("ALU operation", AluControl);
-            $display("Reg %d = %h. Reg %d = %h", registerAddressA, registerReadA, registerAddressB, registerReadB);
+            //$display("Read:",read,"Write:",write);
+            //$display("ALU operation", AluControl);
+            //$display("Reg %d = %h. Reg %d = %h", registerAddressA, registerReadA, registerAddressB, registerReadB);
         	if(instrOp == OP_R_TYPE) begin
         		if(instrFn == FN_JR || instrFn == FN_JALR) begin
                     branch <= 1;
@@ -404,9 +415,9 @@ module mips_cpu_bus(
         end
         else if(state == S_MEMORY) begin
             $display("---MEMORY---");
-            $display("Read:",read,"Write:",write);
-            $display("AluOut:", AluOut);
-            $display("regB data:", registerReadB);
+            //$display("Read:",read,"Write:",write);
+            //$display("AluOut:", AluOut);
+            //$display("regB data:", registerReadB);
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
         	if (waitrequest == 1) begin
         	end
@@ -436,9 +447,9 @@ module mips_cpu_bus(
         end
         else if(state == S_WRITEBACK) begin
             $display("---WRITEBACK---");
-            $display("Read:",read,"Write:",write);
-            $display("curr AluOut", AluOut);
-            $display("writing to reg:", instrS2);
+            //$display("Read:",read,"Write:",write);
+            //$display("curr AluOut", AluOut);
+            //$display("writing to reg:", instrS2);
 
         	registerWriteEnable <= (instrOp == OP_R_TYPE && (instrFn == FN_ADDU || instrFn == FN_SLL
         																	    || instrFn == FN_SRL
@@ -545,7 +556,7 @@ module mips_cpu_bus(
     	end
 
     	else if(state == S_HALTED) begin
-        	$display("Halted kekw");
+        	//$display("Halted kekw");
         end
     end
 endmodule : mips_cpu_bus

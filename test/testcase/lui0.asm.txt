@@ -1,0 +1,7 @@
+lui0
+lui
+Pure lui
+0x1ab20000
+
+LUI $2, 6834
+JR $0

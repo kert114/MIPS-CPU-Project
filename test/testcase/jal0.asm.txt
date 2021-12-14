@@ -1,0 +1,11 @@
+jal1
+jal
+jump to skip an instruction ???
+0x00000004
+
+JAL 66060291
+ADDIU $2, $2, 1
+ADDIU $2, $2, -5
+JR $2
+ADDIU $2, $2, 3
+JR $0

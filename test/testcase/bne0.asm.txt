@@ -1,0 +1,12 @@
+bne0
+bne
+standard branch - not sure how this works
+0x00000400
+
+ADDIU $3, $3, 1020
+ADDIU $21, $21, 1028
+BNE $3, $21, 2
+ADDIU $2, $2, 1
+ADDIU $2, $2, 1
+ADDIU $2, $2, 1
+JR $0

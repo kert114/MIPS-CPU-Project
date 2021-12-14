@@ -1,0 +1,7 @@
+jalr1
+jalr
+jalr halt
+0x00000005
+
+ADDIU $2, $2, 5
+JALR $0 $1

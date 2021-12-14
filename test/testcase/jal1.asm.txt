@@ -1,0 +1,14 @@
+jal2
+jal
+link test ???
+0x00000008
+
+JAL 66060294
+ADDIU $2 $2 1
+ADDIU $2 $2 1
+JR $1
+ADDIU $2 $2 2
+ADDIU $2 $2 3
+ADDIU $2 $2 3
+JR $31
+ADDIU $2 $2 1

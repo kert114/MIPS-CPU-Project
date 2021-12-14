@@ -1,0 +1,9 @@
+addu4
+addu
+same reg
+0x00000080
+
+ADDIU $30, $30, 32
+ADDU $2, $30, $30
+ADDU $2, $2, $2
+JR $0

@@ -1,0 +1,9 @@
+and2
+and
+neg and
+0x00000148
+
+ADDIU $8, $8, -564
+ADDIU $7, $7, 347
+AND $2, $8, $7
+JR $0

@@ -1,0 +1,9 @@
+addu1
+addu
+addition
+0x0000dc8c
+
+ADDIU $12, $12, 53230
+ADDIU $30, $30, 3230
+ADDU $2, $30, $12
+JR $0

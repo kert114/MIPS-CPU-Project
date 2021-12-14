@@ -1,0 +1,9 @@
+addu3
+addu
++ and - add
+0x00000008
+
+ADDIU $12, $12, 16
+ADDIU $30, $30, -8
+ADDU $2, $30, $12
+JR $0
