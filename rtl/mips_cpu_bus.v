@@ -339,14 +339,6 @@ module mips_cpu_bus(
             exImm <= {{16{readdata[23]}},readdata[23:16], readdata[31:24]};
             zeImm <= {16'b0, readdata[23:16], readdata[31:24]};
             shiftAmount <= {readdata[18:16], readdata[31:30]};
-            //$display("Read:",read,"Write:",write);
-            $display("Fetched instruction is %h. Accessing registers %d, %d", readdata, readdata[25:21],readdata[20:16]);
-        	instruction <=readdata;
-        	registerAddressA <= readdata[25:21];
-        	registerAddressB <= readdata[20:16]; //used direct for timing sadness
-            exImm <= {{16{readdata[15]}},readdata[15:0]};
-            zeImm <= {16'b0, readdata[15:0]};
-            shiftAmount <= readdata[10:6];
             if(readdata[31:26] == OP_R_TYPE) begin
             	AluControl <= (readdata[29:24]  == FN_SLL)  ? ALU_SLL  :
         					  (readdata[29:24]  == FN_SRL)  ? ALU_SRL  :
