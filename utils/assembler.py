@@ -96,8 +96,19 @@ def to_bin(x, i):
         binary = to_bin(binary, i)
     else:
         binary = bin(x)[2:].zfill(i)
+    #print(binary)
     return binary
 
+def to_ref(asm_in, ref_out):
+    asm_file = open(asm_in)
+    ref_file = open(ref_out, 'w')
+    asm_input = asm_file.readlines()
+
+    for i, words in enumerate(asm_input):
+        if i == 3:
+            clean = [x.replace("0x","") for x in words.split()]
+            #print(str(clean))
+            ref_file.write("register_v0=" + clean[0] + "\n" + "active=0")
 
 def to_hex(asm_in, hex_out):
 
@@ -135,7 +146,7 @@ def to_hex(asm_in, hex_out):
             Rt = int(words[1])
             Rs = int(words[2])
             Imm = int(words[3])
-            hex_instr = hex(int(opcode + to_bin(Rt, 5) + to_bin(Rs, 5) + to_bin(Imm, 16), 2))
+            hex_instr = hex(int(opcode + to_bin(Rs, 5) + to_bin(Rt, 5) + to_bin(Imm, 16), 2))
         
         elif words[0] in ["ADDU", "AND", "OR", "SLT", "SLTU", "SUBU","XOR"]:
             Rd = int(words[1])
@@ -159,7 +170,11 @@ def to_hex(asm_in, hex_out):
             Rt = int(words[1])
             Imm = int(words[2])
             hex_instr = hex(int(opcode + "00000" + to_bin(Rt,5) + to_bin(Imm,16),2))
-        
+        elif words[0].upper() in ['LB', 'LBU', 'LH', 'LHU', 'LW', 'LWL', 'LWR', 'SB', 'SH', 'SW']:
+            Rt = int(words[1])
+            offset = int(words[2].split('(')[0])
+            Rs = int(words[2].split('(')[1].replace(')',''))
+            hex_instr = hex(int(opcode + to_bin(Rs,5) + to_bin(Rt,5) + to_bin(offset,16),2))
         elif words[0] in ['DIV', 'DIVU', 'MULT', 'MULTU']:
             Rs = int(words[1])
             Rt = int(words[2])
@@ -210,5 +225,6 @@ for file in os.listdir(sys.argv[1]):
     if file.endswith(".asm.txt"):
         print(os.path.join(sys.argv[1], file))
         to_hex(os.path.join(sys.argv[1], file), os.path.join(sys.argv[2], file.replace('asm','hex')))
+        to_ref(os.path.join(sys.argv[1], file), os.path.join(sys.argv[3], file.replace('asm.txt','txt')))
 
         
