@@ -29,7 +29,7 @@ module mips_cpu_bus(
 
     reg[31:0] exImm, zeImm; //sign,unsign
     reg[4:0] shiftAmount;
-    wire[25:0] instrAddrJ = instruction[25:0];
+    wire[25:0] instrAddrJ = instruction[25:0]; //endian conversion applied in decode cycle
     /*---*/
     
     /*---Register0-31+HI+LO+progCountS---*/
@@ -332,54 +332,54 @@ module mips_cpu_bus(
         else if(state == S_DECODE) begin
             $display("---DECODE---");
             $display("Read:",read,"Write:",write);
-            $display("Fetched instruction is %h. Accessing registers %d, %d", readdata, readdata[25:21],readdata[20:16]);
-        	instruction <=readdata;
-        	registerAddressA <= readdata[25:21];
-        	registerAddressB <= readdata[20:16]; //used direct for timing sadness
-            exImm <= {{16{readdata[15]}},readdata[15:0]};
-            zeImm <= {16'b0, readdata[15:0]};
-            shiftAmount <= readdata[10:6];
+            $display("Fetched instruction is %h. Accessing registers %d, %d", {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}, readdata[25:21],readdata[20:16]);
+        	instruction <={readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}; //big endian'd
+        	registerAddressA <= {readdata[1:0], readdata[15:13]}; //big endian'd
+        	registerAddressB <= readdata[12:8]; //big endian'd
+            exImm <= {{16{readdata[23]}},readdata[23:16], readdata[31:24]};
+            zeImm <= {16'b0, readdata[23:16], readdata[31:24]};
+            shiftAmount <= {readdata[18:16], readdata[31:30]};
 
             if(readdata[31:26] == OP_R_TYPE) begin
-            	AluControl <= (readdata[5:0]  == FN_SLL)  ? ALU_SLL  :
-        					  (readdata[5:0]  == FN_SRL)  ? ALU_SRL  :
-        					  (readdata[5:0]  == FN_SRA)  ? ALU_SRA  :
-        					  (readdata[5:0]  == FN_SLLV) ? ALU_SLLV :
-        					  (readdata[5:0]  == FN_SRLV) ? ALU_SRLV :
-        					  (readdata[5:0]  == FN_SRAV) ? ALU_SRAV :
-        					  (readdata[5:0]  == FN_MFHI) ? ALU_ADD  :
-        					  (readdata[5:0]  == FN_MTHI) ? ALU_ADD  :
-        					  (readdata[5:0]  == FN_ADDU) ? ALU_ADD  :
-        					  (readdata[5:0]  == FN_SUBU) ? ALU_SUB  :
-        					  (readdata[5:0]  == FN_AND)  ? ALU_AND  :
-        					  (readdata[5:0]  == FN_OR)   ? ALU_OR   :
-        					  (readdata[5:0]  == FN_XOR)  ? ALU_XOR  :
-        					  (readdata[5:0]  == FN_SLT)  ? ALU_SLT  :
-        					  (readdata[5:0]  == FN_SLTU) ? ALU_SLTU : ALU_DEFAULT;
+            	AluControl <= (readdata[29:24]  == FN_SLL)  ? ALU_SLL  :
+        					  (readdata[29:24]  == FN_SRL)  ? ALU_SRL  :
+        					  (readdata[29:24]  == FN_SRA)  ? ALU_SRA  :
+        					  (readdata[29:24]  == FN_SLLV) ? ALU_SLLV :
+        					  (readdata[29:24]  == FN_SRLV) ? ALU_SRLV :
+        					  (readdata[29:24]  == FN_SRAV) ? ALU_SRAV :
+        					  (readdata[29:24]  == FN_MFHI) ? ALU_ADD  :
+        					  (readdata[29:24]  == FN_MTHI) ? ALU_ADD  :
+        					  (readdata[29:24]  == FN_ADDU) ? ALU_ADD  :
+        					  (readdata[29:24]  == FN_SUBU) ? ALU_SUB  :
+        					  (readdata[29:24]  == FN_AND)  ? ALU_AND  :
+        					  (readdata[29:24]  == FN_OR)   ? ALU_OR   :
+        					  (readdata[29:24]  == FN_XOR)  ? ALU_XOR  :
+        					  (readdata[29:24]  == FN_SLT)  ? ALU_SLT  :
+        					  (readdata[29:24]  == FN_SLTU) ? ALU_SLTU : ALU_DEFAULT;
             end
             else begin
-            	AluControl <= (readdata[31:26] == OP_REGIMM) ? ALU_A    :
-        		              (readdata[31:26] == OP_BEQ)    ? ALU_SUB  :
-        		              (readdata[31:26] == OP_BNE)    ? ALU_SUB  :
-        		              (readdata[31:26] == OP_BLEZ)   ? ALU_A    :
-        		              (readdata[31:26] == OP_BGTZ)   ? ALU_A    :
-        		              (readdata[31:26] == OP_SLTI)   ? ALU_SLT  :
-        		              (readdata[31:26] == OP_SLTIU)  ? ALU_SLTU :
-        		              (readdata[31:26] == OP_ADDIU)  ? ALU_ADD  :
-        		              (readdata[31:26] == OP_ANDI)   ? ALU_AND  :
-        		              (readdata[31:26] == OP_ORI)    ? ALU_OR   :
-        		              (readdata[31:26] == OP_XORI)   ? ALU_XOR  :
-        		              (readdata[31:26] == OP_LUI)    ? ALU_LUI  :
-        		              (readdata[31:26] == OP_LB)     ? ALU_ADD  :
-        		              (readdata[31:26] == OP_LH)     ? ALU_ADD  :
-        		              (readdata[31:26] == OP_LWL)    ? ALU_ADD  :
-        		              (readdata[31:26] == OP_LW)     ? ALU_ADD  :
-        		              (readdata[31:26] == OP_LBU)    ? ALU_ADD  :
-        		              (readdata[31:26] == OP_LHU)    ? ALU_ADD  :
-        		              (readdata[31:26] == OP_LWR)    ? ALU_ADD  :
-        		              (readdata[31:26] == OP_SB)     ? ALU_ADD  :
-        		              (readdata[31:26] == OP_SH)     ? ALU_ADD  :
-        		              (readdata[31:26] == OP_SW)     ? ALU_ADD  : ALU_DEFAULT;
+            	AluControl <= (readdata[7:2] == OP_REGIMM) ? ALU_A    :
+        		              (readdata[7:2] == OP_BEQ)    ? ALU_SUB  :
+        		              (readdata[7:2] == OP_BNE)    ? ALU_SUB  :
+        		              (readdata[7:2] == OP_BLEZ)   ? ALU_A    :
+        		              (readdata[7:2] == OP_BGTZ)   ? ALU_A    :
+        		              (readdata[7:2] == OP_SLTI)   ? ALU_SLT  :
+        		              (readdata[7:2] == OP_SLTIU)  ? ALU_SLTU :
+        		              (readdata[7:2] == OP_ADDIU)  ? ALU_ADD  :
+        		              (readdata[7:2] == OP_ANDI)   ? ALU_AND  :
+        		              (readdata[7:2] == OP_ORI)    ? ALU_OR   :
+        		              (readdata[7:2] == OP_XORI)   ? ALU_XOR  :
+        		              (readdata[7:2] == OP_LUI)    ? ALU_LUI  :
+        		              (readdata[7:2] == OP_LB)     ? ALU_ADD  :
+        		              (readdata[7:2] == OP_LH)     ? ALU_ADD  :
+        		              (readdata[7:2] == OP_LWL)    ? ALU_ADD  :
+        		              (readdata[7:2] == OP_LW)     ? ALU_ADD  :
+        		              (readdata[7:2] == OP_LBU)    ? ALU_ADD  :
+        		              (readdata[7:2] == OP_LHU)    ? ALU_ADD  :
+        		              (readdata[7:2] == OP_LWR)    ? ALU_ADD  :
+        		              (readdata[7:2] == OP_SB)     ? ALU_ADD  :
+        		              (readdata[7:2] == OP_SH)     ? ALU_ADD  :
+        		              (readdata[7:2] == OP_SW)     ? ALU_ADD  : ALU_DEFAULT;
             end
 
             state <= S_EXECUTE;
