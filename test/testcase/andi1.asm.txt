@@ -1,0 +1,8 @@
+andi1
+andi
+sign extension
+0x00008fee
+
+ADDIU $20, $20, 53230
+ANDI $2, $20, 36846
+JR $0

@@ -1,0 +1,8 @@
+xori1
+xori
+edge xori
+0xffff0000
+
+ADDIU $8, $8, -1
+XORI $2, $8, -1
+JR $0

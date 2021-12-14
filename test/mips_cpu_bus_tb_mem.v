@@ -15,6 +15,7 @@ module mips_cpu_bus_tb_mem(
 
 	reg[7:0] memory[2047:0]; //don't know how large this would be
 	logic [10:0] tempaddress;
+	logic dontread;
 	
 	initial begin
 		integer i;
@@ -25,10 +26,12 @@ module mips_cpu_bus_tb_mem(
 			$readmemh(RAM_FILE, memory, 0, 2047);
 			$display("Loading initial RAM contents");
 		end
+		dontread = 0;
 	end
 
 	always @(posedge clk) begin
-		if(read == 1) begin
+		$display("waitreq = %d", waitrequest);
+		if(read == 1 && waitrequest == 0 && dontread == 0) begin
 			
 			if(addr[1:0] != 2'b00) begin
 				$fatal(1, "Reading from misaligned address");
@@ -45,8 +48,11 @@ module mips_cpu_bus_tb_mem(
 			readdata[23:16] <= (byteenable[2] == 1) ? memory[tempaddress+2] : 0;
 			readdata[31:24] <= (byteenable[3] == 1) ? memory[tempaddress+3] : 0;
 		end
-		else if(write == 1) begin
-			readdata <= 32'bx; //writing means we don't care about read data
+		else if(read == 1 && waitrequest == 0 && dontread == 1) begin
+			dontread = 1;
+		end
+		else if(write == 1 && waitrequest == 0) begin
+			//readdata <= 32'bx; //writing means we don't care about read data
 			if(addr[1:0] != 2'b00) begin
 				$fatal(1, "Writing to misaligned address");
 			end
@@ -73,6 +79,20 @@ module mips_cpu_bus_tb_mem(
 		
 		else begin
 			readdata<=32'bx; //don't care what happens when not reading
+		end
+	end
+	always @(negedge waitrequest) begin
+		if(read) begin
+			tempaddress <= (addr % 2048);
+			$display("addr is %d", addr);
+			$display("temp addr is %d, %d, %d, %d", tempaddress, tempaddress+1, tempaddress+2, tempaddress+3);
+			$display("memory is %h, %h, %h, %h",  memory[tempaddress], memory[tempaddress+1], memory[tempaddress+2], memory[tempaddress+3]);
+
+			readdata[7:0] <= (byteenable[0] == 1) ? memory[tempaddress] : 0;
+			readdata[15:8] <= (byteenable[1] == 1) ? memory[tempaddress+1] : 0;
+			readdata[23:16] <= (byteenable[2] == 1) ? memory[tempaddress+2] : 0;
+			readdata[31:24] <= (byteenable[3] == 1) ? memory[tempaddress+3] : 0;
+			dontread = 1;
 		end
 	end
 endmodule

@@ -1,0 +1,9 @@
+and0
+and
+and instruction
+0x00000010
+
+ADDIU $12, $8, 564
+ADDIU $30, $7, 347
+AND $2, $12, $30
+JR $0

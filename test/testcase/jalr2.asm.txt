@@ -1,0 +1,7 @@
+jalr3
+jalr
+jalr delay slot
+0xbfc00410
+
+JALR $12 $2
+ADDIU $2 $2 4

@@ -1,0 +1,8 @@
+addiu2
+addiu
+pos and neg addition 
+0x0000000d
+
+ADDIU $2, $2, 20
+ADDIU $2, $2, -7
+JR $0

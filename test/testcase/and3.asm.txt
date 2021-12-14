@@ -1,0 +1,9 @@
+and3
+and
+all 1 and
+0xffffffff
+
+ADDIU $8, $8, -1
+ADDIU $7, $7, -1
+AND $2, $8, $7
+JR $0

@@ -1,0 +1,7 @@
+lui0
+lui
+no sign xt
+0x80010000
+
+LUI $2, 32769
+JR $0

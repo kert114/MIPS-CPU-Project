@@ -1,0 +1,9 @@
+xori0
+xori
+basic xori
+0x000003a9
+
+ADDIU $8, $8, 564
+XORI $2, $8, 413
+JR $0
+

@@ -28,7 +28,7 @@ module mips_cpu_bus_tb();
     );
 
     parameter RAM_FILE = "";
-    logic [1:0]  waitrequest_counter;
+    logic [1:0]  waitrequest_counter = 2'b00;
 
     mips_cpu_bus_tb_mem #(RAM_FILE) mem(
         .clk(clk),
@@ -46,10 +46,10 @@ module mips_cpu_bus_tb();
         $dumpvars(0, mips_cpu_bus_tb);
         clk = 0;
         #5;
-        repeat (100000) begin
+        repeat (10000) begin
             #10 clk = !clk;
         end
-        $fatal(2, "Simulation did not finish within 100000 cycles.");
+        $fatal(2, "Simulation did not finish within 10000 cycles.");
     end
 
     initial begin // test reset
@@ -79,12 +79,14 @@ module mips_cpu_bus_tb();
 
     end
 
-
+/*
     always @(address or posedge read) 
     begin
         if (read)
+        $display("WRC=%d", waitrequest_counter);
         begin
             if (waitrequest_counter == 0) begin
+                $display("I MADE IT");
                 waitrequest = 1;
                 #25;
                 waitrequest = 0;
@@ -96,11 +98,14 @@ module mips_cpu_bus_tb();
     // Uses waitrequest to make writes take 4 cycles
     always @(address or posedge write)   
     begin
+        $display("write=%d, initialwrite=%d", write, initialwrite);
         if (write == 1 && initialwrite == 1) begin
+            $display("I'm HERE!!!");
             waitrequest = 1;
             #35;
             waitrequest = 0;
             initialwrite = 0;
         end
     end
+    */
 endmodule
