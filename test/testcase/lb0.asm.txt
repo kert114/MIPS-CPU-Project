@@ -1,0 +1,9 @@
+lb1
+lb
+normal operation loading LSB byte 
+0x0000005f
+
+LB $2, 20($0)
+JR $0
+
+DATA 0x00000014, 305419896
