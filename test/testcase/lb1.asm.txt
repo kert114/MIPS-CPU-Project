@@ -1,0 +1,9 @@
+lb1
+lb
+basic load msb byte
+0xffffffd4
+
+LB $2, 9($0)
+JR $0
+
+DATA 0x00000008, 54321

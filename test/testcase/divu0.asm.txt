@@ -1,6 +1,6 @@
 divu0
 divu
-basic divu, remander
+basic divu, remainder
 0x00000002
 
 ADDIU $5, $5, 10

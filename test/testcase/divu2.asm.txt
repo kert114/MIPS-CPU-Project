@@ -1,7 +1,7 @@
 divu2
 divu
-unsigned neg divu, remander
-0x3ffffffe
+unsigned neg divu, remainder
+0x33333331
 
 ADDIU $5, $5, -10
 ADDIU $6, $6, 5

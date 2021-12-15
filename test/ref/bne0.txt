@@ -1,2 +1,2 @@
-register_v0=00000400
+register_v0=00000003
 active=0

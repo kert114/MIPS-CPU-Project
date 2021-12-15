@@ -1,0 +1,7 @@
+jalr2
+jalr
+jalr halt
+0xbfc0000c
+
+ADDIU $3, $3, 0
+JALR $12 $2

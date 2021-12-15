@@ -1,0 +1,9 @@
+mtlo1
+mtlo
+move to lo neg
+0xfffffff9
+
+ADDIU $7, $6, -7
+MTLO $7
+MFLO $2
+JR $0

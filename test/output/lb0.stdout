@@ -11,24 +11,24 @@ waitreq = 1
 Fetching instruction at bfc00000. Branch status is:0
 addr is 3217031168
 temp addr is 1024,       1025,       1026,       1027
-memory is 14, 00, 02, 80
+memory is 08, 00, 02, 80
 ---FETCH---
 Fetching instruction at bfc00000. Branch status is:0
 waitreq = 0
 waitreq = 0
 ---DECODE---
 Read:0Write:0
-Fetched instruction is 80020014. Accessing registers  0,  2
+Fetched instruction is 80020008. Accessing registers  0,  2
 ---EXEC---
 ALU operation 4
 Reg  0 = 00000000. Reg  2 = 00000000
 waitreq = 0
 waitreq = 0
-addr is         20
-temp addr is   20,         21,         22,         23
-memory is 00, 00, a6, 4c
+addr is          8
+temp addr is    8,          9,         10,         11
+memory is 00, 00, d4, 31
 ---MEMORY---
-AluOut:        20
+AluOut:         8
 regB data:         0
 ---WRITEBACK---
 waitreq = 0
@@ -38,7 +38,7 @@ temp addr is 1028,       1029,       1030,       1031
 memory is 08, 00, 00, 00
 ---FETCH---
 Fetching instruction at bfc00004. Branch status is:0
-!! REG  2 is being written with data 0000004c
+!! REG  2 is being written with data 00000031
 ---DECODE---
 Read:0Write:0
 Fetched instruction is 00000008. Accessing registers  0,  0
@@ -48,7 +48,7 @@ waitreq = 0
 ALU operation15
 Reg  0 = 00000000. Reg  0 = 00000000
 ---MEMORY---
-AluOut:        20
+AluOut:         8
 regB data:         0
 waitreq = 0
 waitreq = 0
@@ -80,6 +80,6 @@ memory is 00, 00, 00, 00
 ---FETCH---
 Fetching instruction at 00000000. Branch status is:0
 waitreq = 0
-register_v0=0000004c
+register_v0=00000031
 active=0
 test/mips_cpu_bus_tb.v:82: $finish called at 520 (1s)

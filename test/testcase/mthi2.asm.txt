@@ -1,0 +1,10 @@
+mthi2
+mthi
+move to hi 0
+0x00000008
+
+ADDIU $7, $6, 0
+MTHI $7
+MFHI $2
+ADDIU $2, $2, 8
+JR $0

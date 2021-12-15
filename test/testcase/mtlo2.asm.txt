@@ -1,0 +1,10 @@
+mtlo2
+mtlo
+move to lo zero
+0x00000006
+
+ADDIU $7, $6, 0
+MTLO $7
+MFLO $2
+ADDIU $2, $2, 6
+JR $0

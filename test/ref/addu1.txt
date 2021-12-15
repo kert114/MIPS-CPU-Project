@@ -1,2 +1,2 @@
-register_v0=0000dc8c
+register_v0=00005c8c
 active=0

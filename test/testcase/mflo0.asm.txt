@@ -1,7 +1,10 @@
 mflo0
 mflo
 basic move from Lo - just added numbers here so it worked
-0x00000000
+0x00000006
 
 ADDIU $6, $6, 2
-ADDIU $7, $7, 2
+ADDIU $7, $7, 3
+MULT $6, $7
+MFLO $2
+JR $0

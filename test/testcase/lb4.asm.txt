@@ -1,0 +1,9 @@
+lb4
+lb
+sign extension of bits
+0xfffffffc
+
+LB $2, 8($0)
+JR $0
+
+DATA 0x00000008, -4

@@ -1,11 +1,12 @@
 bne0
 bne
-standard branch - not sure how this works
-0x00000400
+negative branch
+0x00000001
 
-ADDIU $3, $3, 1020
-ADDIU $21, $21, 1028
-BNE $3, $21, 1
+ADDIU $3, $3, -1020
+ADDIU $21, $21, -1028
+BNE $3, $21, 3
+ADDIU $2, $2, 0
 ADDIU $2, $2, 1
 ADDIU $2, $2, 1
 ADDIU $2, $2, 1
