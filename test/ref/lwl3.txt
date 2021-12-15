@@ -1,2 +1,2 @@
-register_v0=075BCD15
+register_v0=07000000
 active=0

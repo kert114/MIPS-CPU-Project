@@ -1,1 +1,10 @@
+mthi0
 mthi
+move to hi basic
+0x00000005
+
+ADDIU $6, $6, 3
+ADDIU $7, $6, 2
+MTHI $7
+MFHI $2
+JR $0

@@ -29,6 +29,15 @@ module mips_cpu_bus_tb_mem(
 		dontread = 0;
 	end
 
+	always @(*) begin
+		if(addr < 1024) begin
+				tempaddress = addr % 1024;
+			end
+			else begin
+				tempaddress <= ((addr % 1024)+1024);
+			end
+	end
+
 	always @(posedge clk) begin
 		$display("waitreq = %d", waitrequest);
 		if(read == 1 && waitrequest == 0 && dontread == 0) begin
@@ -38,7 +47,6 @@ module mips_cpu_bus_tb_mem(
 			end
 
 			
-			tempaddress <= ((addr-4) % 2048);
 			$display("addr is %d", addr);
 			$display("temp addr is %d, %d, %d, %d", tempaddress, tempaddress+1, tempaddress+2, tempaddress+3);
 			$display("memory is %h, %h, %h, %h",  memory[tempaddress], memory[tempaddress+1], memory[tempaddress+2], memory[tempaddress+3]);
@@ -56,8 +64,7 @@ module mips_cpu_bus_tb_mem(
 			if(addr[1:0] != 2'b00) begin
 				$fatal(1, "Writing to misaligned address");
 			end
-			
-			tempaddress <= ((addr-4) % 2048);
+
 			$display("addr is %d", addr);
 			$display("temp addr is %d, %d, %d, %d", tempaddress, tempaddress+1, tempaddress+2, tempaddress+3);
 			$display("memory is %h, %h, %h, %h",  memory[tempaddress], memory[tempaddress+1], memory[tempaddress+2], memory[tempaddress+3]);
@@ -85,7 +92,7 @@ module mips_cpu_bus_tb_mem(
 	end
 	always @(negedge waitrequest) begin
 		if(read) begin
-			tempaddress <= ((addr-4) % 2048);
+
 			$display("addr is %d", addr);
 			$display("temp addr is %d, %d, %d, %d", tempaddress, tempaddress+1, tempaddress+2, tempaddress+3);
 			$display("memory is %h, %h, %h, %h",  memory[tempaddress], memory[tempaddress+1], memory[tempaddress+2], memory[tempaddress+3]);
