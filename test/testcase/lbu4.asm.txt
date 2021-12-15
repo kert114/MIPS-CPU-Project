@@ -1,0 +1,9 @@
+lbu4
+lbu
+zero xt'ed
+0x000000f1
+
+LBU $2, 20($0)
+JR $0
+
+DATA 0x00000014, -15

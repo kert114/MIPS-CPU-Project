@@ -1,0 +1,9 @@
+srav0
+srav
+shift right word arithmetic variable
+0x00000004
+
+ADDIU $3, $3, 16
+ADDIU $4, $4, 2
+SRA $2, $3, $4
+JR $0

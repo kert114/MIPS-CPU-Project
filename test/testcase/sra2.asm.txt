@@ -1,0 +1,8 @@
+sra2
+sra
+shift right word arithmetic
+0xfffffff2
+
+ADDIU $3, $3, -1791
+SRA $2, $3, 7
+JR $0

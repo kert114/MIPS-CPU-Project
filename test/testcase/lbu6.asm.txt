@@ -1,0 +1,10 @@
+lbu6
+lbu
+negative offset
+0x000000d4
+
+ADDIU $20, $20, 16
+LBU $2, 5($20)
+JR $0
+
+DATA 0x00000014, 54321

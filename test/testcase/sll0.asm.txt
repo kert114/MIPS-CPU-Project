@@ -1,0 +1,8 @@
+sll0
+sll
+shift left logical
+0x00002690
+
+ADDIU $3, $3, 1234
+SLL $2, $3, 3
+JR $0

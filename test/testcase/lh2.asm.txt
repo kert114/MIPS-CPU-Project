@@ -1,0 +1,10 @@
+lh2
+lh
+with leading bit as zero  
+0x00002143
+
+ADDIU $16, $16, 20
+LH $2, 2($16)
+JR $0
+
+DATA 0x00000014, 1126240820

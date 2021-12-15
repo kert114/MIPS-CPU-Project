@@ -11,7 +11,7 @@ waitreq = 1
 Fetching instruction at bfc00000. Branch status is:0
 addr is 3217031168
 temp addr is 1024,       1025,       1026,       1027
-memory is 0a, 00, a5, 24
+memory is 24, a5, 00, 0a
 ---FETCH---
 Fetching instruction at bfc00000. Branch status is:0
 waitreq = 0
@@ -32,7 +32,7 @@ waitreq = 0
 waitreq = 0
 addr is 3217031172
 temp addr is 1028,       1029,       1030,       1031
-memory is 05, 00, c6, 24
+memory is 24, c6, 00, 05
 ---FETCH---
 Fetching instruction at bfc00004. Branch status is:0
 !! REG  5 is being written with data 0000000a
@@ -56,7 +56,7 @@ Fetching instruction at bfc00008. Branch status is:0
 waitreq = 1
 addr is 3217031176
 temp addr is 1032,       1033,       1034,       1035
-memory is 1b, 00, a6, 00
+memory is 00, a6, 00, 1b
 waitreq = 0
 ---FETCH---
 Fetching instruction at bfc00008. Branch status is:0
@@ -207,7 +207,7 @@ Fetching instruction at bfc0000c. Branch status is:0
 waitreq = 0
 addr is 3217031180
 temp addr is 1036,       1037,       1038,       1039
-memory is 12, 10, 00, 00
+memory is 00, 00, 10, 12
 waitreq = 0
 ---DECODE---
 Read:0Write:0
@@ -228,7 +228,7 @@ Fetching instruction at bfc00010. Branch status is:0
 !! REG  2 is being written with data 00000002
 addr is 3217031184
 temp addr is 1040,       1041,       1042,       1043
-memory is 08, 00, 00, 00
+memory is 00, 00, 00, 08
 ---FETCH---
 Fetching instruction at bfc00010. Branch status is:0
 waitreq = 0

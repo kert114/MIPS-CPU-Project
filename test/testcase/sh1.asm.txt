@@ -1,0 +1,10 @@
+sh1
+sh
+max store
+0x00007fff
+
+ADDIU $16, $16, 8
+ADDIU $3, $3, 32767
+SH $3, -4($16)
+LH $2, -4($16)
+JR $0

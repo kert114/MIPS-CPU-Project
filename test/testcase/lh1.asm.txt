@@ -1,0 +1,10 @@
+lh1
+lh
+normal operation loading lower half word  
+0xffff9549
+
+ADDIU $16, $16, 20
+LH $2, 2($16)
+JR $0
+
+DATA 0x00000014, 1234554321

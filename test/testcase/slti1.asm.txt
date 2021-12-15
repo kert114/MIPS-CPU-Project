@@ -1,0 +1,8 @@
+slti1
+slti
+set if less than imm neg
+0x00000001
+
+ADDIU $3, $3, -1
+SLTI $2, $3, 0
+JR $0

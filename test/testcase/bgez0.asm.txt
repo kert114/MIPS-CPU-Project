@@ -1,0 +1,11 @@
+bgez0
+bgez
+branch if >=0
+0x00000014
+
+
+ADDIU $7, $7, 14
+BGEZ $7, 2
+ADDIU $2, $7, 6
+ADDIU $2, $2, 4
+JR $0

@@ -1,0 +1,9 @@
+lbu3
+lbu
+normally loading 4th lsB
+0x00000049
+
+LBU $2, 23($0)
+JR $0
+
+DATA 0x00000014, 1234554321

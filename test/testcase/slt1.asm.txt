@@ -1,0 +1,9 @@
+slt1
+slt
+set if less than
+0x00000001
+
+ADDIU $3, $3, 3
+ADDIU $4, $4, 5
+SLT $2, $3, $4
+JR $0

@@ -1,0 +1,8 @@
+sra1
+sra
+shift right word arithmetic max edge case
+0xffffffff
+
+ADDIU $3, $3, -1
+SRA $2, $3, 31
+JR $0

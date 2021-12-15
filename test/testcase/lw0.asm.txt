@@ -1,0 +1,9 @@
+lw0
+lw
+normal load word
+0x23000000
+
+LW $2, 8($8)
+JR $0
+
+DATA 0x00000008, 35

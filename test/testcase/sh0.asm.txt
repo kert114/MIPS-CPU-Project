@@ -1,0 +1,10 @@
+sh0
+sh
+normal store
+0x00000014
+
+ADDIU $16, $16, 8
+ADDIU $3, $3, 20
+SH $3, 4($16)
+LH $2, 4($16)
+JR $0

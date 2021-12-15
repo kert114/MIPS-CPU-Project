@@ -1,0 +1,15 @@
+bgez3
+bgez
+branch
+0x00000002
+
+ADDIU $6, $6, 50
+BGEZ $6, 5
+ADDIU $7, $7, 1
+ADDIU $7, $7, 1
+ADDIU $7, $7, 1
+ADDIU $7, $7, 1
+ADDIU $7, $7, 1
+ADDIU $7, $7, 1
+ADDU $2, $2, $7
+JR $0

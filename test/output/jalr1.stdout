@@ -11,7 +11,7 @@ waitreq = 1
 Fetching instruction at bfc00000. Branch status is:0
 addr is 3217031168
 temp addr is 1024,       1025,       1026,       1027
-memory is 09, 10, 80, 01
+memory is 01, 80, 10, 09
 ---FETCH---
 Fetching instruction at bfc00000. Branch status is:0
 waitreq = 0

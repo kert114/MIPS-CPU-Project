@@ -1,0 +1,8 @@
+sltiu2
+sltiu
+set if less than imm max
+0x00000001
+
+ADDIU $3, $3, 5
+SLTIU $2, $3, 65535
+JR $0

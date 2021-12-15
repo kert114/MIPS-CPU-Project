@@ -1,0 +1,9 @@
+sllv1
+sllv
+shift left logical variable by 0
+0x00000003
+
+ADDIU $3, $3, 3
+ADDIU $4, $4, 0
+SLLV $2, $3, $4
+JR $0

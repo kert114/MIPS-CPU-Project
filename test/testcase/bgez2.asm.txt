@@ -1,0 +1,10 @@
+bgez2
+bgez
+loop on branch
+0xffffffce
+
+ADDIU $7, $7, 50
+BGEZ $7, -1
+ADDIU $7, $7, -25
+ADDU $2, $2, $7
+JR $0

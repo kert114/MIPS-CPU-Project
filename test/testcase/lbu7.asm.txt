@@ -1,0 +1,8 @@
+lbu7
+lbu
+loading no val
+0x00000010
+
+LBU $2, 5($20)
+ADDIU $2, $2, 16
+JR $0

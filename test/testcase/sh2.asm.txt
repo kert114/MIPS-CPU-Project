@@ -1,0 +1,10 @@
+sh1
+sh
+max sign xt store
+0xffffffff
+
+ADDIU $16, $16, 8
+ADDIU $3, $3, 65535
+SH $3, -4($16)
+LH $2, -4($16)
+JR $0

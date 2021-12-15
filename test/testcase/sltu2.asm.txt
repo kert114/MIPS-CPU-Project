@@ -1,0 +1,9 @@
+sltu2
+sltu
+set if less than unsigned same
+0x00000000
+
+ADDIU $3, $3, 5
+ADDIU $4, $4, 5
+SLTU $2, $3, $4
+JR $0

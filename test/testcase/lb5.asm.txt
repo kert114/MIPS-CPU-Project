@@ -1,7 +1,7 @@
 lb5
 lb
 neg offset
-0x00000031
+0x00000000
 
 ADDIU $5, $5, 60
 LB $2, -2($5)

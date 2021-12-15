@@ -1,0 +1,8 @@
+sll2
+sll
+shift left logical max
+0x80000000
+
+ADDIU $3, $3, -1
+SLL $2, $3, 31
+JR $0

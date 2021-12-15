@@ -1,0 +1,11 @@
+beq2
+beq
+branch if equal - signed offset
+0x0000003b
+
+ADDIU $7, $7, 1
+ADDIU $7, $7, 14
+ADDIU $8, $8, 15
+BEQ $7, $8, -3
+ADDU $2, $8, $7
+JR $0

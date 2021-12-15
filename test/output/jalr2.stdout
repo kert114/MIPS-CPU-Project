@@ -11,7 +11,7 @@ waitreq = 1
 Fetching instruction at bfc00000. Branch status is:0
 addr is 3217031168
 temp addr is 1024,       1025,       1026,       1027
-memory is 09, 10, 80, 01
+memory is 01, 80, 10, 09
 ---FETCH---
 Fetching instruction at bfc00000. Branch status is:0
 waitreq = 0
@@ -32,7 +32,7 @@ waitreq = 0
 waitreq = 0
 addr is 3217031172
 temp addr is 1028,       1029,       1030,       1031
-memory is 04, 00, 42, 24
+memory is 24, 42, 00, 04
 ---FETCH---
 Fetching instruction at bfc00004. Branch status is:2
 !! REG  2 is being written with data bfc00008
