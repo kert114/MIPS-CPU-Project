@@ -43,13 +43,13 @@ module mips_cpu_bus_tb_mem(
 			$display("temp addr is %d, %d, %d, %d", tempaddress, tempaddress+1, tempaddress+2, tempaddress+3);
 			$display("memory is %h, %h, %h, %h",  memory[tempaddress], memory[tempaddress+1], memory[tempaddress+2], memory[tempaddress+3]);
 
-			readdata[31:24] <= (byteenable[0] == 1) ? memory[tempaddress] : 0;
-			readdata[23:16] <= (byteenable[1] == 1) ? memory[tempaddress+1] : 0;
-			readdata[15:8] <= (byteenable[2] == 1) ? memory[tempaddress+2] : 0;
-			readdata[7:0] <= (byteenable[3] == 1) ? memory[tempaddress+3] : 0;
+			readdata[31:24] <= memory[tempaddress];
+			readdata[23:16] <= memory[tempaddress+1];
+			readdata[15:8] <= memory[tempaddress+2];
+			readdata[7:0] <= memory[tempaddress+3];
 		end
 		else if(read == 1 && waitrequest == 0 && dontread == 1) begin
-			dontread = 1;
+			dontread = 0;
 		end
 		else if(write == 1 && waitrequest == 0) begin
 			//readdata <= 32'bx; //writing means we don't care about read data
@@ -62,23 +62,25 @@ module mips_cpu_bus_tb_mem(
 			$display("temp addr is %d, %d, %d, %d", tempaddress, tempaddress+1, tempaddress+2, tempaddress+3);
 			$display("memory is %h, %h, %h, %h",  memory[tempaddress], memory[tempaddress+1], memory[tempaddress+2], memory[tempaddress+3]);
 
+			$display("byteenable is %b", byteenable);
+
 			if (byteenable[0] == 1) begin
 				memory[tempaddress] <= writedata[31:24];
+				$write("%h",writedata[31:24]);
 			end
 			if (byteenable[1] == 1) begin
 				memory[tempaddress+1] <= writedata[23:16];
+				$write("%h",writedata[23:16]);
 			end
 			if (byteenable[2] == 1) begin
 				memory[tempaddress+2] <= writedata[15:8];
+				$write("%h",writedata[15:8]);
 			end
 			if (byteenable[3] == 1) begin
 				memory[tempaddress+3] <= writedata[7:0];
+				$write("%h",writedata[7:0]);
 			end
 
-		end
-		
-		else begin
-			readdata<=32'bx; //don't care what happens when not reading
 		end
 	end
 	always @(negedge waitrequest) begin
@@ -88,10 +90,10 @@ module mips_cpu_bus_tb_mem(
 			$display("temp addr is %d, %d, %d, %d", tempaddress, tempaddress+1, tempaddress+2, tempaddress+3);
 			$display("memory is %h, %h, %h, %h",  memory[tempaddress], memory[tempaddress+1], memory[tempaddress+2], memory[tempaddress+3]);
 
-			readdata[31:24] <= (byteenable[0] == 1) ? memory[tempaddress] : 0;
-			readdata[23:16] <= (byteenable[1] == 1) ? memory[tempaddress+1] : 0;
-			readdata[15:8] <= (byteenable[2] == 1) ? memory[tempaddress+2] : 0;
-			readdata[7:0] <= (byteenable[3] == 1) ? memory[tempaddress+3] : 0;
+			readdata[31:24] <= memory[tempaddress];
+			readdata[23:16] <= memory[tempaddress+1];
+			readdata[15:8] <= memory[tempaddress+2];
+			readdata[7:0] <= memory[tempaddress+3];
 			dontread = 1;
 		end
 	end

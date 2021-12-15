@@ -1,0 +1,12 @@
+mfhi0 
+mfhi
+move from high basic
+0x0000023c
+
+ADDIU $6, $6, 50000
+ADDIU $7, $7, 12000
+SLL $6, $6, 6
+SLL $7, $7, 6
+MULT $6, $7
+MFHI $2
+JR $0
