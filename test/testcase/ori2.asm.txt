@@ -4,5 +4,5 @@ ori all high
 0x0000ffff
 
 ADDIU $8, $8, 564
-OR $2, $8, -1
+ORI $2, $8, -1
 JR $0

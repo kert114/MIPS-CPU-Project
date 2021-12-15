@@ -1,8 +1,8 @@
 lwl0
 lwl
 Load word left
-0x15000000
+0x15cd5b07
 
 LWL $2, 8($0)
-JR $1
+JR $0
 DATA 0x00000008, 123456789

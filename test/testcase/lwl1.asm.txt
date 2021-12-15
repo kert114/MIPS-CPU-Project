@@ -1,7 +1,7 @@
 lwl1
 lwl
 2 lsb as msb
-0xcd150000
+0xcd5b0700
 
 LWL $2, 9($0)
 JR $1

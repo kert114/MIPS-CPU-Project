@@ -1,7 +1,7 @@
 lwl2
 lwl
 3 lsb bytes
-0x5bcd1500
+0xcd070000
 
 LWL $2, 10($0)
 JR $1
