@@ -1,0 +1,11 @@
+mult2
+mult
+mult by 0
+0x00000007
+
+ADDIU $4, $4, 2
+ADDIU $6, $6, 0
+MULT $6, $4
+MFLO $2
+ADDIU $2, $2, 7
+JR $0

@@ -1,0 +1,11 @@
+multu1
+multu
+hi reg - multu 
+0x00000007
+
+ADDIU $4, $4, 3
+ADDIU $6, $6, 2
+MULTU $6, $4
+MFHI $2
+ADDIU $2, $2, 7
+JR $0

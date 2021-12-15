@@ -1,0 +1,10 @@
+mult0
+mult
+basic mult
+0x00000006
+
+ADDIU $4, $4, 2
+ADDIU $6, $6, 3
+MULT $6, $4
+MFLO $2
+JR $0

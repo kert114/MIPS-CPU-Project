@@ -1,0 +1,11 @@
+divu2
+divu
+2x unsigned neg divu, remander
+0x00000007
+
+ADDIU $5, $5, -10
+ADDIU $6, $6, -5
+DIVU $5, $6
+MFLO $2
+ADDIU $2, $2, 7
+JR $0

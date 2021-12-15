@@ -1,0 +1,10 @@
+mult4
+mult
+hi reg check -1 mult
+0xffffffff
+
+ADDIU $4, $4, -1
+ADDIU $6, $6, 2
+MULT $6, $4
+MFHI $2
+JR $0

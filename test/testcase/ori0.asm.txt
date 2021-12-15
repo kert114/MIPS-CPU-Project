@@ -1,0 +1,8 @@
+ori0
+ori
+basic ori
+0x00000374
+
+ADDIU $8, $8, 564
+OR $2, $8, 324
+JR $0

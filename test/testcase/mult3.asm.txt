@@ -1,0 +1,10 @@
+mult3
+mult
+lo check with -1
+0xfffffffd
+
+ADDIU $4, $4, -1
+ADDIU $6, $6, 3
+MULT $6, $4
+MFLO $2
+JR $0

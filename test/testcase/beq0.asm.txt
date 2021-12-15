@@ -1,0 +1,11 @@
+beq0
+beq
+branch if equal - basic
+0x0000000f
+
+ADDIU $7, $7, 15
+ADDIU $8, $8, 15
+BEQ $7, $8, 2
+ADDU $2, $0, $7
+ADDU $2, $2, $8
+JR $0

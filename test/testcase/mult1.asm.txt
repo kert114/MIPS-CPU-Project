@@ -1,0 +1,11 @@
+mult1
+mult
+basic mult, remainder check with mfhi
+0x00000005
+
+ADDIU $4, $4, 2
+ADDIU $6, $6, 3
+MULT $6, $4
+MFLI $2
+ADDIU $2, $2, 5
+JR $0

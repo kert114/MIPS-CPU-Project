@@ -1,0 +1,8 @@
+ori1
+ori
+edge ori
+0x00000234
+
+ADDIU $8, $8, 564
+OR $2, $8, 0
+JR $0

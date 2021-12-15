@@ -103,12 +103,12 @@ waitreq = 0
 waitreq = 0
 addr is 3217031192
 temp addr is   20,         21,         22,         23
-memory is 12, 34, 56, 78
+memory is 00, 00, a6, 4c
 ---FETCH---
 Fetching instruction at bfc00018. Branch status is:0
 ---DECODE---
 Read:0Write:0
-Fetched instruction is 78563412. Accessing registers 17, 20
+Fetched instruction is 4ca60000. Accessing registers  0,  0
 waitreq = 0
 waitreq = 0
 ---EXEC---
@@ -4138,13 +4138,13 @@ waitreq = 0
 waitreq = 0
 addr is 3217032200
 temp addr is   20,         21,         22,         23
-memory is 12, 34, 56, 78
+memory is 00, 00, a6, 4c
 ---FETCH---
 Fetching instruction at bfc00408. Branch status is:0
 !! REG  2 is being written with data 00000000
 ---DECODE---
 Read:0Write:0
-Fetched instruction is 78563412. Accessing registers 17, 20
+Fetched instruction is 4ca60000. Accessing registers  0,  0
 waitreq = 0
 waitreq = 0
 ---EXEC---
@@ -8299,12 +8299,12 @@ waitreq = 0
 waitreq = 0
 addr is 3217033240
 temp addr is   20,         21,         22,         23
-memory is 12, 34, 56, 78
+memory is 00, 00, a6, 4c
 ---FETCH---
 Fetching instruction at bfc00818. Branch status is:0
 ---DECODE---
 Read:0Write:0
-Fetched instruction is 78563412. Accessing registers 17, 20
+Fetched instruction is 4ca60000. Accessing registers  0,  0
 waitreq = 0
 waitreq = 0
 ---EXEC---
@@ -12334,13 +12334,13 @@ waitreq = 0
 waitreq = 0
 addr is 3217034248
 temp addr is   20,         21,         22,         23
-memory is 12, 34, 56, 78
+memory is 00, 00, a6, 4c
 ---FETCH---
 Fetching instruction at bfc00c08. Branch status is:0
 !! REG  2 is being written with data 00000000
 ---DECODE---
 Read:0Write:0
-Fetched instruction is 78563412. Accessing registers 17, 20
+Fetched instruction is 4ca60000. Accessing registers  0,  0
 waitreq = 0
 waitreq = 0
 ---EXEC---

@@ -1,0 +1,10 @@
+div0
+div
+basic div
+0x00000002
+
+ADDIU $5, $5, 10
+ADDIU $6, $6, 5
+DIV $5, $6
+MFLO $2
+JR $0

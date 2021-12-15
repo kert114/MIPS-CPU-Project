@@ -1,0 +1,10 @@
+multu3
+multu
+multu by -1 lo reg 
+0xfffffffd
+
+ADDIU $4, $4, -1
+ADDIU $6, $6, 3
+MULTU $6, $4
+MFLO $2
+JR $0
