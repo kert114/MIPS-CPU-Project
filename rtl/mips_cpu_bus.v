@@ -339,7 +339,7 @@ module mips_cpu_bus(
             exImm <= {{16{readdata[23]}},readdata[23:16], readdata[31:24]};
             zeImm <= {16'b0, readdata[23:16], readdata[31:24]};
             shiftAmount <= {readdata[18:16], readdata[31:30]};
-            if(readdata[31:26] == OP_R_TYPE) begin
+            if(readdata[7:2] == OP_R_TYPE) begin
             	AluControl <= (readdata[29:24]  == FN_SLL)  ? ALU_SLL  :
         					  (readdata[29:24]  == FN_SRL)  ? ALU_SRL  :
         					  (readdata[29:24]  == FN_SRA)  ? ALU_SRA  :
