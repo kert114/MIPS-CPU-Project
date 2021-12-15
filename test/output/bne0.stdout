@@ -1,5 +1,4 @@
 Loading initial RAM contents
-VCD info: dumpfile mips_cpu_bus_tb.vcd opened for output.
 waitreq = 0
 !!REGISTER RESET
 waitreq = 0
@@ -4188,11 +4187,11 @@ Fetching instruction at bfc00418. Branch status is:0
 waitreq = 0
 addr is 3217032216
 temp addr is 1040,       1041,       1042,       1043
-memory is 01, 00, 42, 24
+memory is 02, 00, 42, 24
 waitreq = 0
 ---DECODE---
 Read:0Write:0
-Fetched instruction is 24420001. Accessing registers  8,  0
+Fetched instruction is 24420002. Accessing registers 16,  0
 ---EXEC---
 waitreq = 0
 waitreq = 0
@@ -4205,7 +4204,7 @@ temp addr is 1048,       1049,       1050,       1051
 memory is 08, 00, 00, 00
 ---FETCH---
 Fetching instruction at bfc0041c. Branch status is:0
-!! REG  2 is being written with data 00000404
+!! REG  2 is being written with data 00000002
 ---DECODE---
 Read:0Write:0
 Fetched instruction is 00000008. Accessing registers  0,  0
@@ -4239,6 +4238,6 @@ memory is 00, 00, 00, 00
 ---FETCH---
 Fetching instruction at 00000000. Branch status is:0
 waitreq = 0
-register_v0=00000404
+register_v0=00000002
 active=0
 test/mips_cpu_bus_tb.v:78: $finish called at 26475 (1s)

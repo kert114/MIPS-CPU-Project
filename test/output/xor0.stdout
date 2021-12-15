@@ -1,5 +1,4 @@
 Loading initial RAM contents
-VCD info: dumpfile mips_cpu_bus_tb.vcd opened for output.
 waitreq = 0
 !!REGISTER RESET
 waitreq = 0

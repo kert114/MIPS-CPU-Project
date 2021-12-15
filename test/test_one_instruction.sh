@@ -19,7 +19,7 @@ RESULT=$?
 #>&2 echo "${RESULT}"
 set -e
 if [[ "${RESULT}" -ne 0 ]] ; then
-	echo "${INSTR}, Fail - No instruction in RAM"
+	echo "${INSTR}, Fail - Clocked out - program didn't stop"
 	exit
 fi
 #>&2 echo "4 - Outputting final v0 value"

@@ -42,8 +42,8 @@ module mips_cpu_bus_tb();
     );
 
     initial begin // writing the clock
-        $dumpfile("mips_cpu_bus_tb.vcd");
-        $dumpvars(0, mips_cpu_bus_tb);
+        //$dumpfile("mips_cpu_bus_tb.vcd");
+        //$dumpvars(0, mips_cpu_bus_tb);
         clk = 0;
         #5;
         repeat (10000) begin
