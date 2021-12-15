@@ -339,7 +339,7 @@ module mips_cpu_bus(
             exImm <= {{16{readdata[23]}},readdata[23:16], readdata[31:24]};
             zeImm <= {16'b0, readdata[23:16], readdata[31:24]};
             shiftAmount <= {readdata[18:16], readdata[31:30]};
-            if(readdata[7:21] == OP_R_TYPE) begin
+            if(readdata[7:2] == OP_R_TYPE) begin
             	AluControl <= (readdata[29:24]  == FN_SLL)  ? ALU_SLL  :
         					  (readdata[29:24]  == FN_SRL)  ? ALU_SRL  :
         					  (readdata[29:24]  == FN_SRA)  ? ALU_SRA  :
@@ -493,7 +493,7 @@ module mips_cpu_bus(
                                                                                    {16'b0,readdata[23:16],readdata[31:24]}
                                                     ) : //changed to big endian
                               (instrOp == OP_LWL) ? ((addressTemp[1:0] == 2'b00) ? {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]} :
-                                                     (addressTemp[1:0] == 2'b01) ? {readdata[15:8],readdata[23:16],readata[31:24],registerReadB[7:0]} :
+                                                     (addressTemp[1:0] == 2'b01) ? {readdata[15:8],readdata[23:16],readdata[31:24],registerReadB[7:0]} :
                                                      (addressTemp[1:0] == 2'b10) ? {readdata[23:16],readdata[31:24], registerReadB[15:0]}  :
                                                                                    {readdata[31:24], registerReadB[23:0]}
                                                     ) : //changed to big endian

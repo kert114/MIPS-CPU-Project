@@ -129,11 +129,12 @@ def to_hex(asm_in, hex_out):
                 elif clean[0] == "DATA":
                     data = hex(int(to_bin(int(clean[2]), 32), 2))[2:].zfill(8)
                     temp = int(clean[1][2:], 16)
-                    data_words[temp] = data[:2]
-                    data_words[temp+1] = data[2:4]
-                    data_words[temp+2] = data[4:6]
-                    data_words[temp+3] = data[6:]
-    
+                    data_words[temp] = data[6:]
+                    data_words[temp+1] = data[4:6]
+                    data_words[temp+2] = data[2:4]
+                    data_words[temp+3] = data[:2]
+                    #print(data_words)
+                    
     for i in range(1024):
         if i in data_words.keys():
             hex_file.write(data_words[i] + "\n")
@@ -211,15 +212,20 @@ def to_hex(asm_in, hex_out):
             hex_instr = hex(int(opcode + to_bin(Rs, 5) + "00000" + to_bin(Rd, 5) + "00000" + funct_codes[words[0]], 2))
         hex_instr = hex_instr.split("x")[-1].zfill(8)
         print(", ".join(words).ljust(20, " "), hex_instr)
-        for i in range(4):
-            hex_file.write(hex_instr[-2*i+6:-2*i+8]+'\n')
-            line_count += 1
+
         
+        for i in range(4):
+            hex_file.write(hex_instr[2*i:2*i+2]+'\n')
+            line_count += 1
+
+    
+
     for i in range(2048 - (line_count + 1024)):
         if (i + line_count + 1024) in data_words.keys():
             hex_file.write(data_words[i + line_count + 1024] + "\n")
         else:
             hex_file.write('00\n')
+
         
 for file in os.listdir(sys.argv[1]):
     if file.endswith(".asm.txt"):
