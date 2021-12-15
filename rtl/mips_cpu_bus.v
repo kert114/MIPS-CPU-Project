@@ -332,7 +332,7 @@ module mips_cpu_bus(
         else if(state == S_DECODE) begin
             $display("---DECODE---");
             $display("Read:",read,"Write:",write);
-            $display("Fetched instruction is %h. Accessing registers %d, %d", {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}, readdata[25:21],readdata[20:16]);
+            $display("Fetched instruction is %h. Accessing registers %d, %d", {readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}, {readdata[1:0], readdata[15:13]},readdata[12:8]);
         	instruction <={readdata[7:0],readdata[15:8],readdata[23:16],readdata[31:24]}; //big endian'd
         	registerAddressA <= {readdata[1:0], readdata[15:13]}; //big endian'd
         	registerAddressB <= readdata[12:8]; //big endian'd
@@ -386,8 +386,8 @@ module mips_cpu_bus(
         else if(state == S_EXECUTE) begin
         	$display("---EXEC---");
             //$display("Read:",read,"Write:",write);
-            //$display("ALU operation", AluControl);
-            //$display("Reg %d = %h. Reg %d = %h", registerAddressA, registerReadA, registerAddressB, registerReadB);
+            $display("ALU operation", AluControl);
+            $display("Reg %d = %h. Reg %d = %h", registerAddressA, registerReadA, registerAddressB, registerReadB);
         	if(instrOp == OP_R_TYPE) begin
         		if(instrFn == FN_JR || instrFn == FN_JALR) begin
                     branch <= 1;
@@ -404,8 +404,8 @@ module mips_cpu_bus(
         else if(state == S_MEMORY) begin
             $display("---MEMORY---");
             //$display("Read:",read,"Write:",write);
-            //$display("AluOut:", AluOut);
-            //$display("regB data:", registerReadB);
+            $display("AluOut:", AluOut);
+            $display("regB data:", registerReadB);
         	//some logic to check if execute is done for multicycle executes (don't know what tho)
         	if (waitrequest == 1) begin
         	end
