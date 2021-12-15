@@ -44,7 +44,7 @@ module mips_cpu_bus_tb();
         //$dumpfile("mips_cpu_bus_tb.vcd");
         //$dumpvars(0, mips_cpu_bus_tb);
         clk = 0;
-        #5;
+        #50;
         repeat (10000) begin
             #10;
             clk = !clk;
@@ -53,6 +53,10 @@ module mips_cpu_bus_tb();
     end
 
     initial begin // test reset
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
         reset <= 0;
         waitrequest <= 0;
 

@@ -1,4 +1,8 @@
 Loading initial RAM contents
+waitreq = x
+waitreq = x
+waitreq = x
+waitreq = x
 waitreq = 0
 !!REGISTER RESET
 waitreq = 0
@@ -24,10 +28,29 @@ waitreq = 0
 waitreq = 0
 waitreq = 0
 addr is 3217031172
-temp addr is    0,          1,          2,          3
-memory is 05, 00, 42, 24
+temp addr is 2044,       2045,       2046,       2047
+memory is 00, 00, 00, 00
 ---FETCH---
 Fetching instruction at bfc00004. Branch status is:0
+---DECODE---
+Read:0Write:0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+---EXEC---
+---MEMORY---
+waitreq = 0
+waitreq = 0
+---WRITEBACK---
+---FETCH---
+Fetching instruction at bfc00008. Branch status is:0
+waitreq = 1
+addr is 3217031176
+temp addr is    0,          1,          2,          3
+memory is 05, 00, 42, 24
+waitreq = 0
+---FETCH---
+Fetching instruction at bfc00008. Branch status is:0
 ---DECODE---
 Read:0Write:0
 Fetched instruction is 24420005. Accessing registers  8,  0
@@ -40,31 +63,31 @@ waitreq = 0
 ---WRITEBACK---
 !! REG  2 is being written with data 00000005
 ---FETCH---
-Fetching instruction at bfc00008. Branch status is:0
-waitreq = 1
-addr is 3217031176
-temp addr is    4,          5,          6,          7
-memory is 0a, 00, 42, 24
-waitreq = 0
----FETCH---
-Fetching instruction at bfc00008. Branch status is:0
----DECODE---
-Read:0Write:0
-Fetched instruction is 2442000a. Accessing registers 16,  0
-waitreq = 0
-waitreq = 0
----EXEC---
----MEMORY---
-waitreq = 0
-waitreq = 0
----WRITEBACK---
-!! REG  2 is being written with data 0000000f
----FETCH---
 Fetching instruction at bfc0000c. Branch status is:0
 waitreq = 0
 addr is 3217031180
+temp addr is    4,          5,          6,          7
+memory is 0a, 00, 42, 24
+waitreq = 0
+---DECODE---
+Read:0Write:0
+Fetched instruction is 2442000a. Accessing registers 16,  0
+---EXEC---
+waitreq = 0
+waitreq = 0
+---MEMORY---
+---WRITEBACK---
+waitreq = 0
+waitreq = 1
+---FETCH---
+Fetching instruction at bfc00010. Branch status is:0
+!! REG  2 is being written with data 0000000f
+addr is 3217031184
 temp addr is    8,          9,         10,         11
 memory is 08, 00, 00, 00
+---FETCH---
+Fetching instruction at bfc00010. Branch status is:0
+waitreq = 0
 waitreq = 0
 ---DECODE---
 Read:0Write:0
@@ -75,32 +98,26 @@ waitreq = 0
 ---MEMORY---
 ---WRITEBACK---
 waitreq = 0
-waitreq = 1
----FETCH---
-Fetching instruction at bfc00010. Branch status is:2
-addr is 3217031184
+waitreq = 0
+addr is 3217031188
 temp addr is   12,         13,         14,         15
 memory is 00, 00, 00, 00
 ---FETCH---
-Fetching instruction at bfc00010. Branch status is:2
-waitreq = 0
-waitreq = 0
+Fetching instruction at bfc00014. Branch status is:2
 ---DECODE---
 Read:0Write:0
 Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
 ---EXEC---
-waitreq = 0
-waitreq = 0
 ---MEMORY---
+waitreq = 0
+waitreq = 0
 ---WRITEBACK---
-waitreq = 0
-waitreq = 0
-addr is          0
-temp addr is   16,         17,         18,         19
-memory is 00, 00, 00, 00
 ---FETCH---
 Fetching instruction at 00000000. Branch status is:0
-waitreq = 0
+waitreq = 1
 register_v0=0000000f
 active=0
-test/mips_cpu_bus_tb.v:78: $finish called at 635 (1s)
+test/mips_cpu_bus_tb.v:82: $finish called at 860 (1s)
+waitreq = 0

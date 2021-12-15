@@ -1,0 +1,7 @@
+mflo0
+mflo
+basic move from Lo - just added numbers here so it worked
+0x00000000
+
+ADDIU $6, $6, 2
+ADDIU $7, $7, 2
