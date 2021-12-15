@@ -1,7 +1,7 @@
 lwr0
 lwr
 load full word right
-0x0000075B
+0x0015cd5b
 
 LWR $2, 10($0)
 JR $1
