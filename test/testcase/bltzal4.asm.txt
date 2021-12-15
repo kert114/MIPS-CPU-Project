@@ -1,0 +1,13 @@
+bltzal4
+bltzal
+branch if < 0 and link
+0x00000004
+
+ADDIU $7, $7, -4
+BLTZAL $7, 4
+ADDIU $2, $2, 2
+JR $0
+ADDIU $2, $2, 2
+ADDIU $2, $2, 2
+ADDIU $2, $2, 2
+JR $0

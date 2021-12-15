@@ -1,0 +1,9 @@
+srl1
+srl
+shift right logical 2 shifts
+0x00000002
+
+ADDIU $3, $3, 16
+SRL $2, $3, 1
+SRL $2, $2, 2
+JR $0

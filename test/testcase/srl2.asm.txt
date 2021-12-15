@@ -1,0 +1,8 @@
+srl2
+srl
+shift right logical max minus
+0x00000001
+
+ADDIU $3, $3, -1
+SRL $2, $3, 31
+JR $0

@@ -1,0 +1,10 @@
+bltzal3
+bltzal
+loop branch < 0  and link 
+0x00000019
+
+ADDIU $7, $7, -50
+BLTZ $7, -1
+ADDIU $7, $7, 25
+ADDU $2, $2, $7
+JR $0

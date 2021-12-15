@@ -1,0 +1,8 @@
+srl4
+srl
+shift right logical by 0
+0x00000002
+
+ADDIU $3, $3, 2
+SRL $2, $3, 0
+JR $0

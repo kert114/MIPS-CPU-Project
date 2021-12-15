@@ -1,0 +1,13 @@
+bgezal3
+bgezal
+branch if >= 0 and link
+0x00000008
+
+ADDIU $2, $2, 4
+BGEZAL $7, 4
+ADDIU $2, $2, 2
+JR $0
+ADDIU $2, $2, 2
+ADDIU $2, $2, 2
+ADDIU $2, $2, 2
+JR $0

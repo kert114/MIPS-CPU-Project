@@ -1,0 +1,10 @@
+jr0
+jr
+jump to stall
+0x00000012
+
+ADDIU $2, $2, 10
+JR $0
+ADDIU $2, $2, 8
+ADDIU $2, $2, 7
+JR $0

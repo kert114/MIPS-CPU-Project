@@ -1,0 +1,9 @@
+srlv2
+srlv
+shift right logical Variable max neg
+0x00000001
+
+ADDIU $3, $3, -1
+ADDIU $4, $4, 31
+SRLV $2, $3, $4
+JR $0

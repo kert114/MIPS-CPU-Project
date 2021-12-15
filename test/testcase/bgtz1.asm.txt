@@ -1,0 +1,11 @@
+bgtz1
+bgtz
+dont branch = 0 
+0x00000007
+
+BGTZ $7, 2
+ADDIU $7, $7, 2
+ADDIU $7, $7, 2
+ADDIU $7, $7, 2
+ADDIU $2, $7, 1
+JR $0

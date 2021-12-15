@@ -1,0 +1,9 @@
+subu3
+subu
+subtract both neg
+0xfffffffd
+
+ADDIU $3, $3, -10
+ADDIU $4, $4, -7
+SUBU $2, $3, $4
+JR $0

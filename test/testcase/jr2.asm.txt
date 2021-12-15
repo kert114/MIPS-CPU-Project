@@ -1,0 +1,8 @@
+jr2
+jr
+jump extra test
+0x00000005
+
+ADDIU $2, $2, 5
+JR $31
+ADDIU $0, $0, 0

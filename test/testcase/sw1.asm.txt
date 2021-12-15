@@ -1,0 +1,13 @@
+sw1
+sw
+store word replace store
+0x00000007
+
+ADDIU $3, $3, 10
+ADDIU $4, $4, 8
+ADDIU $5, $5, 7
+SW $3, 4($4)
+LW $2, 4($4)
+SW $5, 4($4)
+LW $2, 4($4)
+JR $0

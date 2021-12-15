@@ -1,0 +1,9 @@
+srav1
+srav
+shift right word arithmetic variable max with 1
+0xffffffff
+
+ADDIU $3, $3, -1
+ADDIU $4, $4, 7
+SRAV $2, $3, $4
+JR $0

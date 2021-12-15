@@ -1,0 +1,10 @@
+bltzal0
+bltzal
+branch < 0  and link
+0xfffffffd
+
+ADDIU $7, $7, -6
+BLTZAL $7, 2
+ADDIU $2, $7, 3
+ADDIU $2, $7, 25
+JR $0

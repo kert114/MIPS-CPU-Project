@@ -1,0 +1,11 @@
+bgtz0
+bgtz
+branch if >0
+0x00000007
+
+ADDIU $7, $7, 5
+BGTZ $7, 2
+ADDIU $7, $7, 2
+SLL $0, $0, 0
+ADDU $2, $2, $7
+JR $0

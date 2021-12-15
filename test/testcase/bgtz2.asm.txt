@@ -1,0 +1,12 @@
+bgtz1
+bgtz
+dont branch = neg input 
+0x00000005
+
+ADDIU $7, $7, -2
+BGTZ $7, 2
+ADDIU $7, $7, 2
+ADDIU $7, $7, 2
+ADDIU $7, $7, 2
+ADDIU $2, $7, 1
+JR $0

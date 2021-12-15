@@ -1,0 +1,174 @@
+Loading initial RAM contents
+waitreq = x
+waitreq = x
+waitreq = x
+waitreq = x
+waitreq = 0
+!!REGISTER RESET
+waitreq = 0
+waitreq = 1
+---FETCH---
+Fetching instruction at bfc00000. Branch status is:0
+addr is 3217031168
+temp addr is 1024,       1025,       1026,       1027
+memory is 24, 84, 02, ff
+---FETCH---
+Fetching instruction at bfc00000. Branch status is:0
+waitreq = 0
+waitreq = 0
+---DECODE---
+Read:0Write:0
+Fetched instruction is 248402ff. Accessing registers  4,  4
+---EXEC---
+ALU operation 4
+Reg  4 = 00000000. Reg  4 = 00000000
+waitreq = 0
+waitreq = 0
+---MEMORY---
+AluOut:       767
+regB data:         0
+---WRITEBACK---
+waitreq = 0
+waitreq = 0
+addr is 3217031172
+temp addr is 1028,       1029,       1030,       1031
+memory is 00, 04, 25, 80
+---FETCH---
+Fetching instruction at bfc00004. Branch status is:0
+!! REG  4 is being written with data 000002ff
+---DECODE---
+Read:0Write:0
+Fetched instruction is 00042580. Accessing registers  0,  4
+waitreq = 0
+waitreq = 0
+---EXEC---
+ALU operation 8
+Reg  0 = 00000000. Reg  4 = 000002ff
+---MEMORY---
+AluOut:3217031168
+regB data:       767
+waitreq = 0
+waitreq = 0
+---WRITEBACK---
+!! REG  4 is being written with data bfc00000
+---FETCH---
+Fetching instruction at bfc00008. Branch status is:0
+waitreq = 1
+addr is 3217031176
+temp addr is 1032,       1033,       1034,       1035
+memory is 24, 84, 00, 18
+waitreq = 0
+---FETCH---
+Fetching instruction at bfc00008. Branch status is:0
+---DECODE---
+Read:0Write:0
+Fetched instruction is 24840018. Accessing registers  4,  4
+waitreq = 0
+waitreq = 0
+---EXEC---
+ALU operation 4
+Reg  4 = bfc00000. Reg  4 = bfc00000
+---MEMORY---
+AluOut:3217031192
+regB data:3217031168
+waitreq = 0
+waitreq = 0
+---WRITEBACK---
+!! REG  4 is being written with data bfc00018
+---FETCH---
+Fetching instruction at bfc0000c. Branch status is:0
+waitreq = 0
+addr is 3217031180
+temp addr is 1036,       1037,       1038,       1039
+memory is 00, 80, 00, 08
+waitreq = 0
+---DECODE---
+Read:0Write:0
+Fetched instruction is 00800008. Accessing registers  4,  0
+---EXEC---
+ALU operation15
+Reg  4 = bfc00018. Reg  0 = 00000000
+waitreq = 0
+waitreq = 0
+---MEMORY---
+AluOut:3217031216
+regB data:         0
+---WRITEBACK---
+waitreq = 0
+waitreq = 1
+---FETCH---
+Fetching instruction at bfc00010. Branch status is:2
+addr is 3217031184
+temp addr is 1040,       1041,       1042,       1043
+memory is 24, 42, 00, 08
+---FETCH---
+Fetching instruction at bfc00010. Branch status is:2
+waitreq = 0
+waitreq = 0
+---DECODE---
+Read:0Write:0
+Fetched instruction is 24420008. Accessing registers  2,  2
+---EXEC---
+ALU operation 4
+Reg  2 = 00000000. Reg  2 = 00000000
+waitreq = 0
+waitreq = 0
+---MEMORY---
+AluOut:         8
+regB data:         0
+---WRITEBACK---
+waitreq = 0
+waitreq = 0
+addr is 3217031192
+temp addr is 1048,       1049,       1050,       1051
+memory is 00, 00, 00, 08
+---FETCH---
+Fetching instruction at bfc00018. Branch status is:0
+!! REG  2 is being written with data 00000008
+---DECODE---
+Read:0Write:0
+Fetched instruction is 00000008. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+---EXEC---
+ALU operation15
+Reg  0 = 00000000. Reg  0 = 00000000
+---MEMORY---
+AluOut:        16
+regB data:         0
+waitreq = 0
+waitreq = 0
+---WRITEBACK---
+---FETCH---
+Fetching instruction at bfc0001c. Branch status is:2
+waitreq = 1
+addr is 3217031196
+temp addr is 1052,       1053,       1054,       1055
+memory is 00, 00, 00, 00
+waitreq = 0
+---FETCH---
+Fetching instruction at bfc0001c. Branch status is:2
+---DECODE---
+Read:0Write:0
+Fetched instruction is 00000000. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+---EXEC---
+ALU operation 8
+Reg  0 = 00000000. Reg  0 = 00000000
+---MEMORY---
+AluOut:         0
+regB data:         0
+waitreq = 0
+waitreq = 0
+---WRITEBACK---
+---FETCH---
+Fetching instruction at 00000000. Branch status is:0
+waitreq = 0
+addr is          0
+temp addr is    0,          1,          2,          3
+memory is 00, 00, 00, 00
+register_v0=00000008
+active=0
+test/mips_cpu_bus_tb.v:82: $finish called at 980 (1s)
+waitreq = 0

@@ -1,0 +1,9 @@
+bltzal1
+bltzal
+branch < 0  and link when 0
+0x00000008
+
+BLTZAL $7, 2
+ADDIU $2, $7, 3
+ADDIU $2, $2, 5
+JR $0

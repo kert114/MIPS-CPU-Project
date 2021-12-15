@@ -1,0 +1,12 @@
+jr1
+jr
+jump to jump
+0x00000008
+
+ADDIU $4, $4, 767
+SLL $4, $4, 22
+ADDIU $4, $4, 24
+JR $4
+ADDIU $2, $2, 8
+ADDIU $2, $2, 7
+JR $0

@@ -1,0 +1,10 @@
+bltz0
+bltz
+branch < 0
+0xfffffffd
+
+ADDIU $7, $7, -6
+BLEZ $7, 2
+ADDIU $2, $7, 3
+ADDIU $2, $7, 25
+JR $0

@@ -1,0 +1,10 @@
+sw2
+sw
+store word max neg
+0xffffffff
+
+ADDIU $3, $3, -1
+ADDIU $4, $4, 8
+SW $3, 4($4)
+LW $2, 4($4)
+JR $0

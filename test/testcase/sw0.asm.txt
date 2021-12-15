@@ -1,0 +1,10 @@
+sw0
+sw
+store word
+0x0000000a
+
+ADDIU $3, $3, 10
+ADDIU $4, $4, 8
+SW $3, 4($4)
+LW $2, 4($4)
+JR $0

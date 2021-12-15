@@ -1,6 +1,6 @@
 bgez1
 bgez
-branch if >=0
+branch if >=0 dont
 0xfffffffc
 
 

@@ -1,0 +1,86 @@
+Loading initial RAM contents
+waitreq = x
+waitreq = x
+waitreq = x
+waitreq = x
+waitreq = 0
+!!REGISTER RESET
+waitreq = 0
+waitreq = 1
+---FETCH---
+Fetching instruction at bfc00000. Branch status is:0
+addr is 3217031168
+temp addr is 1024,       1025,       1026,       1027
+memory is 24, 42, 00, 0a
+---FETCH---
+Fetching instruction at bfc00000. Branch status is:0
+waitreq = 0
+waitreq = 0
+---DECODE---
+Read:0Write:0
+Fetched instruction is 2442000a. Accessing registers  2,  2
+---EXEC---
+ALU operation 4
+Reg  2 = 00000000. Reg  2 = 00000000
+waitreq = 0
+waitreq = 0
+---MEMORY---
+AluOut:        10
+regB data:         0
+---WRITEBACK---
+waitreq = 0
+waitreq = 0
+addr is 3217031172
+temp addr is 1028,       1029,       1030,       1031
+memory is 00, 00, 00, 08
+---FETCH---
+Fetching instruction at bfc00004. Branch status is:0
+!! REG  2 is being written with data 0000000a
+---DECODE---
+Read:0Write:0
+Fetched instruction is 00000008. Accessing registers  0,  0
+waitreq = 0
+waitreq = 0
+---EXEC---
+ALU operation15
+Reg  0 = 00000000. Reg  0 = 00000000
+---MEMORY---
+AluOut:        20
+regB data:         0
+waitreq = 0
+waitreq = 0
+---WRITEBACK---
+---FETCH---
+Fetching instruction at bfc00008. Branch status is:2
+waitreq = 1
+addr is 3217031176
+temp addr is 1032,       1033,       1034,       1035
+memory is 24, 42, 00, 08
+waitreq = 0
+---FETCH---
+Fetching instruction at bfc00008. Branch status is:2
+---DECODE---
+Read:0Write:0
+Fetched instruction is 24420008. Accessing registers  2,  2
+waitreq = 0
+waitreq = 0
+---EXEC---
+ALU operation 4
+Reg  2 = 0000000a. Reg  2 = 0000000a
+---MEMORY---
+AluOut:        18
+regB data:        10
+waitreq = 0
+waitreq = 0
+---WRITEBACK---
+!! REG  2 is being written with data 00000012
+---FETCH---
+Fetching instruction at 00000000. Branch status is:0
+waitreq = 0
+addr is          0
+temp addr is    0,          1,          2,          3
+memory is 00, 00, 00, 00
+register_v0=00000012
+active=0
+test/mips_cpu_bus_tb.v:82: $finish called at 540 (1s)
+waitreq = 0

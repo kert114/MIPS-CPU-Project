@@ -1,0 +1,10 @@
+bgezal2
+bgezal
+dont branch and link
+0xfffffffa
+
+ADDIU $7, $7, -10
+BGEZAL $7, 2
+ADDIU $7, $7, 2
+ADDIU $2, $7, 2
+JR $0

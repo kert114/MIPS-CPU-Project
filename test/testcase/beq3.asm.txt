@@ -1,0 +1,14 @@
+beq3
+beq
+branch if equal - neg sign offset
+0x00000047
+
+ADDIU $3, $3, 1
+ADDIU $7, $7, 15
+ADDIU $8, $8, 15
+BEQ $7, $8, -3
+ADDIU $8, $8, 5
+SLL $0, $0, 0
+ADDU $2, $7, $8
+ADDU $2, $2, $3
+JR $0

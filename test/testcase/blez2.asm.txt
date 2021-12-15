@@ -1,0 +1,10 @@
+blez2
+blez
+loop branch <= 0  branch 
+0x00000032
+
+ADDIU $7, $7, -50
+BLEZ $7, -1
+ADDIU $7, $7, 25
+ADDU $2, $2, $7
+JR $0

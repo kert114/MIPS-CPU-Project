@@ -1,0 +1,10 @@
+blez1
+blez
+branch <=0 dont branch +
+0x0000000a
+
+ADDIU $7, $7, 6
+BLEZ $7, 2
+ADDIU $2, $7, 3
+ADDIU $2, $2, 1
+JR $0
