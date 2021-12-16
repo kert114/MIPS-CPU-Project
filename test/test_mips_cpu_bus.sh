@@ -10,6 +10,7 @@ if [[ ${Instruction} == "all" ]]; then
         Test_ID="$(basename -- ${Test})"
         Test_ID=${Test_ID//".asm.txt"/}
         ./test/test_one_instruction.sh ${Folder} ${Test_ID}
+        #echo "${Test_ID}"
     done
 else
     for Test in ${Tests}/${Instruction}*;
@@ -17,5 +18,6 @@ else
         Test_ID="$(basename -- ${Test})"
         Test_ID=${Test_ID//".asm.txt"/}
         ./test/test_one_instruction.sh ${Folder} ${Test_ID}
+        #echo "${Test_ID}"
     done
 fi

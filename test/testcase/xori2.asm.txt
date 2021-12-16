@@ -1,4 +1,4 @@
-xori2
+xori2 
 xori
 edge 2
 0x0000ffff

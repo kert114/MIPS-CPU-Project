@@ -1,6 +1,6 @@
 jal1
 jal
-jump to skip an instruction ???
+jump to skip an instruction
 0x00000004
 
 JAL 66060291

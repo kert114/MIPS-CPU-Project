@@ -1,6 +1,6 @@
 xori1
 xori
-edge xori
+edge
 0xffff0000
 
 ADDIU $8, $8, -1

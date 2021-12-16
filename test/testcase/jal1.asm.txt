@@ -1,6 +1,6 @@
 jal2
 jal
-link test ???
+link test
 0x00000008
 
 JAL 66060294

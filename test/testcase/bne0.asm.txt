@@ -1,6 +1,6 @@
 bne0
 bne
-standard branch - not sure how this works
+standard branch
 0x00000003
 
 ADDIU $3, $3, 1020

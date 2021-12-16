@@ -1,5 +1,5 @@
 xor0
-xor0
+xor
 xor basic
 0x000003a9
 
