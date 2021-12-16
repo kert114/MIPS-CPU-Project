@@ -79,7 +79,7 @@ temp addr is    0,          1,          2,          3
 memory is 00, 00, 00, 00
 ---FETCH---
 Fetching instruction at 00000000. Branch status is:0
-waitreq = 0
 register_v0=0015cd5b
 active=0
-test/mips_cpu_bus_tb.v:82: $finish called at 520 (1s)
+test/mips_cpu_bus_tb.v:86: $finish called at 520 (1s)
+waitreq = 0

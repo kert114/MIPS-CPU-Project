@@ -100,7 +100,7 @@ waitreq = 0
 addr is          0
 temp addr is    0,          1,          2,          3
 memory is 00, 00, 00, 00
+waitreq = 0
 register_v0=00000010
 active=0
-test/mips_cpu_bus_tb.v:82: $finish called at 620 (1s)
-waitreq = 0
+test/mips_cpu_bus_tb.v:86: $finish called at 620 (1s)

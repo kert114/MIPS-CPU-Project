@@ -99,6 +99,8 @@ def to_bin(x, i):
     #print(binary)
     return binary
 
+#automatically finds what we calculate the output to be and writes it into the reference 
+#file (when this fctn is called) so updates are done more easily
 def to_ref(asm_in, ref_out):
     asm_file = open(asm_in)
     ref_file = open(ref_out, 'w')
@@ -110,6 +112,7 @@ def to_ref(asm_in, ref_out):
             #print(str(clean))
             ref_file.write("register_v0=" + clean[0] + "\n" + "active=0")
 
+#allows us to write the instructions in assembly code so it cuts down on work in the long run
 def to_hex(asm_in, hex_out):
 
     asm_file = open(asm_in)

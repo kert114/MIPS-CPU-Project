@@ -53,9 +53,13 @@ module mips_cpu_bus_tb();
     end
 
     initial begin // test reset
+    // making sure the cpu starts at the correct location with no undefined ram reads at the start
         @(posedge clk);
+        #1
         @(posedge clk);
+        #1
         @(posedge clk);
+        #1
         @(posedge clk);
         reset <= 0;
         waitrequest <= 0;
@@ -70,20 +74,36 @@ module mips_cpu_bus_tb();
         assert(active == 1);
         else $display("TB : CPU did not set active=1 after reset.");
         
-        //check that read and write don't activate at the same time
+        //check that read and write don't activate at the same time - is only useful for reading through the stdout files as a 
+        //precautionary measure - it doesn't prevent the tests from working
         while(active == 1) begin
             assert(~(read && write));
             else $display("TB : CPU asserted read and write at the same time.");
             @(posedge clk);
         end
 
+        //writing for the end of the stdout file that we can compare with the reference file written by the assembler 
+        //to check the cpu provides the expected answer
         $display("register_v0=%h", register_v0);
         $display("active=0");
         $finish;
 
     end
 
+    // Uses waitrequest to make writes take additional time so they don't cause instructions to overlap
+    always @(address or posedge write)   
+    begin
+        //$display("write=%d, initialwrite=%d", write, initialwrite);
+        if (write == 1 && initialwrite == 1) begin
+            //$display("I'm HERE!!!");
+            waitrequest = 1;
+            #35;
+            waitrequest = 0;
+            initialwrite = 0;
+        end
+    end
 
+    // Uses waitrequest to make reads take additional time so they don't cause instructions to overlap
     always @(address or posedge read) 
     begin
         if (read)
@@ -96,19 +116,6 @@ module mips_cpu_bus_tb();
                 waitrequest = 0;
             end
             waitrequest_counter = waitrequest_counter + 1;
-        end
-    end
-
-    // Uses waitrequest to make writes take 4 cycles
-    always @(address or posedge write)   
-    begin
-        //$display("write=%d, initialwrite=%d", write, initialwrite);
-        if (write == 1 && initialwrite == 1) begin
-            //$display("I'm HERE!!!");
-            waitrequest = 1;
-            #35;
-            waitrequest = 0;
-            initialwrite = 0;
         end
     end
     
