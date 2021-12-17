@@ -1,9 +1,10 @@
 slt0
 slt
 set if less than
-0x00000000
+0x00000002
 
 ADDIU $3, $3, 5
 ADDIU $4, $4, 3
 SLT $2, $3, $4
 JR $0
+ADDIU $2, $2, 2

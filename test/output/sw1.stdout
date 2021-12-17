@@ -226,5 +226,5 @@ waitreq = 1
 Fetching instruction at 00000000. Branch status is:0
 register_v0=00000007
 active=0
-test/mips_cpu_bus_tb.v:86: $finish called at 1200 (1s)
+test/mips_cpu_bus_tb.v:89: $finish called at 1200 (1s)
 waitreq = 0

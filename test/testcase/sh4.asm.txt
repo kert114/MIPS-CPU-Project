@@ -1,10 +1,11 @@
 sh3
 sh
-max store
-0x00000000
+max store offset by 2
+0x00000001
 
 ADDIU $16, $16, 8
 ADDIU $3, $3, 32767
 SH $3, 2($16)
 LH $2, 0($16)
 JR $0
+ADDIU $2, $2, 1

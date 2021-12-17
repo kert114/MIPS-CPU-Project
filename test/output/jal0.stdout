@@ -100,5 +100,5 @@ Fetching instruction at 00000000. Branch status is:0
 !! REG  2 is being written with data 00000004
 register_v0=00000004
 active=0
-test/mips_cpu_bus_tb.v:86: $finish called at 640 (1s)
+test/mips_cpu_bus_tb.v:89: $finish called at 640 (1s)
 waitreq = 0

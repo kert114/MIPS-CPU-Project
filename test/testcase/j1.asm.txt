@@ -1,11 +1,11 @@
 j1
 j
 standard jump skip two instructions
-0x00000000
+0x00000002
 
 J 66060292
 ADDIU $3, $3, 0
 ADDIU $2, $2, 1
 ADDIU $2, $2, 10
 JR $0
-SLL $0, $0, 0
+ADDIU $2, $2, 2

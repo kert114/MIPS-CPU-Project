@@ -1,6 +1,6 @@
 sll1
 sll
-shift left logical
+shift left logical 2 shifts
 0x00004d20
 
 ADDIU $3, $3, 617

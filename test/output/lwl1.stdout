@@ -81,5 +81,5 @@ memory is 00, 00, 00, 00
 Fetching instruction at 00000000. Branch status is:0
 register_v0=cd5b0700
 active=0
-test/mips_cpu_bus_tb.v:86: $finish called at 520 (1s)
+test/mips_cpu_bus_tb.v:89: $finish called at 520 (1s)
 waitreq = 0

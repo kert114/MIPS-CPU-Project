@@ -1,9 +1,9 @@
 lb2
 lb
 basic load 3rd msb byte
-0x00000000
+0x00000095
 
 LB $2, 10($0)
 JR $0
 
-DATA 0x00000008, 54321
+DATA 0x00000008, 1234554321

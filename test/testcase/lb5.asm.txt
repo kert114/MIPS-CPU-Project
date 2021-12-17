@@ -1,10 +1,11 @@
 lb5
 lb
 neg offset
-0x00000000
+0x00000001
 
 ADDIU $5, $5, 60
 LB $2, -2($5)
 JR $0
+ADDIU $2, $2, 1
 
 DATA 0x0000036, 54321

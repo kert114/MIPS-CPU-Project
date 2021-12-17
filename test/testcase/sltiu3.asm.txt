@@ -1,8 +1,9 @@
 sltiu3
 sltiu
 set if less than imm same
-0x00000000
+0x00000002
 
 ADDIU $3, $3, 5
 SLTIU $2, $3, 5
 JR $0
+ADDIU $2, $2, 2

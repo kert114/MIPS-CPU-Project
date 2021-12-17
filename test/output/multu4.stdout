@@ -144,4 +144,4 @@ waitreq = 1
 waitreq = 0
 register_v0=00000002
 active=0
-test/mips_cpu_bus_tb.v:86: $finish called at 860 (1s)
+test/mips_cpu_bus_tb.v:89: $finish called at 860 (1s)
