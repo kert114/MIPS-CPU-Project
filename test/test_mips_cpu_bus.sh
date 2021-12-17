@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eou pipefail
+chmod u+x *
 
 Tests="test/testcase"
 Folder="$1"
